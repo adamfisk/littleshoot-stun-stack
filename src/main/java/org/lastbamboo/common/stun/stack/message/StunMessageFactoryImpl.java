@@ -63,7 +63,10 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         
         if (!isMagicCookie(magicCookieBytes))
             {
-            LOG.debug("Client does not support magic cookie!!!");
+            if (LOG.isDebugEnabled())
+                {
+                LOG.debug("Client does not support magic cookie!!!");
+                }
             transactionIdBytes = 
                 ArrayUtils.addAll(magicCookieBytes, transactionIdBytes);
             }
@@ -89,9 +92,17 @@ public class StunMessageFactoryImpl implements StunMessageFactory
             (magicCookieBytes[2] == 0xA4) && 
             (magicCookieBytes[3] == 0x42))
             {
+            if (LOG.isDebugEnabled())
+                {
+                LOG.debug("Client sent magic cookie");
+                }
             return true;
             }
-        return true;
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Client not using magic cookie");
+            }
+        return false;
         }
 
     private StunMessage createMessage(final int messageType, 
