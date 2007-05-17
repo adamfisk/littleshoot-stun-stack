@@ -2,6 +2,7 @@ package org.lastbamboo.common.stun.stack.message;
 
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
@@ -41,17 +42,31 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         final int messageType = in.getUnsignedShort();
         final int messageLength = in.getUnsignedShort();
         
-        final long magicCookie = in.getUnsignedInt();
+        final byte[] magicCookieBytes = new byte[4];
+        in.get(magicCookieBytes);
         
-        if (magicCookie != 0x2112A442)
-            {
-            LOG.error("Unexpected magic cookie value!!!");
-            }
+        
+        //final long magicCookie = in.getUnsignedInt();
+        
+        
+        //if (magicCookie != 0x2112A442)
+          //  {
+            //LOG.debug("Client does not support magic cookie!!!");
+            //}
+        
+        
         
         //final ByteBuffer transactionIdBuffer = ByteBuffer.allocate(12);
         //transactionIdBuffer.put(in.get)
-        final byte[] transactionIdBytes = new byte[12];
+        byte[] transactionIdBytes = new byte[12];
         in.get(transactionIdBytes);
+        
+        if (!isMagicCookie(magicCookieBytes))
+            {
+            LOG.debug("Client does not support magic cookie!!!");
+            transactionIdBytes = 
+                ArrayUtils.addAll(magicCookieBytes, transactionIdBytes);
+            }
         
         final byte[] body = new byte[messageLength];
         in.get(body);
@@ -61,6 +76,22 @@ public class StunMessageFactoryImpl implements StunMessageFactory
             this.m_stunAttributesFactory.createAttributes(bodyBuffer);
         
         return createMessage(messageType, transactionIdBytes, attributes);
+        }
+
+    private boolean isMagicCookie(final byte[] magicCookieBytes)
+        {
+        //0x2112A442
+        
+        //final byte byte1 = magicCookieBytes[0];
+        
+        if ((magicCookieBytes[0] == 0x21) && 
+            (magicCookieBytes[1] == 0x12) && 
+            (magicCookieBytes[2] == 0xA4) && 
+            (magicCookieBytes[3] == 0x42))
+            {
+            return true;
+            }
+        return true;
         }
 
     private StunMessage createMessage(final int messageType, 
