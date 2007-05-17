@@ -41,23 +41,12 @@ public class StunMessageFactoryImpl implements StunMessageFactory
             }
         final int messageType = in.getUnsignedShort();
         final int messageLength = in.getUnsignedShort();
-        
+ 
+        // Check for the magic cookie indicating support for the newer
+        // STUN spec.
         final byte[] magicCookieBytes = new byte[4];
         in.get(magicCookieBytes);
-        
-        
-        //final long magicCookie = in.getUnsignedInt();
-        
-        
-        //if (magicCookie != 0x2112A442)
-          //  {
-            //LOG.debug("Client does not support magic cookie!!!");
-            //}
-        
-        
-        
-        //final ByteBuffer transactionIdBuffer = ByteBuffer.allocate(12);
-        //transactionIdBuffer.put(in.get)
+ 
         byte[] transactionIdBytes = new byte[12];
         in.get(transactionIdBytes);
         
