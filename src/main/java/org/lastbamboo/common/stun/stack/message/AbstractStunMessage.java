@@ -62,7 +62,7 @@ public abstract class AbstractStunMessage implements StunMessage
         int length = 0;
         for (final StunAttribute attribute : attributes)
             {
-            length += attribute.getBodyLength();
+            length += attribute.getTotalLength();
             }
         return length;
         }

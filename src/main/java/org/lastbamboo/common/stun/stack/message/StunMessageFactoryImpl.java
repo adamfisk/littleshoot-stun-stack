@@ -9,6 +9,7 @@ import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
+import org.lastbamboo.common.util.BitUtils;
 
 /**
  * Factory for creating new STUN messages.
@@ -33,6 +34,11 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         m_stunAttributesFactory = stunAttributesFactory;
         }
     
+    public StunMessage createBindingRequest()
+        {
+        return new BindingRequest();
+        }
+    
     public StunMessage createMessage(final ByteBuffer in)
         {
         if (LOG.isDebugEnabled())
@@ -44,54 +50,35 @@ public class StunMessageFactoryImpl implements StunMessageFactory
  
         // Check for the magic cookie indicating support for the newer
         // STUN spec.
-        final byte[] magicCookieBytes = new byte[4];
-        in.get(magicCookieBytes);
- 
+        final int maybeMagicCookie = in.getInt();
         byte[] transactionIdBytes = new byte[12];
         in.get(transactionIdBytes);
-        
-        if (!isMagicCookie(magicCookieBytes))
+        //final int transactionIdSize = new byte[12];
+       
+        if (maybeMagicCookie != 0x2112A442)
             {
             if (LOG.isDebugEnabled())
                 {
-                LOG.debug("Client does not support magic cookie!!!");
+                LOG.debug("No magic cookie");
                 }
+            final byte[] magicCookieBytes = 
+                BitUtils.toByteArray(maybeMagicCookie);
             transactionIdBytes = 
                 ArrayUtils.addAll(magicCookieBytes, transactionIdBytes);
             }
         
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Reading message body of length: "+messageLength);
+            }
         final byte[] body = new byte[messageLength];
         in.get(body);
         final ByteBuffer bodyBuffer = ByteBuffer.wrap(body);
-        bodyBuffer.flip();
+        //bodyBuffer.flip();
         final Map<StunAttributeType, StunAttribute> attributes =
             this.m_stunAttributesFactory.createAttributes(bodyBuffer);
         
         return createMessage(messageType, transactionIdBytes, attributes);
-        }
-
-    private boolean isMagicCookie(final byte[] magicCookieBytes)
-        {
-        //0x2112A442
-        
-        //final byte byte1 = magicCookieBytes[0];
-        
-        if ((magicCookieBytes[0] == 0x21) && 
-            (magicCookieBytes[1] == 0x12) && 
-            (magicCookieBytes[2] == 0xA4) && 
-            (magicCookieBytes[3] == 0x42))
-            {
-            if (LOG.isDebugEnabled())
-                {
-                LOG.debug("Client sent magic cookie");
-                }
-            return true;
-            }
-        if (LOG.isDebugEnabled())
-            {
-            LOG.debug("Client not using magic cookie");
-            }
-        return false;
         }
 
     private StunMessage createMessage(final int messageType, 
@@ -100,8 +87,10 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         {
         switch (messageType)
             {
-            case StunMessageType.BINDING:
+            case StunMessageType.BINDING_REQUEST:
                 return new BindingRequest(transactionIdBytes);
+            case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
+                return new BindingResponse(transactionIdBytes, attributes);
             default:
                 return null;
             }

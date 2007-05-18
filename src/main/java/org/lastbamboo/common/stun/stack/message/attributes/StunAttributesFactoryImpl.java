@@ -23,6 +23,10 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
     public Map<StunAttributeType, StunAttribute> createAttributes(
         final ByteBuffer body)
         {
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Creating attributes...");
+            }
         final Map<StunAttributeType, StunAttribute> attributes =
             new ConcurrentHashMap<StunAttributeType, StunAttribute>();
         while (body.hasRemaining())
@@ -36,14 +40,29 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         final Map<StunAttributeType, StunAttribute> attributes, 
         final ByteBuffer buf)
         {
-        final short type = buf.getUnsigned();
-        final short length = buf.getUnsigned();
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Adding attribute");
+            }
+        //final short type = buf.getUnsigned();
+        //final short length = buf.getUnsigned();
+
+        final int type = buf.getUnsignedShort();
+        final int length = buf.getUnsignedShort();
+        
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Type is: "+type);
+            LOG.debug("Length is: "+length);
+            }
+        
         final byte[] body = new byte[length];
         buf.get(body);
-        final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
-        bodyBuf.flip();
         
-        final StunAttributeType enumType = StunAttributeType.convert(type);
+        final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
+        //bodyBuf.flip();
+        
+        final StunAttributeType enumType = StunAttributeType.convert((short) type);
         try
             {
             final StunAttribute attribute = createAttribute(enumType, bodyBuf);

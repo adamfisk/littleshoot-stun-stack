@@ -22,5 +22,10 @@ public abstract class AbstractStunAttribute implements StunAttribute
         {
         return m_bodyLength;
         }
+    
+    public int getTotalLength()
+        {
+        return m_bodyLength + 4;
+        }
 
     }

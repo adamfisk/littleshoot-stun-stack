@@ -90,6 +90,7 @@ class BlockingRequestSender implements ResponseCollector
 
     public synchronized void processResponse (final StunMessageEvent event)
         {
+        LOG.debug("Received response!!");
         // Reset the blocking guard.
         m_requestOutstanding = false;
         

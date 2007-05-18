@@ -65,6 +65,7 @@ import java.util.Map;
 import net.java.stun4j.StunException;
 import net.java.stun4j.attribute.Attribute;
 import net.java.stun4j.attribute.AttributeDecoder;
+import net.java.stun4j.attribute.MappedAddressAttribute;
 import net.java.stun4j.attribute.UnknownAttributesAttribute;
 
 import org.apache.commons.logging.Log;
@@ -229,12 +230,17 @@ public abstract class Message
         Character attributeType = new Character(attribute.getAttributeType());
 
         if (getAttributePresentity(attributeType.charValue()) == N_A)
+            {
+            LOG.warn("Attribute not appropriate!!!");
             throw new StunException(StunException.ILLEGAL_ARGUMENT,
                                     "The attribute "
                                     + attribute.getName()
                                     + " is not allowed in a "
                                     + getName());
+            
+            }
 
+        LOG.debug("Adding attribute!!");
         attributes.put(attributeType, attribute);
     }
 
@@ -477,6 +483,7 @@ public abstract class Message
 
         if (arrayLen - offset < Message.HEADER_LENGTH)
             {
+            LOG.error("Invalid STUN message");
             throw new StunException(StunException.ILLEGAL_ARGUMENT,
                 "The given binary array is not a valid StunMessage");
             }
@@ -514,6 +521,7 @@ public abstract class Message
 
         while(offset - Message.HEADER_LENGTH < length)
             {
+            LOG.debug("Decoding attribute");
             final Attribute att = 
                 AttributeDecoder.decode(binMessage, offset, 
                     (char)(length - offset));
@@ -521,11 +529,17 @@ public abstract class Message
             // Ignore unknown attributes...
             if (att != null && !(att instanceof UnknownAttributesAttribute))
                 {
+                LOG.debug("Adding attribute: "+att);
+                //LOG.debug(((MappedAddressAttribute)att).getAddress().getSocketAddress());
                 message.addAttribute(att);
+                }
+            else
+                {
+                LOG.debug("Received unknown attribute");
                 }
             offset += att.getDataLength() + Attribute.HEADER_LENGTH;
             }
-
+        LOG.debug("Finished while....");
         return message;
         }
 

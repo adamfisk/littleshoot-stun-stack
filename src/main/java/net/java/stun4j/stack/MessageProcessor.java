@@ -92,6 +92,8 @@ final class MessageProcessor implements Runnable
                 stunMessage =
                     Message.decode(rawMessage.getBytes(),
                         (char) 0, (char) rawMessage.getMessageLength());
+                
+                LOG.debug("Decoded STUN message: "+stunMessage);
                 }
             catch (final StunException e)
                 {

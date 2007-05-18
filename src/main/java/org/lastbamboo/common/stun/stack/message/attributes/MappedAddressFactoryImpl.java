@@ -28,9 +28,12 @@ public class MappedAddressFactoryImpl implements MappedAddressFactory
             {
             LOG.debug("Creating mapped address attribute");
             }
-        final short family = buffer.getUnsigned();
-        final short port = buffer.getUnsigned();
         
+        // The first byte is empty zeros.  Ignore it.
+        
+        buffer.get();
+        final byte family = buffer.get();
+        final int port = buffer.getUnsignedShort();
         final InetAddress inetAddress; 
         
         final int length;

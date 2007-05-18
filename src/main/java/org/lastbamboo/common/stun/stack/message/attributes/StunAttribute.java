@@ -1,6 +1,5 @@
 package org.lastbamboo.common.stun.stack.message.attributes;
 
-import org.lastbamboo.common.stun.server.StunAttributeVisitor;
 
 
 /**
@@ -22,5 +21,13 @@ public interface StunAttribute
      * @param visitor The visitor to accept.
      */
     void accept(StunAttributeVisitor visitor);
+
+    /**
+     * Gets the total length of the attribute including the header and the body.
+     * 
+     * @return The total length of the attribute including the header and the 
+     * body.
+     */
+    int getTotalLength();
 
     }

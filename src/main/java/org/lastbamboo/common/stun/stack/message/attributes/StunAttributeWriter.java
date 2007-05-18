@@ -1,11 +1,11 @@
-package org.lastbamboo.common.stun.server;
+package org.lastbamboo.common.stun.stack.message.attributes;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
 /**
  * Write STUN attributes.
@@ -13,8 +13,15 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 public class StunAttributeWriter implements StunAttributeVisitor
     {
 
+    private static final Log LOG = LogFactory.getLog(StunAttributeWriter.class);
+    
     private final ByteBuffer m_buf;
 
+    /**
+     * Creates a new class for writing STUN attributes.
+     * 
+     * @param buf The attribute buffer.
+     */
     public StunAttributeWriter(final ByteBuffer buf)
         {
         m_buf = buf;
@@ -22,7 +29,8 @@ public class StunAttributeWriter implements StunAttributeVisitor
 
     public void visitMappedAddress(final MappedAddress address)
         {
-        final short type = StunAttributeType.MAPPED_ADDRESS.convert();
+        final short type = 
+            StunAttributeType.MAPPED_ADDRESS.convert().shortValue();
         final int length = address.getBodyLength();
         m_buf.putShort((short) (type & 0xffff));
         m_buf.putShort((short) (length & 0xffff));
@@ -33,6 +41,11 @@ public class StunAttributeWriter implements StunAttributeVisitor
         m_buf.put((byte) 0x00);
         
         final int family = address.getAddressFamily();
+        
+        if (LOG.isDebugEnabled())
+            {
+            LOG.debug("Writing family: "+family);
+            }
         final InetSocketAddress socketAddress = address.getInetSocketAddress();
         final int port = socketAddress.getPort();
         final InetAddress ia = socketAddress.getAddress();

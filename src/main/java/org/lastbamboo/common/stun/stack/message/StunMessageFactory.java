@@ -16,4 +16,11 @@ public interface StunMessageFactory
      */
     StunMessage createMessage(ByteBuffer in);
 
+    /**
+     * Creates a new binding request.
+     * 
+     * @return The new binding request.
+     */
+    StunMessage createBindingRequest();
+
     }

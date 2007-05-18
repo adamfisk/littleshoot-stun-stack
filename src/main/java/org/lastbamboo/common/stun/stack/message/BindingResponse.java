@@ -4,6 +4,10 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.ClassUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressFactoryImpl;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
@@ -15,7 +19,8 @@ public class BindingResponse extends AbstractStunMessage
     implements VisitableStunMessage
     {
 
-    private final InetSocketAddress m_address;
+    private static final Log LOG = LogFactory.getLog(BindingResponse.class);
+    private final InetSocketAddress m_mappedAddress;
 
     /**
      * Creates a new binding response message.
@@ -26,8 +31,36 @@ public class BindingResponse extends AbstractStunMessage
     public BindingResponse(final byte[] transactionId, 
         final InetSocketAddress address)
         {
-        super(transactionId, createAttributes(address), 0x0101);
-        m_address = address;
+        super(transactionId, createAttributes(address), 
+            StunMessageType.SUCCESSFUL_BINDING_RESPONSE);
+        m_mappedAddress = address;
+        }
+
+    /**
+     * Creates a new binding response message.
+     * 
+     * @param transactionId The transaction ID of the response.
+     * @param attributes The response attributes.
+     */
+    public BindingResponse(final byte[] transactionId, 
+        final Map<StunAttributeType, StunAttribute> attributes)
+        {
+        super(transactionId, attributes, 
+            StunMessageType.SUCCESSFUL_BINDING_RESPONSE);
+        m_mappedAddress = getAddress(attributes);
+        }
+
+    private InetSocketAddress getAddress(
+        final Map<StunAttributeType, StunAttribute> attributes)
+        {
+        final MappedAddress mappedAddress = 
+            (MappedAddress) attributes.get(StunAttributeType.MAPPED_ADDRESS);
+        if (mappedAddress == null)
+            {
+            LOG.error("No mapped address in: "+attributes.values());
+            return null;
+            }
+        return mappedAddress.getInetSocketAddress();
         }
 
     private static Map<StunAttributeType, StunAttribute> createAttributes(
@@ -43,9 +76,20 @@ public class BindingResponse extends AbstractStunMessage
         return attributes;
         }
     
+    public InetSocketAddress getMappedAddress()
+        {
+        return m_mappedAddress;
+        }
+    
     public void accept(final StunMessageVisitor visitor)
         {
         visitor.visitBindingResponse(this);
+        }
+    
+    public String toString()
+        {
+        return ClassUtils.getShortClassName(getClass()) + 
+            " with MAPPED ADDRESS: " + getMappedAddress(); 
         }
 
     }
