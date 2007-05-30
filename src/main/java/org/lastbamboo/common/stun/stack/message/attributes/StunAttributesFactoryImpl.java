@@ -44,9 +44,6 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             {
             LOG.debug("Adding attribute");
             }
-        //final short type = buf.getUnsigned();
-        //final short length = buf.getUnsigned();
-
         final int type = buf.getUnsignedShort();
         final int length = buf.getUnsignedShort();
         
@@ -60,7 +57,6 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         buf.get(body);
         
         final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
-        //bodyBuf.flip();
         
         if (!StunAttributeType.hasAttribute((short) type))
             {
@@ -91,7 +87,6 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             case MAPPED_ADDRESS:
                 {
                 return this.m_mappedAddressFactory.createAttribute(body);
-                //return new MappedAddress(body);
                 }
             default:
                 {
