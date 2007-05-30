@@ -62,6 +62,11 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
         //bodyBuf.flip();
         
+        if (!StunAttributeType.hasAttribute((short) type))
+            {
+            LOG.debug("Did not recognize attribute type: "+type);
+            return;
+            }
         final StunAttributeType enumType = StunAttributeType.convert((short) type);
         try
             {

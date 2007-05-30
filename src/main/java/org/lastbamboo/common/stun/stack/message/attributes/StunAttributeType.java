@@ -89,6 +89,11 @@ public enum StunAttributeType implements EnumConverter<Short>
         return s_map.get(type);
         }
     
+    public static boolean hasAttribute(final short type)
+        {
+        return s_map.contains(type);
+        }
+    
     private final short m_type;
     
     private StunAttributeType(final int type)

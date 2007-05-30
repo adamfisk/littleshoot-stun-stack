@@ -74,7 +74,6 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         final byte[] body = new byte[messageLength];
         in.get(body);
         final ByteBuffer bodyBuffer = ByteBuffer.wrap(body);
-        //bodyBuffer.flip();
         final Map<StunAttributeType, StunAttribute> attributes =
             this.m_stunAttributesFactory.createAttributes(bodyBuffer);
         
