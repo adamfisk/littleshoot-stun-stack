@@ -9,12 +9,12 @@ import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
 import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 
 /**
- * Validates a STUN message and processes it.
+ * Processes STUN messages.
  */
 public abstract class AbstractStunIoHandler extends IoHandlerAdapter
     {
     
-    private static final Log LOG = LogFactory.getLog(AbstractStunIoHandler.class);
+    private final Log LOG = LogFactory.getLog(AbstractStunIoHandler.class);
     private final StunMessageVisitorFactory m_visitorFactory;
     
     /**
