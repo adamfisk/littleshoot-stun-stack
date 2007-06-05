@@ -6,6 +6,11 @@ package org.lastbamboo.common.stun.stack.message;
  */
 public class StunMessageType
     {
+    
+    private StunMessageType()
+        {
+        // Disable construction.
+        }
 
     /**
      * Binding request type ID.
@@ -23,5 +28,7 @@ public class StunMessageType
      */
     //public static final int SHARED_SECRET = 0x002;
 
-    
+    // TODO: draft-ietf-behave-turn-03.txt has a conflict between the 
+    // indication message IDs and the STUN message IDs. Should be fixed with
+    // draft-ietf-behave-turn-04.txt
     }
