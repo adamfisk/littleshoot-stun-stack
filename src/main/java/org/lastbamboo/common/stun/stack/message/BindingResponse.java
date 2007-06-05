@@ -76,6 +76,11 @@ public class BindingResponse extends AbstractStunMessage
         return attributes;
         }
     
+    /**
+     * Accessor for the mapped address received in the binding response.
+     * 
+     * @return The client's mapped address.
+     */
     public InetSocketAddress getMappedAddress()
         {
         return m_mappedAddress;
