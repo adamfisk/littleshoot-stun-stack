@@ -13,10 +13,11 @@ public interface StunAttributeFactory
     /**
      * Creates a singe STUN attribute.
      * 
-     * @param buffer The buffer containing attribute data.
+     * @param body The buffer containing attribute data.
      * @return The new STUN attribute.
      * @throws IOException If the buffer does not contain the expected data.
      */
-    StunAttribute createAttribute(ByteBuffer buffer) throws IOException;
+    StunAttribute createAttribute(ByteBuffer body) 
+        throws IOException;
 
     }

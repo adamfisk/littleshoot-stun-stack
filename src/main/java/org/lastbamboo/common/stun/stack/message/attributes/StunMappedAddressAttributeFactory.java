@@ -12,11 +12,11 @@ import org.apache.mina.common.ByteBuffer;
 /**
  * Factory for creating mapped address attributes.
  */
-public class MappedAddressFactoryImpl implements MappedAddressFactory
+public class StunMappedAddressAttributeFactory implements MappedAddressFactory
     {
     
     private static final Log LOG = 
-        LogFactory.getLog(MappedAddressFactoryImpl.class);
+        LogFactory.getLog(StunMappedAddressAttributeFactory.class);
     
     private static final short IPv4 = 0x01;
     private static final short IPv6 = 0x02;

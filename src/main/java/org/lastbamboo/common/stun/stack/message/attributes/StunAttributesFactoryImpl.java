@@ -18,7 +18,10 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         LogFactory.getLog(StunAttributesFactoryImpl.class);
     
     private final StunAttributeFactory m_mappedAddressFactory =
-        new MappedAddressFactoryImpl();
+        new StunMappedAddressAttributeFactory();
+    
+    private final StunAttributeFactory m_serverFactory =
+        new StunServerAttributeFactory();
     
     public Map<StunAttributeType, StunAttribute> createAttributes(
         final ByteBuffer body)
@@ -87,6 +90,10 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             case MAPPED_ADDRESS:
                 {
                 return this.m_mappedAddressFactory.createAttribute(body);
+                }
+            case SERVER:
+                {
+                return this.m_serverFactory.createAttribute(body);
                 }
             default:
                 {

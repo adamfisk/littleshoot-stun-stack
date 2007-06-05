@@ -8,7 +8,7 @@ import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressFactoryImpl;
+import org.lastbamboo.common.stun.stack.message.attributes.StunMappedAddressAttributeFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
@@ -69,7 +69,7 @@ public class BindingResponse extends AbstractStunMessage
         final Map<StunAttributeType, StunAttribute> attributes =
             new HashMap<StunAttributeType, StunAttribute>();
         
-        final MappedAddressFactoryImpl factory = new MappedAddressFactoryImpl();
+        final StunMappedAddressAttributeFactory factory = new StunMappedAddressAttributeFactory();
         final StunAttribute attribute = factory.createMappedAddress(address);
         attributes.put(StunAttributeType.MAPPED_ADDRESS, attribute);
         
