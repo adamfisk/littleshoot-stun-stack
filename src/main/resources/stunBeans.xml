@@ -3,9 +3,6 @@
 <beans>
 
     <!--
-        Bean for creating the STUN stack.
+        Nothing for now.
     -->
-    <bean id="stun-stack"
-          class="net.java.stun4j.stack.StunStack">
-        </bean>
     </beans>
