@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
 /**
  * Abstracts out common methods and data of STUN messages.
