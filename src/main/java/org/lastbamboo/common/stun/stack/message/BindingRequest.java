@@ -32,12 +32,7 @@ public class BindingRequest extends AbstractStunMessage
      */
     public BindingRequest()
         {
-        super(createTransactionId(), StunMessageType.BINDING_REQUEST);
-        }
-
-    private static UUID createTransactionId()
-        {
-        return UUID.randomUUID();
+        super(UUID.randomUUID(), StunMessageType.BINDING_REQUEST);
         }
 
     public void accept(final StunMessageVisitor visitor)
