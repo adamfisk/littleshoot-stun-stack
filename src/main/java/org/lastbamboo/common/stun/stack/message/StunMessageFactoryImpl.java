@@ -34,7 +34,7 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         m_stunAttributesFactory = stunAttributesFactory;
         }
     
-    public StunMessage createBindingRequest()
+    public BindingRequest createBindingRequest()
         {
         return new BindingRequest();
         }
@@ -50,10 +50,9 @@ public class StunMessageFactoryImpl implements StunMessageFactory
  
         // Check for the magic cookie indicating support for the newer
         // STUN spec.
-        final int maybeMagicCookie = in.getInt();
+        final long maybeMagicCookie = in.getUnsignedInt();
         byte[] transactionIdBytes = new byte[12];
         in.get(transactionIdBytes);
-        //final int transactionIdSize = new byte[12];
        
         if (maybeMagicCookie != 0x2112A442)
             {
@@ -77,7 +76,8 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         final Map<StunAttributeType, StunAttribute> attributes =
             this.m_stunAttributesFactory.createAttributes(bodyBuffer);
         
-        return createMessage(messageType, transactionIdBytes, attributes);
+        return createMessage(messageType, transactionIdBytes, 
+            attributes);
         }
 
     private StunMessage createMessage(final int messageType, 

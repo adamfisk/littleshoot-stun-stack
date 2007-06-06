@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
@@ -16,7 +17,7 @@ public abstract class AbstractStunMessage implements StunMessage
     private static final Map<StunAttributeType, StunAttribute> EMPTY_MAP =
         Collections.emptyMap();
     
-    private final byte[] m_transactionIdBytes;
+    private final UUID m_transactionId;
     private final Map<StunAttributeType, StunAttribute> m_attributes;
 
     private final int m_totalLength;
@@ -31,7 +32,7 @@ public abstract class AbstractStunMessage implements StunMessage
      * @param transactionId The transaction ID.
      * @param messageType The type of message.
      */
-    public AbstractStunMessage(final byte[] transactionId,
+    public AbstractStunMessage(final UUID transactionId,
         final int messageType)
         {
         this(transactionId, EMPTY_MAP, messageType);
@@ -44,11 +45,11 @@ public abstract class AbstractStunMessage implements StunMessage
      * @param attributes The message attributes.
      * @param messageType The type of the message.
      */
-    public AbstractStunMessage(final byte[] transactionId, 
+    public AbstractStunMessage(final UUID transactionId, 
         final Map<StunAttributeType, StunAttribute> attributes,
         final int messageType)
         {
-        m_transactionIdBytes = transactionId;
+        m_transactionId = transactionId;//.asReadOnlyBuffer();
         m_attributes = attributes;
         m_bodyLength = calculateBodyLength(attributes);
         m_totalLength = m_bodyLength + 20;
@@ -67,9 +68,9 @@ public abstract class AbstractStunMessage implements StunMessage
         return length;
         }
 
-    public byte[] getTransactionId()
+    public UUID getTransactionId()
         {
-        return this.m_transactionIdBytes;
+        return this.m_transactionId;
         }
 
     public int getTotalLength()

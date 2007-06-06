@@ -4,13 +4,14 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.id.uuid.UUID;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
-import org.lastbamboo.common.stun.stack.message.attributes.StunMappedAddressAttributeFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
+import org.lastbamboo.common.stun.stack.message.attributes.StunMappedAddressAttributeFactory;
 
 /**
  * Binding response message.
@@ -31,7 +32,7 @@ public class BindingResponse extends AbstractStunMessage
     public BindingResponse(final byte[] transactionId, 
         final InetSocketAddress address)
         {
-        super(transactionId, createAttributes(address), 
+        super(new UUID(transactionId), createAttributes(address), 
             StunMessageType.SUCCESSFUL_BINDING_RESPONSE);
         m_mappedAddress = address;
         }
@@ -45,7 +46,7 @@ public class BindingResponse extends AbstractStunMessage
     public BindingResponse(final byte[] transactionId, 
         final Map<StunAttributeType, StunAttribute> attributes)
         {
-        super(transactionId, attributes, 
+        super(new UUID(transactionId), attributes, 
             StunMessageType.SUCCESSFUL_BINDING_RESPONSE);
         m_mappedAddress = getAddress(attributes);
         }
@@ -69,7 +70,8 @@ public class BindingResponse extends AbstractStunMessage
         final Map<StunAttributeType, StunAttribute> attributes =
             new HashMap<StunAttributeType, StunAttribute>();
         
-        final StunMappedAddressAttributeFactory factory = new StunMappedAddressAttributeFactory();
+        final StunMappedAddressAttributeFactory factory = 
+            new StunMappedAddressAttributeFactory();
         final StunAttribute attribute = factory.createMappedAddress(address);
         attributes.put(StunAttributeType.MAPPED_ADDRESS, attribute);
         

@@ -2,6 +2,7 @@ package org.lastbamboo.common.stun.stack.message;
 
 import java.util.Map;
 
+import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
@@ -16,7 +17,7 @@ public interface StunMessage
      * 
      * @return The transaction ID.
      */
-    byte[] getTransactionId();
+    UUID getTransactionId();
 
     /**
      * Accessor for the total length of the message, including headers.
