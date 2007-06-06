@@ -10,7 +10,6 @@ import org.lastbamboo.common.stun.stack.message.BindingResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
 import org.lastbamboo.common.util.mina.DecodingState;
@@ -128,7 +127,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
                 new StunAttributesFactoryImpl();
             
             // This decodes the entire body into an attributes map.
-            final Map<StunAttributeType, StunAttribute> attributes = 
+            final Map<Integer, StunAttribute> attributes = 
                 factory.createAttributes(readData);
             
             final StunMessage message;

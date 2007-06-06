@@ -44,7 +44,7 @@ public class BindingResponse extends AbstractStunMessage
      * @param attributes The response attributes.
      */
     public BindingResponse(final byte[] transactionId, 
-        final Map<StunAttributeType, StunAttribute> attributes)
+        final Map<Integer, StunAttribute> attributes)
         {
         super(new UUID(transactionId), attributes, 
             StunMessageType.SUCCESSFUL_BINDING_RESPONSE);
@@ -52,10 +52,11 @@ public class BindingResponse extends AbstractStunMessage
         }
 
     private InetSocketAddress getAddress(
-        final Map<StunAttributeType, StunAttribute> attributes)
+        final Map<Integer, StunAttribute> attributes)
         {
         final MappedAddress mappedAddress = 
-            (MappedAddress) attributes.get(StunAttributeType.MAPPED_ADDRESS);
+            (MappedAddress) attributes.get(
+                new Integer(StunAttributeType.MAPPED_ADDRESS));
         if (mappedAddress == null)
             {
             LOG.error("No mapped address in: "+attributes.values());
@@ -64,16 +65,17 @@ public class BindingResponse extends AbstractStunMessage
         return mappedAddress.getInetSocketAddress();
         }
 
-    private static Map<StunAttributeType, StunAttribute> createAttributes(
+    private static Map<Integer, StunAttribute> createAttributes(
         final InetSocketAddress address)
         {
-        final Map<StunAttributeType, StunAttribute> attributes =
-            new HashMap<StunAttributeType, StunAttribute>();
+        final Map<Integer, StunAttribute> attributes =
+            new HashMap<Integer, StunAttribute>();
         
         final StunMappedAddressAttributeFactory factory = 
             new StunMappedAddressAttributeFactory();
         final StunAttribute attribute = factory.createMappedAddress(address);
-        attributes.put(StunAttributeType.MAPPED_ADDRESS, attribute);
+        attributes.put(new Integer(StunAttributeType.MAPPED_ADDRESS), 
+            attribute);
         
         return attributes;
         }

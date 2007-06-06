@@ -12,7 +12,6 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeWriter;
 
@@ -50,7 +49,7 @@ public class StunEncoder implements ProtocolEncoder
 
         buf.put(transactionId.getRawBytes());
         
-        final Map<StunAttributeType, StunAttribute> attributes = 
+        final Map<Integer, StunAttribute> attributes = 
             stunMessage.getAttributes();
         
         putAttributes(attributes, buf);
@@ -59,8 +58,7 @@ public class StunEncoder implements ProtocolEncoder
         out.write(buf);
         }
 
-    private void putAttributes(
-        final Map<StunAttributeType, StunAttribute> attributesMap, 
+    private void putAttributes(final Map<Integer, StunAttribute> attributesMap, 
         final ByteBuffer buf)
         {
         final StunAttributeVisitor visitor = new StunAttributeWriter(buf);

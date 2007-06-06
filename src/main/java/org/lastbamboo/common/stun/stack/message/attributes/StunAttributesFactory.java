@@ -17,6 +17,6 @@ public interface StunAttributesFactory
      * @param body The body of the STUN message.
      * @return The {@link Map} of attribute types to STUN attributes.
      */
-    Map<StunAttributeType, StunAttribute> createAttributes(ByteBuffer body);
+    Map<Integer, StunAttribute> createAttributes(ByteBuffer body);
 
     }

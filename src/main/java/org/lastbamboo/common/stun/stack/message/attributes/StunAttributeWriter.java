@@ -29,8 +29,7 @@ public class StunAttributeWriter implements StunAttributeVisitor
 
     public void visitMappedAddress(final MappedAddress address)
         {
-        final int type = 
-            StunAttributeType.MAPPED_ADDRESS.convert().intValue();
+        final int type = StunAttributeType.MAPPED_ADDRESS;
         final int length = address.getBodyLength();
         m_buf.putShort((short) (type & 0xffff));
         m_buf.putShort((short) (length & 0xffff));

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
 /**
  * Interface for STUN messages.
@@ -31,7 +30,7 @@ public interface StunMessage
      * 
      * @return The message attributes {@link Map}.
      */
-    Map<StunAttributeType, StunAttribute> getAttributes();
+    Map<Integer, StunAttribute> getAttributes();
 
     /**
      * Accessor for the length of the message body.

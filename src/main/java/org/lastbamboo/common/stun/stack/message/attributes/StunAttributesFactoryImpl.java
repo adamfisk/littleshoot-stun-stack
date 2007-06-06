@@ -23,15 +23,14 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
     private final StunAttributeFactory m_serverFactory =
         new StunServerAttributeFactory();
     
-    public Map<StunAttributeType, StunAttribute> createAttributes(
-        final ByteBuffer body)
+    public Map<Integer, StunAttribute> createAttributes(final ByteBuffer body)
         {
         if (LOG.isDebugEnabled())
             {
             LOG.debug("Creating attributes...");
             }
-        final Map<StunAttributeType, StunAttribute> attributes =
-            new ConcurrentHashMap<StunAttributeType, StunAttribute>();
+        final Map<Integer, StunAttribute> attributes =
+            new ConcurrentHashMap<Integer, StunAttribute>();
         while (body.hasRemaining())
             {
             addAttribute(attributes, body);
@@ -40,7 +39,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         }
 
     private void addAttribute(
-        final Map<StunAttributeType, StunAttribute> attributes, 
+        final Map<Integer, StunAttribute> attributes, 
         final ByteBuffer buf)
         {
         if (LOG.isDebugEnabled())
@@ -61,18 +60,18 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         
         final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
         
-        if (!StunAttributeType.hasAttribute(type))
-            {
-            LOG.debug("Did not recognize attribute type: "+type);
-            return;
-            }
-        final StunAttributeType enumType = StunAttributeType.convert(type);
+        //if (!StunAttributeType.hasAttribute(type))
+          //  {
+            //LOG.debug("Did not recognize attribute type: "+type);
+            //return;
+            //}
+        //final StunAttributeType enumType = StunAttributeType.convert(type);
         try
             {
-            final StunAttribute attribute = createAttribute(enumType, bodyBuf);
+            final StunAttribute attribute = createAttribute(type, bodyBuf);
             if (attribute != null)
                 {
-                attributes.put(enumType, attribute);
+                attributes.put(new Integer(type), attribute);
                 }
             }
         catch (final IOException e)
@@ -82,16 +81,16 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
 
         }
 
-    private StunAttribute createAttribute(final StunAttributeType type, 
+    private StunAttribute createAttribute(final int type, 
         final ByteBuffer body) throws IOException
         {
         switch (type)
             {
-            case MAPPED_ADDRESS:
+            case StunAttributeType.MAPPED_ADDRESS:
                 {
                 return this.m_mappedAddressFactory.createAttribute(body);
                 }
-            case SERVER:
+            case StunAttributeType.SERVER:
                 {
                 return this.m_serverFactory.createAttribute(body);
                 }

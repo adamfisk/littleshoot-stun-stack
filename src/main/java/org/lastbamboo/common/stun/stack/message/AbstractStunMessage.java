@@ -14,11 +14,11 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 public abstract class AbstractStunMessage implements StunMessage
     {
 
-    private static final Map<StunAttributeType, StunAttribute> EMPTY_MAP =
+    private static final Map<Integer, StunAttribute> EMPTY_MAP =
         Collections.emptyMap();
     
     private final UUID m_transactionId;
-    private final Map<StunAttributeType, StunAttribute> m_attributes;
+    private final Map<Integer, StunAttribute> m_attributes;
 
     private final int m_totalLength;
 
@@ -46,10 +46,10 @@ public abstract class AbstractStunMessage implements StunMessage
      * @param messageType The type of the message.
      */
     public AbstractStunMessage(final UUID transactionId, 
-        final Map<StunAttributeType, StunAttribute> attributes,
+        final Map<Integer, StunAttribute> attributes,
         final int messageType)
         {
-        m_transactionId = transactionId;//.asReadOnlyBuffer();
+        m_transactionId = transactionId;
         m_attributes = attributes;
         m_bodyLength = calculateBodyLength(attributes);
         m_totalLength = m_bodyLength + 20;
@@ -57,7 +57,7 @@ public abstract class AbstractStunMessage implements StunMessage
         }
 
     private int calculateBodyLength(
-        final Map<StunAttributeType, StunAttribute> attributesMap)
+        final Map<Integer, StunAttribute> attributesMap)
         {
         final Collection<StunAttribute> attributes = attributesMap.values();
         int length = 0;
@@ -78,7 +78,7 @@ public abstract class AbstractStunMessage implements StunMessage
         return this.m_totalLength;
         }
 
-    public Map<StunAttributeType, StunAttribute> getAttributes()
+    public Map<Integer, StunAttribute> getAttributes()
         {
         return m_attributes;
         }

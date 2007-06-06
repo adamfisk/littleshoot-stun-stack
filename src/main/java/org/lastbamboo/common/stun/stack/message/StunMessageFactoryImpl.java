@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.util.BitUtils;
 
@@ -73,7 +72,7 @@ public class StunMessageFactoryImpl implements StunMessageFactory
         final byte[] body = new byte[messageLength];
         in.get(body);
         final ByteBuffer bodyBuffer = ByteBuffer.wrap(body);
-        final Map<StunAttributeType, StunAttribute> attributes =
+        final Map<Integer, StunAttribute> attributes =
             this.m_stunAttributesFactory.createAttributes(bodyBuffer);
         
         return createMessage(messageType, transactionIdBytes, 
@@ -82,7 +81,7 @@ public class StunMessageFactoryImpl implements StunMessageFactory
 
     private StunMessage createMessage(final int messageType, 
         final byte[] transactionIdBytes, 
-        final Map<StunAttributeType, StunAttribute> attributes)
+        final Map<Integer, StunAttribute> attributes)
         {
         switch (messageType)
             {
