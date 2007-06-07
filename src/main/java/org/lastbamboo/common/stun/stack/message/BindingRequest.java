@@ -16,11 +16,11 @@ public class BindingRequest extends AbstractStunMessage
     /**
      * Creates a new STUN binding message.
      * 
-     * @param transactionIdBytes The message's transaction ID.
+     * @param id The message's transaction ID.
      */
-    public BindingRequest(final byte[] transactionIdBytes)
+    public BindingRequest(final UUID id)
         {
-        super(new UUID(transactionIdBytes), StunMessageType.BINDING_REQUEST);
+        super(id, StunMessageType.BINDING_REQUEST);
         if (LOG.isDebugEnabled())
             {
             LOG.debug("Building binding message");

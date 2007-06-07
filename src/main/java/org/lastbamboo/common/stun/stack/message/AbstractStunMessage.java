@@ -10,7 +10,8 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 /**
  * Abstracts out common methods and data of STUN messages.
  */
-public abstract class AbstractStunMessage implements StunMessage
+public abstract class AbstractStunMessage implements StunMessage,
+    VisitableStunMessage
     {
 
     private static final Map<Integer, StunAttribute> EMPTY_MAP =
@@ -34,7 +35,7 @@ public abstract class AbstractStunMessage implements StunMessage
     public AbstractStunMessage(final UUID transactionId,
         final int messageType)
         {
-        this(transactionId, EMPTY_MAP, messageType);
+        this(transactionId, messageType, EMPTY_MAP);
         }
     
     /**
@@ -44,9 +45,8 @@ public abstract class AbstractStunMessage implements StunMessage
      * @param attributes The message attributes.
      * @param messageType The type of the message.
      */
-    public AbstractStunMessage(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes,
-        final int messageType)
+    public AbstractStunMessage(final UUID transactionId, final int messageType,
+        final Map<Integer, StunAttribute> attributes)
         {
         m_transactionId = transactionId;
         m_attributes = attributes;
@@ -90,5 +90,10 @@ public abstract class AbstractStunMessage implements StunMessage
     public int getType()
         {
         return this.m_messageType;
+        }
+    
+    public StunAttribute getAttribute(final int attributeType)
+        {
+        return this.m_attributes.get(new Integer(attributeType));
         }
     }

@@ -13,15 +13,14 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeWriter;
 
 /**
  * Encodes bytes into STUN messages.
  */
-public class StunEncoder implements ProtocolEncoder
+public class StunMessageEncoder implements ProtocolEncoder
     {
 
-    private static final Log LOG = LogFactory.getLog(StunEncoder.class);
+    private static final Log LOG = LogFactory.getLog(StunMessageEncoder.class);
     
     public void dispose(final IoSession session) throws Exception
         {
@@ -61,7 +60,7 @@ public class StunEncoder implements ProtocolEncoder
     private void putAttributes(final Map<Integer, StunAttribute> attributesMap, 
         final ByteBuffer buf)
         {
-        final StunAttributeVisitor visitor = new StunAttributeWriter(buf);
+        final StunAttributeVisitor visitor = new StunAttributeEncoder(buf);
         final Collection<StunAttribute> attributes = attributesMap.values();
         for (final StunAttribute attribute : attributes)
             {

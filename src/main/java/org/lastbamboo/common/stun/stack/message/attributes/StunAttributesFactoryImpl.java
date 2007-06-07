@@ -1,12 +1,17 @@
 package org.lastbamboo.common.stun.stack.message.attributes;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.lastbamboo.common.util.mina.MinaUtils;
 
 /**
  * Class for creating STUN attributes.
@@ -16,12 +21,6 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
 
     private static final Log LOG = 
         LogFactory.getLog(StunAttributesFactoryImpl.class);
-    
-    private final StunAttributeFactory m_mappedAddressFactory =
-        new StunMappedAddressAttributeFactory();
-    
-    private final StunAttributeFactory m_serverFactory =
-        new StunServerAttributeFactory();
     
     public Map<Integer, StunAttribute> createAttributes(final ByteBuffer body)
         {
@@ -38,8 +37,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         return attributes;
         }
 
-    private void addAttribute(
-        final Map<Integer, StunAttribute> attributes, 
+    private void addAttribute(final Map<Integer, StunAttribute> attributes, 
         final ByteBuffer buf)
         {
         if (LOG.isDebugEnabled())
@@ -58,17 +56,9 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         final byte[] body = new byte[length];
         buf.get(body);
         
-        final ByteBuffer bodyBuf = ByteBuffer.wrap(body);
-        
-        //if (!StunAttributeType.hasAttribute(type))
-          //  {
-            //LOG.debug("Did not recognize attribute type: "+type);
-            //return;
-            //}
-        //final StunAttributeType enumType = StunAttributeType.convert(type);
         try
             {
-            final StunAttribute attribute = createAttribute(type, bodyBuf);
+            final StunAttribute attribute = createAttribute(type, body);
             if (attribute != null)
                 {
                 attributes.put(new Integer(type), attribute);
@@ -82,17 +72,38 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         }
 
     private StunAttribute createAttribute(final int type, 
-        final ByteBuffer body) throws IOException
+        final byte[] bodyBytes) throws IOException
         {
+        final ByteBuffer body = ByteBuffer.wrap(bodyBytes);
         switch (type)
             {
             case StunAttributeType.MAPPED_ADDRESS:
                 {
-                return this.m_mappedAddressFactory.createAttribute(body);
+                final InetSocketAddress address = 
+                    AddressAttributeReader.readAddress(body);
+                return new MappedAddress(address);
                 }
             case StunAttributeType.SERVER:
                 {
-                return this.m_serverFactory.createAttribute(body);
+                final String serverText = MinaUtils.toAsciiString(body);
+                return new StunServerAttribute(bodyBytes.length, serverText);
+                }
+                
+            case StunAttributeType.RELAY_ADDRESS:
+                {
+                final InetSocketAddress address = 
+                    AddressAttributeReader.readAddress(body);
+                return new RelayAddressAttribute(address);
+                }
+            case StunAttributeType.REMOTE_ADDRESS:
+                {
+                final InetSocketAddress address = 
+                    AddressAttributeReader.readAddress(body);
+                return new RemoteAddressAttribute(address);
+                }
+            case StunAttributeType.DATA:
+                {
+                return new DataAttribute(bodyBytes);
                 }
             default:
                 {

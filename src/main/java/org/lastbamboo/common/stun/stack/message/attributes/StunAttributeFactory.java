@@ -17,7 +17,6 @@ public interface StunAttributeFactory
      * @return The new STUN attribute.
      * @throws IOException If the buffer does not contain the expected data.
      */
-    StunAttribute createAttribute(ByteBuffer body) 
-        throws IOException;
+    StunAttribute createAttribute(ByteBuffer body) throws IOException;
 
     }

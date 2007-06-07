@@ -82,4 +82,19 @@ public class StunAttributeType
      */
     public static final int REFRESH_INTERVAL = 0x8024;
 
+    /**
+     * The relay address allocated for a client on a TURN server.
+     */
+    public static final int RELAY_ADDRESS = 0x0016;
+
+    /**
+     * Used in Data Indication messages to describe where the data came from.
+     */
+    public static final int REMOTE_ADDRESS = 0x0012;
+
+    /**
+     * Used in Data Indication messages to wrap the actual data.
+     */
+    public static final int DATA = 0x0013;
+
     }

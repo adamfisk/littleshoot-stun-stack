@@ -3,15 +3,20 @@ package org.lastbamboo.common.stun.stack.decoder;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.id.uuid.UUID;
 import org.apache.mina.common.ByteBuffer;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
-import org.lastbamboo.common.stun.stack.message.BindingResponse;
+import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
+import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
+import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
+import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.util.mina.DecodingState;
 import org.lastbamboo.common.util.mina.DecodingStateMachine;
 import org.lastbamboo.common.util.mina.FixedLengthDecodingState;
@@ -130,15 +135,27 @@ public class StunMessageDecodingState extends DecodingStateMachine
             final Map<Integer, StunAttribute> attributes = 
                 factory.createAttributes(readData);
             
+            final UUID id = new UUID(m_transactionId);
             final StunMessage message;
             switch (this.m_type)
                 {
                 case StunMessageType.BINDING_REQUEST:
-                    message = new BindingRequest(m_transactionId);
+                    message = new BindingRequest(id);
                     break;
                 case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
-                    message = new BindingResponse(m_transactionId, attributes);
+                    message = new SuccessfulBindingResponse(id, attributes);
                     break;
+                case StunMessageType.ALLOCATE_REQUEST:
+                    message = new AllocateRequest(id);
+                    break;
+                case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
+                    message = new SuccessfulAllocateResponse(id, attributes);
+                    break;
+                case StunMessageType.DATA_INDICATION:
+                    message = new DataIndication(id, attributes);
+                    break;
+                case StunMessageType.SEND_INDICATION:
+                    message = new SendIndication(id, attributes);
                 default:
                     LOG.warn("Did not understand message type: " + this.m_type);
                     return null;

@@ -5,8 +5,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
-import org.lastbamboo.common.stun.stack.message.BindingResponse;
+import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
+import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
+import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
+import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
 
 /**
  * Implementation of a SIP client transaction.
@@ -60,7 +64,8 @@ public class StunClientTransactionImpl implements StunClientTransaction
         
         }
 
-    public void visitBindingResponse(final BindingResponse response)
+    public void visitSuccessfulBindingResponse(
+        final SuccessfulBindingResponse response)
         {
         setTransactionTime();
         if (LOG.isDebugEnabled())
@@ -78,5 +83,30 @@ public class StunClientTransactionImpl implements StunClientTransaction
         {
         this.m_transactionTime = 
             System.currentTimeMillis() - this.m_transactionStartTime;
+        }
+
+    public void visitAllocateRequest(AllocateRequest request)
+        {
+        // TODO Auto-generated method stub
+        
+        }
+
+    public void visitDataIndication(DataIndication data)
+        {
+        // TODO Auto-generated method stub
+        
+        }
+
+    public void visitSendIndication(SendIndication request)
+        {
+        // TODO Auto-generated method stub
+        
+        }
+
+    public void visitSuccessfulAllocateResponse(
+        final SuccessfulAllocateResponse response)
+        {
+        // TODO Auto-generated method stub
+        
         }
     }

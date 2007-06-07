@@ -31,6 +31,15 @@ public interface StunMessage
      * @return The message attributes {@link Map}.
      */
     Map<Integer, StunAttribute> getAttributes();
+    
+    /**
+     * Gets the attribute for the specified attribute type.
+     * 
+     * @param attributeType The enclosed attribute, or <code>null</code> if 
+     * the attribute does not exist.
+     * @return The associated attribute.
+     */
+    StunAttribute getAttribute(int attributeType);
 
     /**
      * Accessor for the length of the message body.
