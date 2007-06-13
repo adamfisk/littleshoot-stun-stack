@@ -1,6 +1,7 @@
 package org.lastbamboo.common.stun.stack.message.attributes.turn;
 
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
 
 /**
@@ -20,7 +21,7 @@ public final class DataAttribute extends AbstractStunAttribute
      */
     public DataAttribute(final byte[] bodyBytes)
         {
-        super(bodyBytes.length);
+        super(StunAttributeType.DATA, bodyBytes.length);
         this.m_data = bodyBytes;
         }
 

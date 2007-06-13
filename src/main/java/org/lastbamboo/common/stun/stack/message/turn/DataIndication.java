@@ -1,9 +1,9 @@
 package org.lastbamboo.common.stun.stack.message.turn;
 
+import java.net.InetSocketAddress;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
@@ -12,7 +12,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
  * TURN message that encapsulates data coming from a remote host for sending
  * on to the TURN client.
  */
-public final class DataIndication extends AbstractStunMessage 
+public final class DataIndication extends AbstractStunDataMessage 
     {
     
     /**
@@ -25,6 +25,19 @@ public final class DataIndication extends AbstractStunMessage
         final Map<Integer, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.DATA_INDICATION, attributes);
+        }
+
+    /**
+     * Creates a new Data Indication message.
+     * 
+     * @param remoteAddress The remote address the data arrived from.
+     * @param data The data.
+     */
+    public DataIndication(final InetSocketAddress remoteAddress, 
+        final byte[] data)
+        {
+        super(UUID.randomUUID(), StunMessageType.DATA_INDICATION, 
+            data, remoteAddress);
         }
 
     public void accept(final StunMessageVisitor visitor)

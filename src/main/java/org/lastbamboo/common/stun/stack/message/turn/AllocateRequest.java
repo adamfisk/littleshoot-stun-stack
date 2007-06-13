@@ -4,14 +4,12 @@ import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
-import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 
 /**
  * Allocate request message.  This can create an allocate request from scratch
  * or from network data.
  */
 public final class AllocateRequest extends AbstractStunMessage
-    implements VisitableStunMessage
     {
 
     /**

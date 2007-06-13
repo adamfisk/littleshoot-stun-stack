@@ -15,7 +15,7 @@ public class MappedAddress extends AbstractStunAddressAttribute
      */
     public MappedAddress(final InetSocketAddress socketAddress)
         {
-        super(socketAddress);
+        super(StunAttributeType.MAPPED_ADDRESS, socketAddress);
         }
 
     public void accept(final StunAttributeVisitor visitor)

@@ -7,14 +7,17 @@ public abstract class AbstractStunAttribute implements StunAttribute
     {
 
     private final int m_bodyLength;
+    private final int m_attributeType;
 
     /**
      * Creates a new attribute.
      * 
+     * @param attributeType The type of the attribute.
      * @param bodyLength The length of the attribute body.
      */
-    public AbstractStunAttribute(final int bodyLength)
+    public AbstractStunAttribute(final int attributeType, final int bodyLength)
         {
+        m_attributeType = attributeType;
         m_bodyLength = bodyLength;
         }
 
@@ -26,6 +29,11 @@ public abstract class AbstractStunAttribute implements StunAttribute
     public int getTotalLength()
         {
         return m_bodyLength + 4;
+        }
+
+    public int getAttributeType()
+        {
+        return m_attributeType;
         }
 
     }

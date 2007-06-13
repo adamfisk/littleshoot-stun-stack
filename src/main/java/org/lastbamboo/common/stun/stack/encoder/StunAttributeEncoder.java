@@ -3,17 +3,19 @@ package org.lastbamboo.common.stun.stack.encoder;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatus;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.lastbamboo.common.util.mina.MinaUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Writes STUN attributes.
@@ -21,7 +23,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAtt
 public class StunAttributeEncoder implements StunAttributeVisitor
     {
 
-    private static final Log LOG = LogFactory.getLog(StunAttributeEncoder.class);
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
     
     private final ByteBuffer m_buf;
 
@@ -37,34 +39,41 @@ public class StunAttributeEncoder implements StunAttributeVisitor
     
     public void visitData(final DataAttribute data)
         {
-        writeHeader(m_buf, StunAttributeType.DATA, data);
+        writeHeader(data);
         final byte[] dataBytes = data.getData();
         m_buf.put(dataBytes);
+        }
+    
+    public void visitConnectionStatus(final ConnectionStatusAttribute attribute)
+        {
+        LOG.debug("Writing connection status attribute: {}", attribute);
+        writeHeader(attribute);
+        final ConnectionStatus status = attribute.getConnectionStatus();
+        MinaUtils.putUnsignedInt(m_buf, status.toLong());
         }
 
     public void visitRelayAddress(final RelayAddressAttribute address)
         {
-        visitAddressAttribute(StunAttributeType.RELAY_ADDRESS, address);
+        visitAddressAttribute(address);
         }
     
     public void visitMappedAddress(final MappedAddress address)
         {
-        visitAddressAttribute(StunAttributeType.MAPPED_ADDRESS, address);
+        visitAddressAttribute(address);
         }
     
     public void visitRemoteAddress(final RemoteAddressAttribute address)
         {
-        visitAddressAttribute(StunAttributeType.REMOTE_ADDRESS, address);
+        visitAddressAttribute(address);
         }
     
-    private void visitAddressAttribute(final int type, 
-        final StunAddressAttribute address)
+    private void visitAddressAttribute(final StunAddressAttribute address)
         {
-        writeHeader(m_buf, type, address);
+        writeHeader(address);
 
         // Now put the attribute body.
         
-        // The first byte is ignored in MAPPED_ADDRESS.
+        // The first byte is ignored in address attributes.
         m_buf.put((byte) 0x00);
         
         final int family = address.getAddressFamily();
@@ -82,11 +91,10 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         m_buf.put(addressBytes);
         }
 
-    private static void writeHeader(final ByteBuffer buf, final int type, 
-        final StunAttribute address)
+    private void writeHeader(final StunAttribute sa)
         {
-        final int length = address.getBodyLength();
-        buf.putShort((short) (type & 0xffff));
-        buf.putShort((short) (length & 0xffff));
+        final int length = sa.getBodyLength();
+        m_buf.putShort((short) (sa.getAttributeType() & 0xffff));
+        m_buf.putShort((short) (length & 0xffff));
         }
     }

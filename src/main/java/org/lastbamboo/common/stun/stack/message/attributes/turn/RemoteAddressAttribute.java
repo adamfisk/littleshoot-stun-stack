@@ -3,6 +3,7 @@ package org.lastbamboo.common.stun.stack.message.attributes.turn;
 import java.net.InetSocketAddress;
 
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAddressAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
 
 /**
@@ -18,7 +19,7 @@ public class RemoteAddressAttribute extends AbstractStunAddressAttribute
      */
     public RemoteAddressAttribute(final InetSocketAddress socketAddress)
         {
-        super(socketAddress);
+        super(StunAttributeType.REMOTE_ADDRESS, socketAddress);
         }
 
     public void accept(final StunAttributeVisitor visitor)

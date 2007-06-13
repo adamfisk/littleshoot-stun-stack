@@ -1,11 +1,14 @@
 package org.lastbamboo.common.stun.stack.message;
 
+import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 
 /**
  * Abstracts out common methods and data of STUN messages.
@@ -53,6 +56,28 @@ public abstract class AbstractStunMessage implements StunMessage,
         m_bodyLength = calculateBodyLength(attributes);
         m_totalLength = m_bodyLength + 20;
         m_messageType = messageType;
+        }
+    
+    protected static Map<Integer, StunAttribute> createAttributes(
+        final StunAttribute... attributes)
+        {
+        final Map<Integer, StunAttribute> attributesMap = 
+            new HashMap<Integer, StunAttribute>();
+        
+        for (final StunAttribute attribute : attributes)
+            {
+            attributesMap.put(new Integer(attribute.getAttributeType()), 
+                attribute);
+            }
+        return attributesMap;
+        }
+    
+    protected static Map<Integer, StunAttribute> createRemoteAddress(
+        final InetSocketAddress remoteAddress)
+        {
+        final RemoteAddressAttribute att = 
+            new RemoteAddressAttribute(remoteAddress);
+        return createAttributes(att);
         }
 
     private int calculateBodyLength(

@@ -4,34 +4,32 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
-import org.apache.mina.common.IoSession;
-import org.apache.mina.filter.codec.ProtocolEncoder;
-import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Encodes bytes into STUN messages.
+ * Encodes bytes into STUN messages.  This is separate from the MINA
+ * protocol encoder for easier testing.
  */
-public class StunMessageEncoder implements ProtocolEncoder
+public class StunMessageEncoder
     {
 
-    private static final Log LOG = LogFactory.getLog(StunMessageEncoder.class);
+    private final Logger LOG = 
+        LoggerFactory.getLogger(StunMessageEncoder.class);
     
-    public void dispose(final IoSession session) throws Exception
+    /**
+     * Encodes a {@link StunMessage} into a {@link ByteBuffer}.
+     * 
+     * @param stunMessage The STUN message to encode.
+     * @return The message encoded in a {@link ByteBuffer} ready for writing
+     * (flipped).
+     */
+    public ByteBuffer encode(final StunMessage stunMessage) 
         {
-        // TODO Auto-generated method stub
-
-        }
-
-    public void encode(final IoSession session, final Object message,
-        final ProtocolEncoderOutput out) throws Exception
-        {
-        final StunMessage stunMessage = (StunMessage) message;
         
         final int length = stunMessage.getTotalLength();
         final ByteBuffer buf = ByteBuffer.allocate(length);
@@ -54,7 +52,7 @@ public class StunMessageEncoder implements ProtocolEncoder
         putAttributes(attributes, buf);
         
         buf.flip();
-        out.write(buf);
+        return buf;
         }
 
     private void putAttributes(final Map<Integer, StunAttribute> attributesMap, 

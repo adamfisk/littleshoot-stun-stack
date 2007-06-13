@@ -16,7 +16,7 @@ public class StunServerAttribute extends AbstractStunAttribute
      */
     public StunServerAttribute(final int bodyLength, final String serverText)
         {
-        super(bodyLength);
+        super(StunAttributeType.SERVER, bodyLength);
         m_serverText = serverText;
         }
 

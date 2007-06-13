@@ -30,4 +30,11 @@ public interface StunAttribute
      */
     int getTotalLength();
 
+    /**
+     * Accessor for the type of the attribute.
+     * 
+     * @return The type of the attribute.
+     */
+    int getAttributeType();
+
     }

@@ -35,7 +35,7 @@ public class StunAttributeType
     /**
      * The message integrity attribute.
      */
-    public static final int ESSAGE_INTEGRITY = 0x0008;
+    public static final int MESSAGE_INTEGRITY = 0x0008;
     
     /**
      * The error code attribute.
@@ -63,9 +63,11 @@ public class StunAttributeType
     public static final int XOR_MAPPED_ADDRESS = 0x0020;
     
     /**
-     * The fingerprint attribute.
+     * The fingerprint attribute. TODO: This is 0x8023 in 
+     * draft-ietf-behave-rfc3489bis-06.txt, but that conflicts with 
+     * ALTERNATE SERVER.  Looks like maybe it should be 0x8021?
      */
-    public static final int FINGERPRINT = 0x8023;
+    public static final int FINGERPRINT = 0x8021;
     
     /**
      * The server attribute.
@@ -88,13 +90,20 @@ public class StunAttributeType
     public static final int RELAY_ADDRESS = 0x0016;
 
     /**
-     * Used in Data Indication messages to describe where the data came from.
+     * Used in Data and Send Indication messages to describe where the data 
+     * came from.
      */
     public static final int REMOTE_ADDRESS = 0x0012;
 
     /**
-     * Used in Data Indication messages to wrap the actual data.
+     * Used in TURN Data and Send Indication and messages to wrap the actual 
+     * data.
      */
     public static final int DATA = 0x0013;
+
+    /**
+     * Attribute for describing the TURN connection status.
+     */
+    public static final int CONNECT_STAT = 0x0023;
 
     }

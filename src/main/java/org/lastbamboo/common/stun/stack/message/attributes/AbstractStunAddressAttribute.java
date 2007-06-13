@@ -18,11 +18,13 @@ public abstract class AbstractStunAddressAttribute extends AbstractStunAttribute
     /**
      * Creates a new mapped address attribute.
      * 
+     * @param attributeType The type of the attribute.
      * @param socketAddress The IP and port to put in the attribute.
      */
-    public AbstractStunAddressAttribute(final InetSocketAddress socketAddress)
+    public AbstractStunAddressAttribute(final int attributeType,
+        final InetSocketAddress socketAddress)
         {
-        super(getBodyLength(socketAddress));
+        super(attributeType, getBodyLength(socketAddress));
         this.m_inetSocketAddress = socketAddress;
         
         final InetAddress address = socketAddress.getAddress();

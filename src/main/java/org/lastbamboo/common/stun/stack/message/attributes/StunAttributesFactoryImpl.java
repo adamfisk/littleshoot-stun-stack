@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatus;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
@@ -104,6 +106,13 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             case StunAttributeType.DATA:
                 {
                 return new DataAttribute(bodyBytes);
+                }
+            case StunAttributeType.CONNECT_STAT:
+                {
+                final long statusInt = body.getUnsignedInt();
+                final ConnectionStatus status = 
+                    ConnectionStatus.valueOf(statusInt);
+                return new ConnectionStatusAttribute(status);
                 }
             default:
                 {

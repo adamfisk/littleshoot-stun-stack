@@ -1,5 +1,6 @@
 package org.lastbamboo.common.stun.stack.decoder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
+import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
+import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
@@ -34,10 +37,14 @@ public class StunMessageDecodingState extends DecodingStateMachine
     private final Logger LOG = 
         LoggerFactory.getLogger(StunMessageDecodingState.class);
     
+    private static final Map<Integer, StunAttribute> EMPTY_ATTRIBUTES =
+        Collections.emptyMap();
+    
     
     @Override
     protected DecodingState init() throws Exception
         {
+        LOG.debug("Initing...");
         return new ReadMessageType();
         }
 
@@ -79,6 +86,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
         protected DecodingState finishDecode(final int decoded, 
             final ProtocolDecoderOutput out) throws Exception
             {
+            LOG.debug("Read message length: "+decoded);
             return new ReadTransactionId(this.m_messageType, decoded);
             }
     
@@ -105,9 +113,50 @@ public class StunMessageDecodingState extends DecodingStateMachine
             // This copy is not ideal, but passing around ByteBuffers was 
             // causing issues.
             final byte[] transactionId = MinaUtils.toByteArray(readData);
-            return new ReadBody(this.m_messageType, this.m_messageLength, 
-                transactionId);
+            LOG.debug("Read transaction id...");
+            if (this.m_messageLength > 0)
+                {
+                return new ReadBody(this.m_messageType, this.m_messageLength, 
+                    transactionId);                
+                }
+            else
+                {
+                final StunMessage message = 
+                    createMessage(this.m_messageType, transactionId, EMPTY_ATTRIBUTES);
+                out.write(message);
+                return null;
+                }
             }
+        }
+    
+    private StunMessage createMessage(final int type,
+        final byte[] transactionId, 
+        final Map<Integer, StunAttribute> attributes)
+        {
+        final UUID id = new UUID(transactionId);
+        switch (type)
+            {
+            case StunMessageType.BINDING_REQUEST:
+                return new BindingRequest(id);
+            case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
+                return new SuccessfulBindingResponse(id, attributes);
+            case StunMessageType.ALLOCATE_REQUEST:
+                return new AllocateRequest(id);
+            case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
+                return new SuccessfulAllocateResponse(id, attributes);
+            case StunMessageType.DATA_INDICATION:
+                return new DataIndication(id, attributes);
+            case StunMessageType.SEND_INDICATION:
+                return new SendIndication(id, attributes);
+            case StunMessageType.CONNECT_REQUEST:
+                return new ConnectRequest(id, attributes);
+            case StunMessageType.CONNECTION_STATUS_INDICATION:
+                return new ConnectionStatusIndication(id, attributes);
+            default:
+                LOG.warn("Did not understand message type: " + type);
+                return null;
+            }
+        
         }
     
     private class ReadBody extends FixedLengthDecodingState
@@ -135,6 +184,10 @@ public class StunMessageDecodingState extends DecodingStateMachine
             final Map<Integer, StunAttribute> attributes = 
                 factory.createAttributes(readData);
             
+            final StunMessage message = 
+                createMessage(this.m_type, this.m_transactionId, attributes);
+            
+            /*
             final UUID id = new UUID(m_transactionId);
             final StunMessage message;
             switch (this.m_type)
@@ -156,10 +209,12 @@ public class StunMessageDecodingState extends DecodingStateMachine
                     break;
                 case StunMessageType.SEND_INDICATION:
                     message = new SendIndication(id, attributes);
+                    break;
                 default:
                     LOG.warn("Did not understand message type: " + this.m_type);
                     return null;
                 }
+            */
             
             out.write(message);
             return new ReadMessageType();
