@@ -10,6 +10,8 @@ import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Creates a new response to an allocate request.  This includes the mapped
@@ -17,6 +19,8 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
  */
 public final class SuccessfulAllocateResponse extends AbstractStunMessage
     {
+    
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
     
     private final InetSocketAddress m_mappedAddress;
 
@@ -37,6 +41,7 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         m_mappedAddress = ma.getInetSocketAddress(); 
         if (m_mappedAddress == null)
             {
+            LOG.error("No mapped address");
             throw new NullPointerException("Null mapped address");
             }
         }
@@ -56,6 +61,7 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         this.m_mappedAddress = address;
         if (m_mappedAddress == null)
             {
+            LOG.error("No mapped address");
             throw new NullPointerException("Null mapped address");
             }
         }
