@@ -35,6 +35,10 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         final MappedAddress ma = (MappedAddress) attributes.get(
             new Integer(StunAttributeType.MAPPED_ADDRESS));
         m_mappedAddress = ma.getInetSocketAddress(); 
+        if (m_mappedAddress == null)
+            {
+            throw new NullPointerException("Null mapped address");
+            }
         }
 
     /**
@@ -50,6 +54,10 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
             createAttributes(address));
         this.m_mappedAddress = address;
+        if (m_mappedAddress == null)
+            {
+            throw new NullPointerException("Null mapped address");
+            }
         }
 
     private static Map<Integer, StunAttribute> createAttributes(
