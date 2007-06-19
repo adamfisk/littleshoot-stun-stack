@@ -7,9 +7,10 @@ import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
+import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
+import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,8 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
     
     private final InetSocketAddress m_mappedAddress;
 
+    private final InetSocketAddress m_relayAddress;
+
     /**
      * Creates a new successful response to an allocate request.
      * 
@@ -36,14 +39,13 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         {
         super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
             attributes);
-        final MappedAddress ma = (MappedAddress) attributes.get(
+        final MappedAddressAttribute ma = (MappedAddressAttribute) attributes.get(
             new Integer(StunAttributeType.MAPPED_ADDRESS));
+        
+        final RelayAddressAttribute ra = (RelayAddressAttribute) attributes.get(
+            new Integer(StunAttributeType.RELAY_ADDRESS));
         m_mappedAddress = ma.getInetSocketAddress(); 
-        if (m_mappedAddress == null)
-            {
-            LOG.error("No mapped address");
-            throw new NullPointerException("Null mapped address");
-            }
+        m_relayAddress = ra.getInetSocketAddress();
         }
 
     /**
@@ -51,26 +53,29 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
      * 
      * @param transactionId The ID of the transaction, matching the ID of the
      * request.
-     * @param address The MAPPED ADDRESS.
+     * @param relayAddress The allocated RELAY ADDRESS on the server.
+     * @param mappedAddress The MAPPED ADDRESS, or the "server reflexive"
+     * address.
      */
-    public SuccessfulAllocateResponse(final UUID transactionId, 
-        final InetSocketAddress address)
+    public SuccessfulAllocateResponse(final UUID transactionId,
+        final InetSocketAddress relayAddress,
+        final InetSocketAddress mappedAddress)
         {
         super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
-            createAttributes(address));
-        this.m_mappedAddress = address;
-        if (m_mappedAddress == null)
-            {
-            LOG.error("No mapped address");
-            throw new NullPointerException("Null mapped address");
-            }
+            createAttributes(relayAddress, mappedAddress));
+        this.m_mappedAddress = mappedAddress;
+        this.m_relayAddress = relayAddress;
         }
 
     private static Map<Integer, StunAttribute> createAttributes(
-        final InetSocketAddress address)
+        final InetSocketAddress relayAddress,
+        final InetSocketAddress mappedAddress)
         {
-        final MappedAddress ma = new MappedAddress(address);
-        return createAttributes(ma);
+        final RelayAddressAttribute ra = 
+            new RelayAddressAttribute(relayAddress);
+        final MappedAddressAttribute ma = 
+            new MappedAddressAttribute(mappedAddress);
+        return createAttributes(ra, ma);
         }
 
     /**
@@ -81,6 +86,16 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
     public InetSocketAddress getMappedAddress()
         {
         return m_mappedAddress;
+        }
+
+    /**
+     * Accessor for the RELAY ADDRESS in the response.
+     * 
+     * @return The RELAY ADDRESS.
+     */
+    public InetSocketAddress getRelayAddress()
+        {
+        return this.m_relayAddress;
         }
     
     public void accept(final StunMessageVisitor visitor)

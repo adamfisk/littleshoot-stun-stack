@@ -8,7 +8,7 @@ import org.apache.commons.id.uuid.UUID;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
+import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
@@ -54,8 +54,8 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
     private InetSocketAddress getAddress(
         final Map<Integer, StunAttribute> attributes)
         {
-        final MappedAddress mappedAddress = 
-            (MappedAddress) attributes.get(
+        final MappedAddressAttribute mappedAddress = 
+            (MappedAddressAttribute) attributes.get(
                 new Integer(StunAttributeType.MAPPED_ADDRESS));
         if (mappedAddress == null)
             {
@@ -71,7 +71,7 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
         final Map<Integer, StunAttribute> attributes =
             new HashMap<Integer, StunAttribute>();
         
-        final StunAttribute attribute = new MappedAddress(address);
+        final StunAttribute attribute = new MappedAddressAttribute(address);
         attributes.put(new Integer(StunAttributeType.MAPPED_ADDRESS), 
             attribute);
         

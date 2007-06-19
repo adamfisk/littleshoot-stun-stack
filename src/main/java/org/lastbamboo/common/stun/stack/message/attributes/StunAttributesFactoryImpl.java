@@ -83,7 +83,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 {
                 final InetSocketAddress address = 
                     AddressAttributeReader.readAddress(body);
-                return new MappedAddress(address);
+                return new MappedAddressAttribute(address);
                 }
             case StunAttributeType.SERVER:
                 {

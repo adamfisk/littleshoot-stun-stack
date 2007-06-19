@@ -122,7 +122,8 @@ public class StunMessageDecodingState extends DecodingStateMachine
             else
                 {
                 final StunMessage message = 
-                    createMessage(this.m_messageType, transactionId, EMPTY_ATTRIBUTES);
+                    createMessage(this.m_messageType, transactionId, 
+                        EMPTY_ATTRIBUTES);
                 out.write(message);
                 return null;
                 }
@@ -186,35 +187,6 @@ public class StunMessageDecodingState extends DecodingStateMachine
             
             final StunMessage message = 
                 createMessage(this.m_type, this.m_transactionId, attributes);
-            
-            /*
-            final UUID id = new UUID(m_transactionId);
-            final StunMessage message;
-            switch (this.m_type)
-                {
-                case StunMessageType.BINDING_REQUEST:
-                    message = new BindingRequest(id);
-                    break;
-                case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
-                    message = new SuccessfulBindingResponse(id, attributes);
-                    break;
-                case StunMessageType.ALLOCATE_REQUEST:
-                    message = new AllocateRequest(id);
-                    break;
-                case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
-                    message = new SuccessfulAllocateResponse(id, attributes);
-                    break;
-                case StunMessageType.DATA_INDICATION:
-                    message = new DataIndication(id, attributes);
-                    break;
-                case StunMessageType.SEND_INDICATION:
-                    message = new SendIndication(id, attributes);
-                    break;
-                default:
-                    LOG.warn("Did not understand message type: " + this.m_type);
-                    return null;
-                }
-            */
             
             out.write(message);
             return new ReadMessageType();

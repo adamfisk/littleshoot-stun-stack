@@ -5,7 +5,7 @@ import java.net.InetSocketAddress;
 /**
  * Mapped Address attribute.
  */
-public class MappedAddress extends AbstractStunAddressAttribute
+public class MappedAddressAttribute extends AbstractStunAddressAttribute
     {
 
     /**
@@ -13,7 +13,7 @@ public class MappedAddress extends AbstractStunAddressAttribute
      * 
      * @param socketAddress The IP and port to put in the attribute.
      */
-    public MappedAddress(final InetSocketAddress socketAddress)
+    public MappedAddressAttribute(final InetSocketAddress socketAddress)
         {
         super(StunAttributeType.MAPPED_ADDRESS, socketAddress);
         }

@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 import org.apache.mina.common.ByteBuffer;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddress;
+import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
@@ -57,7 +57,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         visitAddressAttribute(address);
         }
     
-    public void visitMappedAddress(final MappedAddress address)
+    public void visitMappedAddress(final MappedAddressAttribute address)
         {
         visitAddressAttribute(address);
         }
@@ -74,7 +74,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         // Now put the attribute body.
         
         // The first byte is ignored in address attributes.
-        m_buf.put((byte) 0x00);
+        MinaUtils.putUnsignedByte(m_buf, 0x00);
         
         final int family = address.getAddressFamily();
         
@@ -86,15 +86,14 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         final int port = socketAddress.getPort();
         final InetAddress ia = socketAddress.getAddress();
         final byte[] addressBytes = ia.getAddress();
-        m_buf.put((byte) family);
-        m_buf.putShort((short) (port & 0xffff));
+        MinaUtils.putUnsignedByte(m_buf, family);
+        MinaUtils.putUnsignedShort(m_buf, port);
         m_buf.put(addressBytes);
         }
 
     private void writeHeader(final StunAttribute sa)
         {
-        final int length = sa.getBodyLength();
-        m_buf.putShort((short) (sa.getAttributeType() & 0xffff));
-        m_buf.putShort((short) (length & 0xffff));
+        MinaUtils.putUnsignedShort(m_buf, sa.getAttributeType());
+        MinaUtils.putUnsignedShort(m_buf, sa.getBodyLength());
         }
     }

@@ -8,6 +8,7 @@ import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.lastbamboo.common.util.mina.MinaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +39,8 @@ public class StunMessageEncoder
             {
             LOG.debug("Total message length: "+length);
             }
-        buf.putShort((short) (stunMessage.getType() & 0xffff));
-        buf.putShort((short) (stunMessage.getBodyLength() & 0xffff));
-        
+        MinaUtils.putUnsignedShort(buf, stunMessage.getType());
+        MinaUtils.putUnsignedShort(buf, stunMessage.getBodyLength());
         
         final UUID transactionId = stunMessage.getTransactionId();
 

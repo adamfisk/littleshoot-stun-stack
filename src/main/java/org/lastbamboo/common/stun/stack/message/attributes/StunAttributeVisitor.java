@@ -17,7 +17,7 @@ public interface StunAttributeVisitor
      * 
      * @param address The MAPPED ADDRESS.
      */
-    void visitMappedAddress(MappedAddress address);
+    void visitMappedAddress(MappedAddressAttribute address);
 
     /**
      * Visits the TURN RELAY ADDRESS attribute.
