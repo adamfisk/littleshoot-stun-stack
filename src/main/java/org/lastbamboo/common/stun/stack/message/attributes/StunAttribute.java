@@ -35,6 +35,6 @@ public interface StunAttribute
      * 
      * @return The type of the attribute.
      */
-    int getAttributeType();
+    StunAttributeType getAttributeType();
 
     }

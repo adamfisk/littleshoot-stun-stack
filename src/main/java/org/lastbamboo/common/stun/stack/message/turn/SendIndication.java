@@ -7,6 +7,7 @@ import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
 /**
  * TURN send message for encapsulating data to be sent to remote hosts.
@@ -21,7 +22,7 @@ public final class SendIndication extends AbstractStunDataMessage
      * @param attributes The message attributes.
      */
     public SendIndication(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.SEND_INDICATION, attributes);
         }

@@ -35,15 +35,15 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
      * @param attributes The message attributes.
      */
     public SuccessfulAllocateResponse(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
             attributes);
         final MappedAddressAttribute ma = (MappedAddressAttribute) attributes.get(
-            new Integer(StunAttributeType.MAPPED_ADDRESS));
+            StunAttributeType.MAPPED_ADDRESS);
         
         final RelayAddressAttribute ra = (RelayAddressAttribute) attributes.get(
-            new Integer(StunAttributeType.RELAY_ADDRESS));
+            StunAttributeType.RELAY_ADDRESS);
         m_mappedAddress = ma.getInetSocketAddress(); 
         m_relayAddress = ra.getInetSocketAddress();
         }
@@ -67,7 +67,7 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         this.m_relayAddress = relayAddress;
         }
 
-    private static Map<Integer, StunAttribute> createAttributes(
+    private static Map<StunAttributeType, StunAttribute> createAttributes(
         final InetSocketAddress relayAddress,
         final InetSocketAddress mappedAddress)
         {

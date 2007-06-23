@@ -44,7 +44,7 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
      * @param attributes The response attributes.
      */
     public SuccessfulBindingResponse(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.SUCCESSFUL_BINDING_RESPONSE, 
             attributes);
@@ -52,11 +52,11 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
         }
 
     private InetSocketAddress getAddress(
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         final MappedAddressAttribute mappedAddress = 
             (MappedAddressAttribute) attributes.get(
-                new Integer(StunAttributeType.MAPPED_ADDRESS));
+                StunAttributeType.MAPPED_ADDRESS);
         if (mappedAddress == null)
             {
             LOG.error("No mapped address in: "+attributes.values());
@@ -65,15 +65,14 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
         return mappedAddress.getInetSocketAddress();
         }
 
-    private static Map<Integer, StunAttribute> createAttributes(
+    private static Map<StunAttributeType, StunAttribute> createAttributes(
         final InetSocketAddress address)
         {
-        final Map<Integer, StunAttribute> attributes =
-            new HashMap<Integer, StunAttribute>();
+        final Map<StunAttributeType, StunAttribute> attributes =
+            new HashMap<StunAttributeType, StunAttribute>();
         
         final StunAttribute attribute = new MappedAddressAttribute(address);
-        attributes.put(new Integer(StunAttributeType.MAPPED_ADDRESS), 
-            attribute);
+        attributes.put(StunAttributeType.MAPPED_ADDRESS, attribute);
         
         return attributes;
         }

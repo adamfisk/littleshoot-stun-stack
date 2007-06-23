@@ -29,15 +29,15 @@ public abstract class AbstractStunDataMessage extends AbstractStunMessage
      * @param attributes The message attributes.
      */
     public AbstractStunDataMessage(final UUID transactionId, 
-        final int messageType, final Map<Integer, StunAttribute> attributes)
+        final int messageType, 
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, messageType, attributes);
         m_remoteAddress = 
             ((RemoteAddressAttribute) attributes.get(
-                new Integer(StunAttributeType.REMOTE_ADDRESS))).getInetSocketAddress();
+                StunAttributeType.REMOTE_ADDRESS)).getInetSocketAddress();
         m_data = 
-            ((DataAttribute) attributes.get(
-                new Integer(StunAttributeType.DATA))).getData();
+            ((DataAttribute) attributes.get(StunAttributeType.DATA)).getData();
         }
     
     /**
@@ -58,7 +58,7 @@ public abstract class AbstractStunDataMessage extends AbstractStunMessage
         m_data = data;
         }
 
-    private static Map<Integer, StunAttribute> createDataAttributes(
+    private static Map<StunAttributeType, StunAttribute> createDataAttributes(
         final byte[] data, final InetSocketAddress remoteAddress)
         {
         final RemoteAddressAttribute raa = 

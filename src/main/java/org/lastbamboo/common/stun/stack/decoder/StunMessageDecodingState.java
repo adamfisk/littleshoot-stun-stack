@@ -12,6 +12,7 @@ import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
@@ -37,9 +38,14 @@ public class StunMessageDecodingState extends DecodingStateMachine
     private final Logger LOG = 
         LoggerFactory.getLogger(StunMessageDecodingState.class);
     
-    private static final Map<Integer, StunAttribute> EMPTY_ATTRIBUTES =
-        Collections.emptyMap();
+    private static final Map<StunAttributeType, StunAttribute> 
+        EMPTY_ATTRIBUTES = Collections.emptyMap();
     
+    
+    public StunMessageDecodingState()
+        {
+        LOG.debug("Creating new STUN message decoding state...");
+        }
     
     @Override
     protected DecodingState init() throws Exception
@@ -57,7 +63,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
     protected DecodingState finishDecode(final List<Object> childProducts, 
         final ProtocolDecoderOutput out) throws Exception
         {
-        LOG.debug("Got finish decode");
+        LOG.error("Got finish decode");
         return null;
         }
     
@@ -121,43 +127,14 @@ public class StunMessageDecodingState extends DecodingStateMachine
                 }
             else
                 {
+                LOG.debug("Handling empty body");
                 final StunMessage message = 
                     createMessage(this.m_messageType, transactionId, 
                         EMPTY_ATTRIBUTES);
                 out.write(message);
-                return null;
+                return new ReadMessageType();
                 }
             }
-        }
-    
-    private StunMessage createMessage(final int type,
-        final byte[] transactionId, 
-        final Map<Integer, StunAttribute> attributes)
-        {
-        final UUID id = new UUID(transactionId);
-        switch (type)
-            {
-            case StunMessageType.BINDING_REQUEST:
-                return new BindingRequest(id);
-            case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
-                return new SuccessfulBindingResponse(id, attributes);
-            case StunMessageType.ALLOCATE_REQUEST:
-                return new AllocateRequest(id);
-            case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
-                return new SuccessfulAllocateResponse(id, attributes);
-            case StunMessageType.DATA_INDICATION:
-                return new DataIndication(id, attributes);
-            case StunMessageType.SEND_INDICATION:
-                return new SendIndication(id, attributes);
-            case StunMessageType.CONNECT_REQUEST:
-                return new ConnectRequest(id, attributes);
-            case StunMessageType.CONNECTION_STATUS_INDICATION:
-                return new ConnectionStatusIndication(id, attributes);
-            default:
-                LOG.warn("Did not understand message type: " + type);
-                return null;
-            }
-        
         }
     
     private class ReadBody extends FixedLengthDecodingState
@@ -178,11 +155,17 @@ public class StunMessageDecodingState extends DecodingStateMachine
         protected DecodingState finishDecode(final ByteBuffer readData, 
             final ProtocolDecoderOutput out) throws Exception
             {
+            if (readData.remaining() != m_length)
+                {
+                LOG.error("Read body of unexpected length." +
+                    "\nExpected length:  "+m_length+
+                    "\nRemaining length: "+readData.remaining());
+                }
             final StunAttributesFactory factory = 
                 new StunAttributesFactoryImpl();
             
             // This decodes the entire body into an attributes map.
-            final Map<Integer, StunAttribute> attributes = 
+            final Map<StunAttributeType, StunAttribute> attributes = 
                 factory.createAttributes(readData);
             
             final StunMessage message = 
@@ -192,6 +175,34 @@ public class StunMessageDecodingState extends DecodingStateMachine
             return new ReadMessageType();
             }
     
+        }
+    
+    
+    private static StunMessage createMessage(final int type,
+        final byte[] transactionId, 
+        final Map<StunAttributeType, StunAttribute> attributes)
+        {
+        final UUID id = new UUID(transactionId);
+        switch (type)
+            {
+            case StunMessageType.BINDING_REQUEST:
+                return new BindingRequest(id);
+            case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
+                return new SuccessfulBindingResponse(id, attributes);
+            case StunMessageType.ALLOCATE_REQUEST:
+                return new AllocateRequest(id);
+            case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
+                return new SuccessfulAllocateResponse(id, attributes);
+            case StunMessageType.DATA_INDICATION:
+                return new DataIndication(id, attributes);
+            case StunMessageType.SEND_INDICATION:
+                return new SendIndication(id, attributes);
+            case StunMessageType.CONNECT_REQUEST:
+                return new ConnectRequest(id, attributes);
+            case StunMessageType.CONNECTION_STATUS_INDICATION:
+                return new ConnectionStatusIndication(id, attributes);
+            }
+        return null;
         }
 
     }

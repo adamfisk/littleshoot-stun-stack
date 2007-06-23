@@ -31,18 +31,18 @@ public class ConnectionStatusIndication extends AbstractStunMessage
      * @param attributes The message attributes.
      */
     public ConnectionStatusIndication(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.CONNECTION_STATUS_INDICATION,
             attributes);
         final RemoteAddressAttribute att = 
             (RemoteAddressAttribute)attributes.get(
-                new Integer(StunAttributeType.REMOTE_ADDRESS));
+                StunAttributeType.REMOTE_ADDRESS);
         this.m_remoteAddress = att.getInetSocketAddress();
         
         final ConnectionStatusAttribute csa =
             (ConnectionStatusAttribute)attributes.get(
-                new Integer(StunAttributeType.CONNECT_STAT));
+                StunAttributeType.CONNECT_STAT);
         this.m_connectionStatus = csa.getConnectionStatus();
         }
 
@@ -61,19 +61,19 @@ public class ConnectionStatusIndication extends AbstractStunMessage
         this.m_connectionStatus = connectionStatus;
         }
 
-    private static Map<Integer, StunAttribute> createAttributes(
+    private static Map<StunAttributeType, StunAttribute> createAttributes(
         final InetSocketAddress remoteAddress, 
         final ConnectionStatus connectionStatus)
         {
-        final Map<Integer, StunAttribute> attributes = 
-            new ConcurrentHashMap<Integer, StunAttribute>();
+        final Map<StunAttributeType, StunAttribute> attributes = 
+            new ConcurrentHashMap<StunAttributeType, StunAttribute>();
         final StunAttribute remoteAddressAttribute =
             new RemoteAddressAttribute(remoteAddress);
         final StunAttribute status = 
             new ConnectionStatusAttribute(connectionStatus);
-        attributes.put(new Integer(remoteAddressAttribute.getAttributeType()), 
+        attributes.put(remoteAddressAttribute.getAttributeType(), 
             remoteAddressAttribute);
-        attributes.put(new Integer(status.getAttributeType()), status);
+        attributes.put(status.getAttributeType(), status);
         return attributes;
         }
 

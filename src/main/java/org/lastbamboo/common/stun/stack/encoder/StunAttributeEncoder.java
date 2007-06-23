@@ -93,7 +93,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
 
     private void writeHeader(final StunAttribute sa)
         {
-        MinaUtils.putUnsignedShort(m_buf, sa.getAttributeType());
+        MinaUtils.putUnsignedShort(m_buf, sa.getAttributeType().toInt());
         MinaUtils.putUnsignedShort(m_buf, sa.getBodyLength());
         }
     }

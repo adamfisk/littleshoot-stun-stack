@@ -24,14 +24,11 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
     private static final Log LOG = 
         LogFactory.getLog(StunAttributesFactoryImpl.class);
     
-    public Map<Integer, StunAttribute> createAttributes(final ByteBuffer body)
+    public Map<StunAttributeType, StunAttribute> createAttributes(
+        final ByteBuffer body)
         {
-        if (LOG.isDebugEnabled())
-            {
-            LOG.debug("Creating attributes...");
-            }
-        final Map<Integer, StunAttribute> attributes =
-            new ConcurrentHashMap<Integer, StunAttribute>();
+        final Map<StunAttributeType, StunAttribute> attributes =
+            new ConcurrentHashMap<StunAttributeType, StunAttribute>();
         while (body.hasRemaining())
             {
             addAttribute(attributes, body);
@@ -39,31 +36,45 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         return attributes;
         }
 
-    private void addAttribute(final Map<Integer, StunAttribute> attributes, 
+    private void addAttribute(
+        final Map<StunAttributeType, StunAttribute> attributes, 
         final ByteBuffer buf)
         {
-        if (LOG.isDebugEnabled())
+        final int typeInt = buf.getUnsignedShort();
+        final StunAttributeType type = StunAttributeType.toType(typeInt);
+        if (type == null)
             {
-            LOG.debug("Adding attribute");
+            LOG.error("Could not get type for int: "+typeInt);
             }
-        final int type = buf.getUnsignedShort();
         final int length = buf.getUnsignedShort();
         
         if (LOG.isDebugEnabled())
             {
-            LOG.debug("Type is: "+type);
-            LOG.debug("Length is: "+length);
+            //LOG.debug("Type is: "+type);
+            //LOG.debug("Length is: "+length);
             }
-        
+
+        if (buf.remaining() < length)
+            {
+            LOG.error("Error reading attribute.\nExpected length:  "+length+
+                "\nActual remaining: "+buf.remaining());
+            }
         final byte[] body = new byte[length];
         buf.get(body);
         
+        // Handle types we don't recognize, such as types returned from
+        // "foreign" STUN servers.
+        if (type == null)
+            {
+            LOG.debug("Did not recognize type: "+typeInt);
+            return;
+            }
         try
             {
             final StunAttribute attribute = createAttribute(type, body);
             if (attribute != null)
                 {
-                attributes.put(new Integer(type), attribute);
+                attributes.put(type, attribute);
                 }
             }
         catch (final IOException e)
@@ -72,42 +83,42 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             }
 
         }
-
-    private StunAttribute createAttribute(final int type, 
+    
+    private StunAttribute createAttribute(final StunAttributeType type, 
         final byte[] bodyBytes) throws IOException
         {
         final ByteBuffer body = ByteBuffer.wrap(bodyBytes);
         switch (type)
             {
-            case StunAttributeType.MAPPED_ADDRESS:
+            case MAPPED_ADDRESS:
                 {
                 final InetSocketAddress address = 
                     AddressAttributeReader.readAddress(body);
                 return new MappedAddressAttribute(address);
                 }
-            case StunAttributeType.SERVER:
+            case SERVER:
                 {
                 final String serverText = MinaUtils.toAsciiString(body);
                 return new StunServerAttribute(bodyBytes.length, serverText);
                 }
                 
-            case StunAttributeType.RELAY_ADDRESS:
+            case RELAY_ADDRESS:
                 {
                 final InetSocketAddress address = 
                     AddressAttributeReader.readAddress(body);
                 return new RelayAddressAttribute(address);
                 }
-            case StunAttributeType.REMOTE_ADDRESS:
+            case REMOTE_ADDRESS:
                 {
                 final InetSocketAddress address = 
                     AddressAttributeReader.readAddress(body);
                 return new RemoteAddressAttribute(address);
                 }
-            case StunAttributeType.DATA:
+            case DATA:
                 {
                 return new DataAttribute(bodyBytes);
                 }
-            case StunAttributeType.CONNECT_STAT:
+            case CONNECT_STAT:
                 {
                 final long statusInt = body.getUnsignedInt();
                 final ConnectionStatus status = 
@@ -116,7 +127,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 }
             default:
                 {
-                LOG.warn("Unrecognized attribute: "+type);
+                LOG.error("Unrecognized attribute: "+type);
                 return null;
                 }
             }

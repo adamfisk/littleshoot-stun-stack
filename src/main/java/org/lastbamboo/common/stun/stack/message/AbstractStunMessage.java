@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
+import org.apache.commons.lang.ClassUtils;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 
 /**
@@ -17,11 +19,11 @@ public abstract class AbstractStunMessage implements StunMessage,
     VisitableStunMessage
     {
 
-    private static final Map<Integer, StunAttribute> EMPTY_MAP =
+    private static final Map<StunAttributeType, StunAttribute> EMPTY_MAP =
         Collections.emptyMap();
     
     private final UUID m_transactionId;
-    private final Map<Integer, StunAttribute> m_attributes;
+    private final Map<StunAttributeType, StunAttribute> m_attributes;
 
     private final int m_totalLength;
 
@@ -49,7 +51,7 @@ public abstract class AbstractStunMessage implements StunMessage,
      * @param messageType The type of the message.
      */
     public AbstractStunMessage(final UUID transactionId, final int messageType,
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         m_transactionId = transactionId;
         m_attributes = attributes;
@@ -58,21 +60,21 @@ public abstract class AbstractStunMessage implements StunMessage,
         m_messageType = messageType;
         }
     
-    protected static Map<Integer, StunAttribute> createAttributes(
+    protected static Map<StunAttributeType, StunAttribute> createAttributes(
         final StunAttribute... attributes)
         {
-        final Map<Integer, StunAttribute> attributesMap = 
-            new HashMap<Integer, StunAttribute>();
+        final Map<StunAttributeType, StunAttribute> attributesMap = 
+            new HashMap<StunAttributeType, StunAttribute>();
         
         for (final StunAttribute attribute : attributes)
             {
-            attributesMap.put(new Integer(attribute.getAttributeType()), 
+            attributesMap.put(attribute.getAttributeType(), 
                 attribute);
             }
         return attributesMap;
         }
     
-    protected static Map<Integer, StunAttribute> createRemoteAddress(
+    protected static Map<StunAttributeType, StunAttribute> createRemoteAddress(
         final InetSocketAddress remoteAddress)
         {
         final RemoteAddressAttribute att = 
@@ -81,7 +83,7 @@ public abstract class AbstractStunMessage implements StunMessage,
         }
 
     private int calculateBodyLength(
-        final Map<Integer, StunAttribute> attributesMap)
+        final Map<StunAttributeType, StunAttribute> attributesMap)
         {
         final Collection<StunAttribute> attributes = attributesMap.values();
         int length = 0;
@@ -102,7 +104,7 @@ public abstract class AbstractStunMessage implements StunMessage,
         return this.m_totalLength;
         }
 
-    public Map<Integer, StunAttribute> getAttributes()
+    public Map<StunAttributeType, StunAttribute> getAttributes()
         {
         return m_attributes;
         }
@@ -117,8 +119,8 @@ public abstract class AbstractStunMessage implements StunMessage,
         return this.m_messageType;
         }
     
-    public StunAttribute getAttribute(final int attributeType)
+    public String toString()
         {
-        return this.m_attributes.get(new Integer(attributeType));
+        return ClassUtils.getShortClassName(getClass());
         }
     }

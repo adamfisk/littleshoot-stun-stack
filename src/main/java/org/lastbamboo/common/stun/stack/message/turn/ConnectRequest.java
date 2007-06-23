@@ -26,12 +26,12 @@ public class ConnectRequest extends AbstractStunMessage
      * @param attributes
      */
     public ConnectRequest(final UUID transactionId, 
-        final Map<Integer, StunAttribute> attributes)
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, StunMessageType.CONNECT_REQUEST, attributes);
         m_remoteAddress = 
             ((RemoteAddressAttribute) attributes.get(
-                new Integer(StunAttributeType.REMOTE_ADDRESS))).getInetSocketAddress();
+                StunAttributeType.REMOTE_ADDRESS)).getInetSocketAddress();
         }
 
     /**

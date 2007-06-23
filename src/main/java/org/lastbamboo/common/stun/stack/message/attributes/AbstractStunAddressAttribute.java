@@ -21,7 +21,7 @@ public abstract class AbstractStunAddressAttribute extends AbstractStunAttribute
      * @param attributeType The type of the attribute.
      * @param socketAddress The IP and port to put in the attribute.
      */
-    public AbstractStunAddressAttribute(final int attributeType,
+    public AbstractStunAddressAttribute(final StunAttributeType attributeType,
         final InetSocketAddress socketAddress)
         {
         super(attributeType, getBodyLength(socketAddress));
@@ -38,7 +38,7 @@ public abstract class AbstractStunAddressAttribute extends AbstractStunAttribute
             this.m_addressFamily = 0x02;
             }
         }
-    
+
     private static int getBodyLength(final InetSocketAddress address)
         {
         final InetAddress ia = address.getAddress();

@@ -7,6 +7,7 @@ import org.apache.commons.id.uuid.UUID;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
 import org.lastbamboo.common.util.mina.MinaUtils;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class StunMessageEncoder
 
         buf.put(transactionId.getRawBytes());
         
-        final Map<Integer, StunAttribute> attributes = 
+        final Map<StunAttributeType, StunAttribute> attributes = 
             stunMessage.getAttributes();
         
         putAttributes(attributes, buf);
@@ -55,7 +56,8 @@ public class StunMessageEncoder
         return buf;
         }
 
-    private void putAttributes(final Map<Integer, StunAttribute> attributesMap, 
+    private void putAttributes(
+        final Map<StunAttributeType, StunAttribute> attributesMap, 
         final ByteBuffer buf)
         {
         final StunAttributeVisitor visitor = new StunAttributeEncoder(buf);
