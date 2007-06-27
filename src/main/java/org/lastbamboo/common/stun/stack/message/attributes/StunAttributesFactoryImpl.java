@@ -44,16 +44,12 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         final StunAttributeType type = StunAttributeType.toType(typeInt);
         if (type == null)
             {
-            LOG.error("Could not get type for int: "+typeInt);
+            // This could just be a weird attribute from a STUN server we 
+            // don't understand, for example.  Then again, it could be a bug!
+            LOG.debug("Could not get type for int: "+typeInt);
             }
         final int length = buf.getUnsignedShort();
         
-        if (LOG.isDebugEnabled())
-            {
-            //LOG.debug("Type is: "+type);
-            //LOG.debug("Length is: "+length);
-            }
-
         if (buf.remaining() < length)
             {
             LOG.error("Error reading attribute.\nExpected length:  "+length+
