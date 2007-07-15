@@ -100,7 +100,38 @@ public enum StunAttributeType
     /**
      * Attribute for describing the TURN connection status.
      */
-    CONNECT_STAT(0x0023);
+    CONNECT_STAT(0x0023),
+    
+    // The following are attribute types for the ICE usage of the STUN.  They
+    // are included here so parsing with the base STUN stack will still work
+    // with attributes from the ICE usage.
+    
+    /**
+     * The priority that is to be associated with an ICE peer reflexive 
+     * candidate, should one be discovered by the check with a request using 
+     * this attribute.
+     */
+    PRIORITY(0x0024),
+    
+    /**
+     * Indicates that the ICE candidate pair resulting from this check 
+     * should be used for transmission of media.
+     */
+    USE_CANDIDATE(0x0025),
+    
+    /**
+     * Indicates that an ICE client believes it is currently in the 
+     * controlled role.
+     */
+    ICE_CONTROLLED(0x8029),
+    
+    /**
+     * Indicates that an ICE client believes it is currently in the 
+     * controlling role.
+     */
+    ICE_CONTROLLING(0x802a),
+    
+    ;
 
     private static final Map<Integer, StunAttributeType> s_intsToEnums =
         new HashMap<Integer, StunAttributeType>();
@@ -141,7 +172,7 @@ public enum StunAttributeType
      */
     public static StunAttributeType toType(final int typeInt)
         {
-        return s_intsToEnums.get(typeInt);
+        return s_intsToEnums.get(new Integer(typeInt));
         }
 
     }
