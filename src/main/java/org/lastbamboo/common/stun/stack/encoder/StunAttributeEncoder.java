@@ -8,6 +8,10 @@ import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribut
 import org.lastbamboo.common.stun.stack.message.attributes.StunAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControllingAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IcePriorityAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceUseCandidateAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatus;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
@@ -50,6 +54,34 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         writeHeader(attribute);
         final ConnectionStatus status = attribute.getConnectionStatus();
         MinaUtils.putUnsignedInt(m_buf, status.toLong());
+        }
+    
+
+    public void visitIceControlled(final IceControlledAttribute attribute)
+        {
+        writeHeader(attribute);
+        final byte[] tieBreaker = attribute.getTieBreaker();
+        m_buf.put(tieBreaker);
+        }
+
+    public void visitIceControlling(final IceControllingAttribute attribute)
+        {
+        writeHeader(attribute);
+        final byte[] tieBreaker = attribute.getTieBreaker();
+        m_buf.put(tieBreaker);
+        }
+
+    public void visitIcePriority(final IcePriorityAttribute attribute)
+        {
+        writeHeader(attribute);
+        final long priority = attribute.getPriority();
+        MinaUtils.putUnsignedInt(m_buf, priority);
+        }
+
+    public void visitIceUseCandidate(final IceUseCandidateAttribute attribute)
+        {
+        writeHeader(attribute);
+        // Note that USE-CANDIDATE doesn't have any body.
         }
 
     public void visitRelayAddress(final RelayAddressAttribute address)
@@ -96,4 +128,5 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         MinaUtils.putUnsignedShort(m_buf, sa.getAttributeType().toInt());
         MinaUtils.putUnsignedShort(m_buf, sa.getBodyLength());
         }
+
     }

@@ -8,6 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.ByteBuffer;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControllingAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IcePriorityAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceUseCandidateAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatus;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
@@ -121,6 +125,32 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                     ConnectionStatus.valueOf(statusInt);
                 return new ConnectionStatusAttribute(status);
                 }
+                
+            case PRIORITY:
+                {
+                final long priority = body.getUnsignedInt();
+                return new IcePriorityAttribute(priority);
+                }
+                
+            case USE_CANDIDATE:
+                {
+                return new IceUseCandidateAttribute();
+                }
+                
+            case ICE_CONTROLLED:
+                {
+                final byte[] tieBreaker = new byte[8];
+                body.get(tieBreaker);
+                return new IceControlledAttribute(tieBreaker);
+                }
+                
+            case ICE_CONTROLLING:
+                {
+                final byte[] tieBreaker = new byte[8];
+                body.get(tieBreaker);
+                return new IceControllingAttribute(tieBreaker);
+                }
+                
             default:
                 {
                 LOG.error("Unrecognized attribute: "+type);

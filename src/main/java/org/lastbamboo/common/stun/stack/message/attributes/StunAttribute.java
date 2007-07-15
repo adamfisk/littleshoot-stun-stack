@@ -9,9 +9,9 @@ public interface StunAttribute
     {
 
     /**
-     * Returns the length of the attribute.
+     * Returns the length of the attribute in bytes.
      * 
-     * @return The length of the attribute;
+     * @return The length of the attribute in bytes;
      */
     int getBodyLength();
 
@@ -23,7 +23,8 @@ public interface StunAttribute
     void accept(StunAttributeVisitor visitor);
 
     /**
-     * Gets the total length of the attribute including the header and the body.
+     * Gets the total length of the attribute including the header and the 
+     * body in bytes.
      * 
      * @return The total length of the attribute including the header and the 
      * body.

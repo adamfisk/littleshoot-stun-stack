@@ -1,5 +1,9 @@
 package org.lastbamboo.common.stun.stack.message.attributes;
 
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControllingAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IcePriorityAttribute;
+import org.lastbamboo.common.stun.stack.message.attributes.ice.IceUseCandidateAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
@@ -46,5 +50,33 @@ public interface StunAttributeVisitor
      * @param attribute The connection status attribute.
      */
     void visitConnectionStatus(ConnectionStatusAttribute attribute);
+
+    /**
+     * Visits the priority attribute.
+     * 
+     * @param attribute The priority attribute.
+     */
+    void visitIcePriority(IcePriorityAttribute attribute);
+
+    /**
+     * Visits the ICE USE-CANDIDATE attribute.
+     * 
+     * @param attribute The attribute.
+     */
+    void visitIceUseCandidate(IceUseCandidateAttribute attribute);
+
+    /**
+     * Visits the ICE controlled attribute.
+     * 
+     * @param attribute The ICE controlled attribute.
+     */
+    void visitIceControlled(IceControlledAttribute attribute);
+
+    /**
+     * Visits the ICE controlling attribute.
+     * 
+     * @param attribute The ICE controlling attribute.
+     */
+    void visitIceControlling(IceControllingAttribute attribute);
 
     }

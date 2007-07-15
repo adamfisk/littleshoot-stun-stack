@@ -41,12 +41,6 @@ public class StunMessageDecodingState extends DecodingStateMachine
     private static final Map<StunAttributeType, StunAttribute> 
         EMPTY_ATTRIBUTES = Collections.emptyMap();
     
-    
-    public StunMessageDecodingState()
-        {
-        LOG.debug("Creating new STUN message decoding state...");
-        }
-    
     @Override
     protected DecodingState init() throws Exception
         {

@@ -13,7 +13,7 @@ public abstract class AbstractStunAttribute implements StunAttribute
      * Creates a new attribute.
      * 
      * @param attributeType The type of the attribute.
-     * @param bodyLength The length of the attribute body.
+     * @param bodyLength The length of the attribute body in bytes.
      */
     public AbstractStunAttribute(final StunAttributeType attributeType, 
         final int bodyLength)
