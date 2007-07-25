@@ -9,7 +9,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 /**
  * Interface for STUN messages.
  */
-public interface StunMessage
+public interface StunMessage extends VisitableStunMessage
     {
 
     /**

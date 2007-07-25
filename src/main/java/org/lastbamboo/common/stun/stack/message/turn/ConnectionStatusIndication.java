@@ -77,9 +77,9 @@ public class ConnectionStatusIndication extends AbstractStunMessage
         return attributes;
         }
 
-    public void accept(StunMessageVisitor visitor)
+    public <T> T accept(StunMessageVisitor<T> visitor)
         {
-        visitor.visitConnectionStatusIndication(this);
+        return visitor.visitConnectionStatusIndication(this);
         }
 
     /**

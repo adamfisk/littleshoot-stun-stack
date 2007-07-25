@@ -5,8 +5,10 @@ import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 
 /**
  * Interface for client transactions.
+ * 
+ * @param <T> The visitor return type.
  */
-public interface StunClientTransaction extends StunMessageVisitor
+public interface StunClientTransaction<T> extends StunMessageVisitor<T>
     {
 
     /**

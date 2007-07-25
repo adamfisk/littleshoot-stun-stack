@@ -32,9 +32,9 @@ public final class AllocateRequest extends AbstractStunMessage
         super(id, StunMessageType.ALLOCATE_REQUEST); 
         }
 
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitAllocateRequest(this);
+        return visitor.visitAllocateRequest(this);
         }
 
     }

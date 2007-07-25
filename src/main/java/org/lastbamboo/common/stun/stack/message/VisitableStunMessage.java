@@ -9,8 +9,10 @@ public interface VisitableStunMessage
     /**
      * Accepts the specified visitor class.
      * 
+     * @param <T> The type the visitor will return.
      * @param visitor The visitor to accept.
+     * @return The return value of the visitor. 
      */
-    void accept(StunMessageVisitor visitor);
+    <T> T accept(StunMessageVisitor<T> visitor);
     
     }

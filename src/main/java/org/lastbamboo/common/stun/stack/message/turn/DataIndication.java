@@ -41,8 +41,8 @@ public final class DataIndication extends AbstractStunDataMessage
             data, remoteAddress);
         }
 
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitDataIndication(this);
+        return visitor.visitDataIndication(this);
         }
     }

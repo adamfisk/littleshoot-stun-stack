@@ -40,9 +40,9 @@ public final class SendIndication extends AbstractStunDataMessage
             data, remoteAddress);
         }
     
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitSendIndication(this);
+        return visitor.visitSendIndication(this);
         }
 
     public boolean equals(final Object obj)

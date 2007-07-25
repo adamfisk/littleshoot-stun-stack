@@ -87,9 +87,9 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
         return m_mappedAddress;
         }
     
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitSuccessfulBindingResponse(this);
+        return visitor.visitSuccessfulBindingResponse(this);
         }
     
     public String toString()

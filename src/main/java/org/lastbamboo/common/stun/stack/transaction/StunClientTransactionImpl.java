@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
+import org.lastbamboo.common.stun.stack.message.NullStunMessage;
 import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
@@ -17,7 +18,8 @@ import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
 /**
  * Implementation of a SIP client transaction.
  */
-public class StunClientTransactionImpl implements StunClientTransaction
+public class StunClientTransactionImpl 
+    implements StunClientTransaction<StunMessage>
     {
     
     private static final Log LOG = 
@@ -60,15 +62,17 @@ public class StunClientTransactionImpl implements StunClientTransaction
         return m_transactionTime;
         }
     
-    public void visitBindingRequest(BindingRequest binding)
-        {
-        // TODO Auto-generated method stub
-        
-        }
-
-    public void visitSuccessfulBindingResponse(
+    public StunMessage visitSuccessfulBindingResponse(
         final SuccessfulBindingResponse response)
         {
+        if (!this.m_request.getTransactionId().equals(
+            response.getTransactionId()))
+            {
+            LOG.error("Unexpected transaction ID.  Expected " + 
+                this.m_request.getTransactionId() +
+                " but was "+response.getTransactionId());
+            return null;
+            }
         setTransactionTime();
         if (LOG.isDebugEnabled())
             {
@@ -79,6 +83,7 @@ public class StunClientTransactionImpl implements StunClientTransaction
             {
             listener.onTransactionSucceeded(this.m_request, response);
             }
+        return response;
         }
 
     private void setTransactionTime()
@@ -87,40 +92,46 @@ public class StunClientTransactionImpl implements StunClientTransaction
             System.currentTimeMillis() - this.m_transactionStartTime;
         }
 
-    public void visitAllocateRequest(AllocateRequest request)
+    public StunMessage visitBindingRequest(final BindingRequest binding)
         {
-        // TODO Auto-generated method stub
-        
+        return null;
+        }
+    
+    public StunMessage visitAllocateRequest(final AllocateRequest request)
+        {
+        return null;
         }
 
-    public void visitDataIndication(DataIndication data)
+    public StunMessage visitDataIndication(final DataIndication data)
         {
-        // TODO Auto-generated method stub
-        
+        return null;
         }
 
-    public void visitSendIndication(final SendIndication request)
+    public StunMessage visitSendIndication(final SendIndication request)
         {
-        // TODO Auto-generated method stub
-        
+        return null;
         }
 
-    public void visitSuccessfulAllocateResponse(
+    public StunMessage visitSuccessfulAllocateResponse(
         final SuccessfulAllocateResponse response)
         {
-        // TODO Auto-generated method stub
-        
+        return null;
         }
 
-    public void visitConnectRequest(final ConnectRequest request)
+    public StunMessage visitConnectRequest(final ConnectRequest request)
         {
         LOG.error("Client received connect request");
+        return null;
         }
 
-    public void visitConnectionStatusIndication(
+    public StunMessage visitConnectionStatusIndication(
         final ConnectionStatusIndication indication)
         {
-        // TODO Auto-generated method stub
-        
+        return null;
+        }
+
+    public StunMessage visitNullMessage(final NullStunMessage message)
+        {
+        return message;
         }
     }

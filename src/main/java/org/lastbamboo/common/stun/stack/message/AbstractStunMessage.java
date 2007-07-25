@@ -59,7 +59,7 @@ public abstract class AbstractStunMessage implements StunMessage,
         m_totalLength = m_bodyLength + 20;
         m_messageType = messageType;
         }
-    
+
     protected static Map<StunAttributeType, StunAttribute> createAttributes(
         final StunAttribute... attributes)
         {

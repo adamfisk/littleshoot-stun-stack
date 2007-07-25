@@ -12,11 +12,13 @@ public interface StunMessageVisitorFactory
     /**
      * Creates a new visitor.
      * 
+     * @param <T> The type the visitor returns.
+     * 
      * @param session The {@link IoSession} for reading or writing any necessary
      * data.
      * 
      * @return The new visitor.
      */
-    StunMessageVisitor createVisitor(final IoSession session);
+    <T> StunMessageVisitor<T> createVisitor(final IoSession session);
 
     }

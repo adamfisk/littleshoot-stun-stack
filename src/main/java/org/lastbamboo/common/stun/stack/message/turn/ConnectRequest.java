@@ -56,9 +56,9 @@ public class ConnectRequest extends AbstractStunMessage
         return m_remoteAddress;
         }
     
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitConnectRequest(this);
+        return visitor.visitConnectRequest(this);
         }
 
     }

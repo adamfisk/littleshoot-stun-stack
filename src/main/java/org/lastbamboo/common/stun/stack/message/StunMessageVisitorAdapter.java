@@ -14,54 +14,71 @@ import org.slf4j.LoggerFactory;
  * will log errors whenever something is visited that's not overidden.  If
  * a subclass should handle a message, it therefore must override the 
  * appropriate visit method.
+ * 
+ * @param <T> The class the visitor methods return.
  */
-public abstract class StunMessageVisitorAdapter implements StunMessageVisitor
+public abstract class StunMessageVisitorAdapter<T>
+    implements StunMessageVisitor<T>
     {
 
     private Logger LOG = LoggerFactory.getLogger(
         StunMessageVisitorAdapter.class);
     
-    public void visitAllocateRequest(final AllocateRequest request)
+    public T visitAllocateRequest(final AllocateRequest request)
         {
         LOG.error("Visiting unexpected message: {}", request);
+        return null;
         }
 
-    public void visitBindingRequest(final BindingRequest request)
+    public T visitBindingRequest(final BindingRequest request)
         {
         LOG.error("Visiting unexpected message: {}", request);
+        return null;
         }
 
-    public void visitConnectRequest(final ConnectRequest request)
+    public T visitConnectRequest(final ConnectRequest request)
         {
         LOG.error("Visiting unexpected message: {}", request);
+        return null;
         }
 
-    public void visitConnectionStatusIndication(
+    public T visitConnectionStatusIndication(
         final ConnectionStatusIndication indication)
         {
         LOG.error("Visiting unexpected message: {}", indication);
+        return null;
         }
 
-    public void visitDataIndication(final DataIndication data)
+    public T visitDataIndication(final DataIndication data)
         {
         LOG.error("Visiting unexpected message: {}", data);
+        return null;
         }
 
-    public void visitSendIndication(final SendIndication request)
+    public T visitSendIndication(final SendIndication request)
         {
         LOG.error("Visiting unexpected message: {}", request);
+        return null;
         }
 
-    public void visitSuccessfulAllocateResponse(
+    public T visitSuccessfulAllocateResponse(
         final SuccessfulAllocateResponse response)
         {
         LOG.error("Visiting unexpected message: {}", response);
+        return null;
         }
 
-    public void visitSuccessfulBindingResponse(
+    public T visitSuccessfulBindingResponse(
         final SuccessfulBindingResponse response)
         {
         LOG.error("Visiting unexpected message: {}", response);
+        return null;
+        }
+    
+    public T visitNullMessage(final NullStunMessage message)
+        {
+        LOG.error("Visiting unexpected message: {}", message);
+        return null;
         }
 
     }

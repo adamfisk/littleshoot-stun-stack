@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.common.IoHandlerAdapter;
 import org.apache.mina.common.IoSession;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
 import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 
@@ -39,9 +38,9 @@ public abstract class AbstractStunIoHandler extends IoHandlerAdapter
         
         final VisitableStunMessage stunMessage = (VisitableStunMessage) message;
         
-        final StunMessageVisitor visitor = 
-            this.m_visitorFactory.createVisitor(session);
-        
-        stunMessage.accept(visitor);
+        // The visitor will handle the particular message type, allowing for 
+        // variation between, for example, client and server visitor 
+        // implementations.
+        stunMessage.accept(this.m_visitorFactory.createVisitor(session));
         }
     }

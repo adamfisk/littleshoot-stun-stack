@@ -10,7 +10,7 @@ import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
 /**
  * Visitor for various STUN messages.
  */
-public interface StunMessageVisitor
+public interface StunMessageVisitor<T>
     {
 
     /**
@@ -18,27 +18,27 @@ public interface StunMessageVisitor
      * 
      * @param binding The binding message.
      */
-    void visitBindingRequest(BindingRequest binding);
+    T visitBindingRequest(BindingRequest binding);
 
     /**
      * Visits a binding response.
      * 
      * @param response The binding response.
      */
-    void visitSuccessfulBindingResponse(SuccessfulBindingResponse response);
+    T visitSuccessfulBindingResponse(SuccessfulBindingResponse response);
 
     /**
      * Visits the TURN usage allocate request message.
      * 
      * @param request The TURN usage allocate request.
      */
-    void visitAllocateRequest(AllocateRequest request);
+    T visitAllocateRequest(AllocateRequest request);
 
-    void visitSuccessfulAllocateResponse(SuccessfulAllocateResponse response);
+    T visitSuccessfulAllocateResponse(SuccessfulAllocateResponse response);
 
-    void visitDataIndication(DataIndication data);
+    T visitDataIndication(DataIndication data);
 
-    void visitSendIndication(SendIndication request);
+    T visitSendIndication(SendIndication request);
     
     /**
      * Visits a connection request from a client.  Only STUN servers will
@@ -48,7 +48,7 @@ public interface StunMessageVisitor
      * 
      * @param request The connect request.
      */
-    void visitConnectRequest(ConnectRequest request);
+    T visitConnectRequest(ConnectRequest request);
     
     /**
      * Visits a connection status indication message informing clients of the
@@ -57,6 +57,14 @@ public interface StunMessageVisitor
      * 
      * @param indication The connection status indication message.
      */
-    void visitConnectionStatusIndication(ConnectionStatusIndication indication);
+    T visitConnectionStatusIndication(ConnectionStatusIndication indication);
+
+    /**
+     * Visits the absence of a message.  This can occur, for example, when a
+     * request receives no response whatsoever.
+     * 
+     * @param message The message to visit.
+     */
+    T visitNullMessage(NullStunMessage message);
 
     }

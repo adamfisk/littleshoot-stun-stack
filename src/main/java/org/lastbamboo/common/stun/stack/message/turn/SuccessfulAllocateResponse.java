@@ -98,9 +98,9 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
         return this.m_relayAddress;
         }
     
-    public void accept(final StunMessageVisitor visitor)
+    public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        visitor.visitSuccessfulAllocateResponse(this);
+        return visitor.visitSuccessfulAllocateResponse(this);
         }
 
     }
