@@ -8,12 +8,14 @@ import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
 import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 
 /**
- * Processes STUN messages.
+ * Processes STUN messages.  This class can be subclassed to implement 
+ * specialized policies, for example for specialized policies for idle sessions
+ * for specific STUN usages.
  */
-public abstract class AbstractStunIoHandler extends IoHandlerAdapter
+public class StunIoHandler extends IoHandlerAdapter
     {
     
-    private final Log LOG = LogFactory.getLog(AbstractStunIoHandler.class);
+    private final Log LOG = LogFactory.getLog(StunIoHandler.class);
     private final StunMessageVisitorFactory m_visitorFactory;
     
     /**
@@ -24,7 +26,7 @@ public abstract class AbstractStunIoHandler extends IoHandlerAdapter
      * client side while others create visitors for the server side, 
      * for example.
      */
-    public AbstractStunIoHandler(final StunMessageVisitorFactory visitorFactory)
+    public StunIoHandler(final StunMessageVisitorFactory visitorFactory)
         {
         m_visitorFactory = visitorFactory;
         }
@@ -42,5 +44,12 @@ public abstract class AbstractStunIoHandler extends IoHandlerAdapter
         // variation between, for example, client and server visitor 
         // implementations.
         stunMessage.accept(this.m_visitorFactory.createVisitor(session));
+        }
+    
+    public void exceptionCaught(final IoSession session, final Throwable cause)
+        throws Exception
+        {
+        LOG.warn("Exception on STUN IoHandler", cause);
+        session.close();
         }
     }
