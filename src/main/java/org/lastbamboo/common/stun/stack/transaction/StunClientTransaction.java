@@ -1,5 +1,7 @@
 package org.lastbamboo.common.stun.stack.transaction;
 
+import java.net.InetSocketAddress;
+
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 
@@ -33,5 +35,14 @@ public interface StunClientTransaction<T> extends StunMessageVisitor<T>
      * @param listener The listener to add.
      */
     void addListener(StunTransactionListener listener);
+
+    /**
+     * Gets the destination host the transaction was intended for.  This 
+     * allows handlers to verify that the source of incoming packets is the
+     * source we expect.
+     * 
+     * @return The intended destination host.
+     */
+    InetSocketAddress getIntendedDestination();
 
     }

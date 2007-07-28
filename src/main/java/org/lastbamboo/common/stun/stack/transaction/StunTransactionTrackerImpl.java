@@ -1,5 +1,8 @@
 package org.lastbamboo.common.stun.stack.transaction;
 
+import java.net.InetSocketAddress;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,8 +23,23 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
     
     private final Map<UUID, StunClientTransaction> m_transactions = 
         new ConcurrentHashMap<UUID, StunClientTransaction>();
+    
+    public void addTransaction(final StunMessage request, 
+        final StunTransactionListener listener, 
+        final InetSocketAddress localAddress, 
+        final InetSocketAddress remoteAddress)
+        {
+        final List<StunTransactionListener> transactionListeners = 
+            new LinkedList<StunTransactionListener>();
+        transactionListeners.add(listener);
+        
+        final StunClientTransaction ct = 
+            new StunClientTransactionImpl(request, transactionListeners,
+                localAddress, remoteAddress);
+        trackTransaction(ct);
+        }
 
-    public void trackTransaction(final StunClientTransaction ct)
+    private void trackTransaction(final StunClientTransaction ct)
         {
         LOG.debug("Tracking transaction...");
         final StunMessage message = ct.getRequest();

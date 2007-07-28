@@ -1,5 +1,6 @@
 package org.lastbamboo.common.stun.stack.transaction;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -33,17 +34,27 @@ public class StunClientTransactionImpl
 
     private final long m_transactionStartTime;
 
+    private final InetSocketAddress m_localAddress;
+
+    private final InetSocketAddress m_remoteAddress;
+
     /**
      * Creates a new SIP client transaction.
      * 
      * @param request The request starting the transaction.
      * @param transactionListeners The listeners for transaction events.
+     * @param remoteAddress The remote address for the transaction.
+     * @param localAddress The local address for the transation.
      */
     public StunClientTransactionImpl(final StunMessage request, 
-        final List<StunTransactionListener> transactionListeners)
+        final List<StunTransactionListener> transactionListeners, 
+        final InetSocketAddress localAddress, 
+        final InetSocketAddress remoteAddress)
         {
         this.m_request = request;
         this.m_transactionListeners = transactionListeners;
+        this.m_localAddress = localAddress;
+        this.m_remoteAddress = remoteAddress;
         this.m_transactionStartTime = System.currentTimeMillis();
         }
     
@@ -133,5 +144,10 @@ public class StunClientTransactionImpl
     public StunMessage visitNullMessage(final NullStunMessage message)
         {
         return message;
+        }
+
+    public InetSocketAddress getIntendedDestination()
+        {
+        return this.m_remoteAddress;
         }
     }
