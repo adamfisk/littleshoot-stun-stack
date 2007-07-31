@@ -2,8 +2,12 @@ package org.lastbamboo.common.stun.stack.encoder;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 
 import org.apache.mina.common.ByteBuffer;
+import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
@@ -28,6 +32,9 @@ public class StunAttributeEncoder implements StunAttributeVisitor
     {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
+    
+    private static final CharsetEncoder UTF_8_ENCODER =
+        Charset.forName("UTF-8").newEncoder();
     
     private final ByteBuffer m_buf;
 
@@ -83,6 +90,28 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         writeHeader(attribute);
         // Note that USE-CANDIDATE doesn't have any body.
         }
+    
+    public void visiteErrorCode(final ErrorCodeAttribute attribute)
+        {
+        writeHeader(attribute);
+        
+        // The first 21 bits are zero-filled for 32 bit alignment.  We skip
+        // the first 16 here so we can just write a full byte for the class
+        // on the next call.
+        m_buf.skip(16);
+        MinaUtils.putUnsignedByte(this.m_buf, attribute.getErrorClass());
+        MinaUtils.putUnsignedByte(this.m_buf, attribute.getErrorNumber());
+        try
+            {
+            m_buf.putString(attribute.getReasonPhrase(), UTF_8_ENCODER);
+            }
+        catch (final CharacterCodingException e)
+            {
+            LOG.error("Could not encode reason phrase", e);
+            throw new IllegalArgumentException(
+                "Could not encode reason phrase", e);
+            }
+        }
 
     public void visitRelayAddress(final RelayAddressAttribute address)
         {
@@ -128,5 +157,4 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         MinaUtils.putUnsignedShort(m_buf, sa.getAttributeType().toInt());
         MinaUtils.putUnsignedShort(m_buf, sa.getBodyLength());
         }
-
     }

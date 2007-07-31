@@ -34,9 +34,9 @@ public class NullStunMessage implements StunMessage, VisitableStunMessage
         return UUID.randomUUID();
         }
 
-    public int getType()
+    public StunMessageType getType()
         {
-        return Integer.MAX_VALUE;
+        return null;
         }
 
     public <T> T accept(final StunMessageVisitor<T> visitor)

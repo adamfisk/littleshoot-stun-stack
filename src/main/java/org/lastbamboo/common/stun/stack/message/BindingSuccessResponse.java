@@ -15,11 +15,11 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 /**
  * Binding response message.
  */
-public class SuccessfulBindingResponse extends AbstractStunMessage
+public class BindingSuccessResponse extends AbstractStunMessage
     {
 
     private static final Log LOG = 
-        LogFactory.getLog(SuccessfulBindingResponse.class);
+        LogFactory.getLog(BindingSuccessResponse.class);
     private final InetSocketAddress m_mappedAddress;
 
     /**
@@ -28,11 +28,11 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
      * @param transactionId The ID of the transaction.
      * @param address The mapped address.
      */
-    public SuccessfulBindingResponse(final byte[] transactionId, 
+    public BindingSuccessResponse(final byte[] transactionId, 
         final InetSocketAddress address)
         {
         super(new UUID(transactionId), 
-            StunMessageType.SUCCESSFUL_BINDING_RESPONSE, 
+            StunMessageType.BINDING_SUCCESS_RESPONSE, 
             createAttributes(address));
         m_mappedAddress = address;
         }
@@ -43,10 +43,10 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
      * @param transactionId The transaction ID of the response.
      * @param attributes The response attributes.
      */
-    public SuccessfulBindingResponse(final UUID transactionId, 
+    public BindingSuccessResponse(final UUID transactionId, 
         final Map<StunAttributeType, StunAttribute> attributes)
         {
-        super(transactionId, StunMessageType.SUCCESSFUL_BINDING_RESPONSE, 
+        super(transactionId, StunMessageType.BINDING_SUCCESS_RESPONSE, 
             attributes);
         m_mappedAddress = getAddress(attributes);
         }
@@ -89,7 +89,7 @@ public class SuccessfulBindingResponse extends AbstractStunMessage
     
     public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        return visitor.visitSuccessfulBindingResponse(this);
+        return visitor.visitBindingSuccessResponse(this);
         }
     
     public String toString()

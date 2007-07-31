@@ -45,6 +45,6 @@ public interface StunMessage extends VisitableStunMessage
      * 
      * @return The type of the message.
      */
-    int getType();
+    StunMessageType getType();
 
     }

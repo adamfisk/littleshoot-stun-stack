@@ -23,7 +23,8 @@ public interface StunTransactionListener
      * or for any other reason. 
      * 
      * @param request The original request.
+     * @param response The binding response.
      */
-    void onTransactionFailed(StunMessage request);
+    void onTransactionFailed(StunMessage request, StunMessage response);
 
     }

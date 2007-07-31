@@ -1,20 +1,26 @@
 package org.lastbamboo.common.stun.stack.transaction;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
 import org.lastbamboo.common.stun.stack.message.NullStunMessage;
-import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
+import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateErrorResponse;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
-import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
+import org.lastbamboo.common.util.Closure;
+import org.lastbamboo.common.util.CollectionUtils;
+import org.lastbamboo.common.util.CollectionUtilsImpl;
 
 /**
  * Implementation of a SIP client transaction.
@@ -30,7 +36,11 @@ public class StunClientTransactionImpl
 
     private long m_transactionTime = Long.MAX_VALUE;
 
-    private final List<StunTransactionListener> m_transactionListeners;
+    /**
+     * The listeners for a transaction.  We must lock this whenever 
+     * it's accessed.
+     */
+    private List<StunTransactionListener> m_transactionListeners;
 
     private final long m_transactionStartTime;
 
@@ -52,7 +62,8 @@ public class StunClientTransactionImpl
         final InetSocketAddress remoteAddress)
         {
         this.m_request = request;
-        this.m_transactionListeners = transactionListeners;
+        this.m_transactionListeners = 
+            Collections.synchronizedList(transactionListeners);
         this.m_localAddress = localAddress;
         this.m_remoteAddress = remoteAddress;
         this.m_transactionStartTime = System.currentTimeMillis();
@@ -73,8 +84,54 @@ public class StunClientTransactionImpl
         return m_transactionTime;
         }
     
-    public StunMessage visitSuccessfulBindingResponse(
-        final SuccessfulBindingResponse response)
+    public StunMessage visitBindingSuccessResponse(
+        final BindingSuccessResponse response)
+        {
+        LOG.debug("Received success response");
+        final Closure<StunTransactionListener> success =
+            new Closure<StunTransactionListener>()
+            {
+            public void execute(final StunTransactionListener listener)
+                {
+                listener.onTransactionSucceeded(m_request, response);
+                }
+            };
+        return notifyListeners(response, success);
+        }
+    
+    public StunMessage visitBindingErrorResponse(
+        final BindingErrorResponse response)
+        {
+        final Closure<StunTransactionListener> error =
+            new Closure<StunTransactionListener>()
+            {
+            public void execute(final StunTransactionListener listener)
+                {
+                listener.onTransactionFailed(m_request, response);
+                }
+            };
+        return notifyListeners(response, error);
+        }
+    
+    private StunMessage notifyListeners(final StunMessage response, 
+        final Closure<StunTransactionListener> closure)
+        {
+        if (isSameTransaction(response))
+            {
+            final CollectionUtils utils = new CollectionUtilsImpl();
+
+            LOG.debug("About to notify listeners...");
+            utils.forAllDoSynchronized(this.m_transactionListeners, closure);
+            return response;
+            }
+        else
+            {
+            LOG.warn("Received response from different transaction.");
+            return null;
+            }
+        }
+
+    private boolean isSameTransaction(StunMessage response)
         {
         if (!this.m_request.getTransactionId().equals(
             response.getTransactionId()))
@@ -82,19 +139,13 @@ public class StunClientTransactionImpl
             LOG.error("Unexpected transaction ID.  Expected " + 
                 this.m_request.getTransactionId() +
                 " but was "+response.getTransactionId());
-            return null;
+            return false;
             }
-        setTransactionTime();
-        if (LOG.isDebugEnabled())
+        else
             {
-            LOG.debug("Transaction time: "+getTransactionTime());
+            setTransactionTime();
+            return true;
             }
-        for (final StunTransactionListener listener : 
-            this.m_transactionListeners)
-            {
-            listener.onTransactionSucceeded(this.m_request, response);
-            }
-        return response;
         }
 
     private void setTransactionTime()
@@ -123,8 +174,14 @@ public class StunClientTransactionImpl
         return null;
         }
 
-    public StunMessage visitSuccessfulAllocateResponse(
-        final SuccessfulAllocateResponse response)
+    public StunMessage visitAllocateSuccessResponse(
+        final AllocateSuccessResponse response)
+        {
+        return null;
+        }
+    
+    public StunMessage visitAllocateErrorResponse(
+        final AllocateErrorResponse response)
         {
         return null;
         }

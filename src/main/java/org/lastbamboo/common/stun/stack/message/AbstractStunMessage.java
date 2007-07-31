@@ -29,7 +29,7 @@ public abstract class AbstractStunMessage implements StunMessage,
 
     private final int m_bodyLength;
 
-    private final int m_messageType;
+    private final StunMessageType m_messageType;
 
     /**
      * Creates a new STUN message.
@@ -38,7 +38,7 @@ public abstract class AbstractStunMessage implements StunMessage,
      * @param messageType The type of message.
      */
     public AbstractStunMessage(final UUID transactionId,
-        final int messageType)
+        final StunMessageType messageType)
         {
         this(transactionId, messageType, EMPTY_MAP);
         }
@@ -50,7 +50,8 @@ public abstract class AbstractStunMessage implements StunMessage,
      * @param attributes The message attributes.
      * @param messageType The type of the message.
      */
-    public AbstractStunMessage(final UUID transactionId, final int messageType,
+    public AbstractStunMessage(final UUID transactionId, 
+        final StunMessageType messageType,
         final Map<StunAttributeType, StunAttribute> attributes)
         {
         m_transactionId = transactionId;
@@ -114,7 +115,7 @@ public abstract class AbstractStunMessage implements StunMessage,
         return this.m_bodyLength;
         }
     
-    public int getType()
+    public StunMessageType getType()
         {
         return this.m_messageType;
         }

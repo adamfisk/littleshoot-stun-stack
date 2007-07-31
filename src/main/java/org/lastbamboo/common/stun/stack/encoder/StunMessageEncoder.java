@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.id.uuid.UUID;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
@@ -40,7 +41,8 @@ public class StunMessageEncoder
             {
             LOG.debug("Total message length: "+length);
             }
-        MinaUtils.putUnsignedShort(buf, stunMessage.getType());
+        final StunMessageType type = stunMessage.getType();
+        MinaUtils.putUnsignedShort(buf, type.toInt());
         MinaUtils.putUnsignedShort(buf, stunMessage.getBodyLength());
         
         final UUID transactionId = stunMessage.getTransactionId();

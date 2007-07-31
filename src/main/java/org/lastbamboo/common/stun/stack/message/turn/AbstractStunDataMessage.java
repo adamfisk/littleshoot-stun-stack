@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
+import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
@@ -29,7 +30,7 @@ public abstract class AbstractStunDataMessage extends AbstractStunMessage
      * @param attributes The message attributes.
      */
     public AbstractStunDataMessage(final UUID transactionId, 
-        final int messageType, 
+        final StunMessageType messageType, 
         final Map<StunAttributeType, StunAttribute> attributes)
         {
         super(transactionId, messageType, attributes);
@@ -49,7 +50,7 @@ public abstract class AbstractStunDataMessage extends AbstractStunMessage
      * @param remoteAddress The address the data came from or should be sent to.
      */
     public AbstractStunDataMessage(final UUID transactionId, 
-        final int messageType, final byte[] data, 
+        final StunMessageType messageType, final byte[] data, 
         final InetSocketAddress remoteAddress)
         {
         super(transactionId, messageType, 

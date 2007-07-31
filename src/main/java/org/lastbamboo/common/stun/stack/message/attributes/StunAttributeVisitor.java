@@ -79,4 +79,11 @@ public interface StunAttributeVisitor
      */
     void visitIceControlling(IceControllingAttribute attribute);
 
+    /**
+     * Visits the STUN ERROR-CODE attribute.
+     * 
+     * @param attribute The STUN ERROR-CODE attribute.
+     */
+    void visiteErrorCode(ErrorCodeAttribute attribute);
+
     }

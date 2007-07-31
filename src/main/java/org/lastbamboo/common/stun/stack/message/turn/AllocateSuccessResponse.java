@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Creates a new response to an allocate request.  This includes the mapped
  * address the server has allocated to proxy data to the TURN client.
  */
-public final class SuccessfulAllocateResponse extends AbstractStunMessage
+public final class AllocateSuccessResponse extends AbstractStunMessage
     {
     
     private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -34,10 +34,10 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
      * request.
      * @param attributes The message attributes.
      */
-    public SuccessfulAllocateResponse(final UUID transactionId, 
+    public AllocateSuccessResponse(final UUID transactionId, 
         final Map<StunAttributeType, StunAttribute> attributes)
         {
-        super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
+        super(transactionId, StunMessageType.ALLOCATE_SUCCESS_RESPONSE,
             attributes);
         final MappedAddressAttribute ma = (MappedAddressAttribute) attributes.get(
             StunAttributeType.MAPPED_ADDRESS);
@@ -57,11 +57,11 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
      * @param mappedAddress The MAPPED ADDRESS, or the "server reflexive"
      * address.
      */
-    public SuccessfulAllocateResponse(final UUID transactionId,
+    public AllocateSuccessResponse(final UUID transactionId,
         final InetSocketAddress relayAddress,
         final InetSocketAddress mappedAddress)
         {
-        super(transactionId, StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE,
+        super(transactionId, StunMessageType.ALLOCATE_SUCCESS_RESPONSE,
             createAttributes(relayAddress, mappedAddress));
         this.m_mappedAddress = mappedAddress;
         this.m_relayAddress = relayAddress;
@@ -100,7 +100,7 @@ public final class SuccessfulAllocateResponse extends AbstractStunMessage
     
     public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        return visitor.visitSuccessfulAllocateResponse(this);
+        return visitor.visitAllocateSuccessResponse(this);
         }
 
     }

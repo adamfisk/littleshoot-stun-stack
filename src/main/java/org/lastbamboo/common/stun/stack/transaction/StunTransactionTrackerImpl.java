@@ -69,7 +69,8 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
         return message.getTransactionId();
         }
 
-    public void onTransactionFailed(final StunMessage request)
+    public void onTransactionFailed(final StunMessage request,
+        final StunMessage response)
         {
         removeTransaction(request);
         }

@@ -1,14 +1,17 @@
 package org.lastbamboo.common.stun.stack.message;
 
+import org.lastbamboo.common.stun.stack.message.turn.AllocateErrorResponse;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
-import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
 
 /**
  * Visitor for various STUN messages.
+ * 
+ * @param <T> The return type for this visitor.
  */
 public interface StunMessageVisitor<T>
     {
@@ -17,24 +20,49 @@ public interface StunMessageVisitor<T>
      * Visits a binding message.
      * 
      * @param binding The binding message.
+     * @return The return type for this visitor.
      */
     T visitBindingRequest(BindingRequest binding);
 
     /**
-     * Visits a binding response.
+     * Visits a binding success response.
      * 
-     * @param response The binding response.
+     * @param response The binding success response.
+     * @return The return type for this visitor.
      */
-    T visitSuccessfulBindingResponse(SuccessfulBindingResponse response);
+    T visitBindingSuccessResponse(BindingSuccessResponse response);
+    
+    /**
+     * Visits a binding error response.
+     * 
+     * @param response Binding error response.
+     * @return The return type for this visitor.
+     */
+    T visitBindingErrorResponse(BindingErrorResponse response);
 
     /**
      * Visits the TURN usage allocate request message.
      * 
      * @param request The TURN usage allocate request.
+     * @return The return type for this visitor.
      */
     T visitAllocateRequest(AllocateRequest request);
 
-    T visitSuccessfulAllocateResponse(SuccessfulAllocateResponse response);
+    /**
+     * Visits a response for a successful Allocate Request.
+     * 
+     * @param response The response to a successful Allocate Request.
+     * @return The return type for this visitor.
+     */
+    T visitAllocateSuccessResponse(AllocateSuccessResponse response);
+ 
+    /**
+     * Visits a response for a failed Allocate Request.
+     * 
+     * @param response The response to a failed Allocate Request.
+     * @return The return type for this visitor.
+     */
+    T visitAllocateErrorResponse(AllocateErrorResponse response);
 
     T visitDataIndication(DataIndication data);
 
@@ -47,6 +75,7 @@ public interface StunMessageVisitor<T>
      * attribute.
      * 
      * @param request The connect request.
+     * @return The return type for this visitor.
      */
     T visitConnectRequest(ConnectRequest request);
     
@@ -56,6 +85,7 @@ public interface StunMessageVisitor<T>
      * CONNECT STAT attribute.
      * 
      * @param indication The connection status indication message.
+     * @return The return type for this visitor.
      */
     T visitConnectionStatusIndication(ConnectionStatusIndication indication);
 
@@ -64,6 +94,7 @@ public interface StunMessageVisitor<T>
      * request receives no response whatsoever.
      * 
      * @param message The message to visit.
+     * @return The return type for this visitor.
      */
     T visitNullMessage(NullStunMessage message);
 

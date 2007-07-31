@@ -7,19 +7,21 @@ import java.util.Map;
 import org.apache.commons.id.uuid.UUID;
 import org.apache.mina.common.ByteBuffer;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
+import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
-import org.lastbamboo.common.stun.stack.message.SuccessfulBindingResponse;
+import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateErrorResponse;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
-import org.lastbamboo.common.stun.stack.message.turn.SuccessfulAllocateResponse;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.util.mina.DecodingState;
 import org.lastbamboo.common.util.mina.DecodingStateMachine;
@@ -28,6 +30,7 @@ import org.lastbamboo.common.util.mina.MinaUtils;
 import org.lastbamboo.common.util.mina.decode.binary.UnsignedShortDecodingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingErrorProcessor;
 
 /**
  * State machine for decoding STUN messages.
@@ -35,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class StunMessageDecodingState extends DecodingStateMachine 
     {
 
-    private final Logger LOG = 
+    private final static Logger LOG = 
         LoggerFactory.getLogger(StunMessageDecodingState.class);
     
     private static final Map<StunAttributeType, StunAttribute> 
@@ -177,23 +180,33 @@ public class StunMessageDecodingState extends DecodingStateMachine
         final Map<StunAttributeType, StunAttribute> attributes)
         {
         final UUID id = new UUID(transactionId);
-        switch (type)
+        final StunMessageType messageType = StunMessageType.toType(type);
+        if (messageType == null)
             {
-            case StunMessageType.BINDING_REQUEST:
+            LOG.warn("Unrecognized type: "+type);
+            throw new IllegalArgumentException("Unrecognized type: "+type);
+            }
+        switch (messageType)
+            {
+            case BINDING_REQUEST:
                 return new BindingRequest(id);
-            case StunMessageType.SUCCESSFUL_BINDING_RESPONSE:
-                return new SuccessfulBindingResponse(id, attributes);
-            case StunMessageType.ALLOCATE_REQUEST:
+            case BINDING_SUCCESS_RESPONSE:
+                return new BindingSuccessResponse(id, attributes);
+            case BINDING_ERROR_RESPONSE:
+                return new BindingErrorResponse(id, attributes);
+            case ALLOCATE_REQUEST:
                 return new AllocateRequest(id);
-            case StunMessageType.SUCCESSFUL_ALLOCATE_RESPONSE:
-                return new SuccessfulAllocateResponse(id, attributes);
-            case StunMessageType.DATA_INDICATION:
+            case ALLOCATE_SUCCESS_RESPONSE:
+                return new AllocateSuccessResponse(id, attributes);
+            case ALLOCATE_ERROR_RESPONSE:
+                return new AllocateErrorResponse(id, attributes);
+            case DATA_INDICATION:
                 return new DataIndication(id, attributes);
-            case StunMessageType.SEND_INDICATION:
+            case SEND_INDICATION:
                 return new SendIndication(id, attributes);
-            case StunMessageType.CONNECT_REQUEST:
+            case CONNECT_REQUEST:
                 return new ConnectRequest(id, attributes);
-            case StunMessageType.CONNECTION_STATUS_INDICATION:
+            case CONNECTION_STATUS_INDICATION:
                 return new ConnectionStatusIndication(id, attributes);
             }
         return null;
