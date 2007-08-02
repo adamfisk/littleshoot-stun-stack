@@ -5,20 +5,20 @@ import org.apache.mina.common.IoSession;
 /**
  * Factory for creating STUN message visitors.  Implementing classes might
  * include a factory for the server and a factory for the client, for example.
+ * 
+ * @param <T> The return type of visitor methods.
  */
-public interface StunMessageVisitorFactory
+public interface StunMessageVisitorFactory<T>
     {
 
     /**
      * Creates a new visitor.
-     * 
-     * @param <T> The type the visitor returns.
      * 
      * @param session The {@link IoSession} for reading or writing any necessary
      * data.
      * 
      * @return The new visitor.
      */
-    <T> StunMessageVisitor<T> createVisitor(final IoSession session);
+    StunMessageVisitor<T> createVisitor(final IoSession session);
 
     }

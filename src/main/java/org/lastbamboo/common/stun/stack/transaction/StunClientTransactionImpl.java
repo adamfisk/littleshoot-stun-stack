@@ -2,6 +2,7 @@ package org.lastbamboo.common.stun.stack.transaction;
 
 import java.net.InetSocketAddress;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -23,7 +24,7 @@ import org.lastbamboo.common.util.CollectionUtils;
 import org.lastbamboo.common.util.CollectionUtilsImpl;
 
 /**
- * Implementation of a SIP client transaction.
+ * Implementation of a STUN client transaction.
  */
 public class StunClientTransactionImpl 
     implements StunClientTransaction<StunMessage>
@@ -49,7 +50,7 @@ public class StunClientTransactionImpl
     private final InetSocketAddress m_remoteAddress;
 
     /**
-     * Creates a new SIP client transaction.
+     * Creates a new STUN client transaction.
      * 
      * @param request The request starting the transaction.
      * @param transactionListeners The listeners for transaction events.
@@ -69,6 +70,30 @@ public class StunClientTransactionImpl
         this.m_transactionStartTime = System.currentTimeMillis();
         }
     
+    /**
+     * Creates a new STUN client transaction.
+     * 
+     * @param request The request starting the transaction.
+     * @param transactionListener The listener for transaction events.
+     * @param remoteAddress The remote address for the transaction.
+     * @param localAddress The local address for the transation.
+     */
+    public StunClientTransactionImpl(final StunMessage request, 
+        StunTransactionListener transactionListener, 
+        final InetSocketAddress localAddress, 
+        final InetSocketAddress remoteAddress)
+        {
+        this.m_request = request;
+        final List<StunTransactionListener> listeners = 
+            new LinkedList<StunTransactionListener>();
+        listeners.add(transactionListener);
+        this.m_transactionListeners = 
+            Collections.synchronizedList(listeners);
+        this.m_localAddress = localAddress;
+        this.m_remoteAddress = remoteAddress;
+        this.m_transactionStartTime = System.currentTimeMillis();
+        }
+    
     public void addListener(final StunTransactionListener listener)
         {
         this.m_transactionListeners.add(listener);
@@ -82,6 +107,11 @@ public class StunClientTransactionImpl
     public long getTransactionTime()
         {
         return m_transactionTime;
+        }
+    
+    public InetSocketAddress getIntendedDestination()
+        {
+        return this.m_remoteAddress;
         }
     
     public StunMessage visitBindingSuccessResponse(
@@ -127,7 +157,7 @@ public class StunClientTransactionImpl
         else
             {
             LOG.warn("Received response from different transaction.");
-            return null;
+            return new NullStunMessage();
             }
         }
 
@@ -201,10 +231,5 @@ public class StunClientTransactionImpl
     public StunMessage visitNullMessage(final NullStunMessage message)
         {
         return message;
-        }
-
-    public InetSocketAddress getIntendedDestination()
-        {
-        return this.m_remoteAddress;
         }
     }

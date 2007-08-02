@@ -69,19 +69,19 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
         return message.getTransactionId();
         }
 
-    public void onTransactionFailed(final StunMessage request,
+    public Object onTransactionFailed(final StunMessage request,
         final StunMessage response)
         {
-        removeTransaction(request);
+        return removeTransaction(request);
         }
 
-    public void onTransactionSucceeded(final StunMessage request, 
+    public Object onTransactionSucceeded(final StunMessage request, 
         final StunMessage response)
         {
-        removeTransaction(request);
+        return removeTransaction(request);
         }
 
-    private void removeTransaction(final StunMessage message)
+    private Object removeTransaction(final StunMessage message)
         {
         // We now consider the transaction completed and remove the 
         // transaction.
@@ -89,5 +89,6 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
         
         LOG.debug("Removing transaction with key '" + key + "'");
         this.m_transactions.remove(key);
+        return null;
         }
     }

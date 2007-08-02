@@ -3,10 +3,11 @@ package org.lastbamboo.common.stun.stack.transaction;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 
 /**
- * Interface for "transaction user" (TU) classes wishing to listen for 
- * transtaction events.
+ * Interface for classes wishing to listen for STUN transtaction events.
+ * 
+ * @param <T> The return type of the event methods.
  */
-public interface StunTransactionListener
+public interface StunTransactionListener<T>
     {
 
     /**
@@ -15,8 +16,9 @@ public interface StunTransactionListener
      * 
      * @param message The binding request.
      * @param response The binding response.
+     * @return The return type of the event methods.
      */
-    void onTransactionSucceeded(StunMessage message, StunMessage response);
+    T onTransactionSucceeded(StunMessage message, StunMessage response);
 
     /**
      * Called when the transaction failed with an error response, a timeout,
@@ -24,7 +26,8 @@ public interface StunTransactionListener
      * 
      * @param request The original request.
      * @param response The binding response.
+     * @return The return type of the event methods.
      */
-    void onTransactionFailed(StunMessage request, StunMessage response);
+    T onTransactionFailed(StunMessage request, StunMessage response);
 
     }
