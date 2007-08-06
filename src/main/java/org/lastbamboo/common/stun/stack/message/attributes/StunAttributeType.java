@@ -111,13 +111,13 @@ public enum StunAttributeType
      * candidate, should one be discovered by the check with a request using 
      * this attribute.
      */
-    PRIORITY(0x0024),
+    ICE_PRIORITY(0x0024),
     
     /**
      * Indicates that the ICE candidate pair resulting from this check 
      * should be used for transmission of media.
      */
-    USE_CANDIDATE(0x0025),
+    ICE_USE_CANDIDATE(0x0025),
     
     /**
      * Indicates that an ICE client believes it is currently in the 

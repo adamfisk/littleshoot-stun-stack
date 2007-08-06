@@ -21,7 +21,7 @@ public final class IcePriorityAttribute extends AbstractStunAttribute
      */
     public IcePriorityAttribute(final long priority)
         {
-        super(StunAttributeType.PRIORITY, 4);
+        super(StunAttributeType.ICE_PRIORITY, 4);
         m_priority = priority;
         }
 

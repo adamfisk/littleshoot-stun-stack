@@ -18,7 +18,7 @@ public final class IceUseCandidateAttribute extends AbstractStunAttribute
      */
     public IceUseCandidateAttribute()
         {
-        super(StunAttributeType.USE_CANDIDATE, 0);
+        super(StunAttributeType.ICE_USE_CANDIDATE, 0);
         }
     
     public void accept(final StunAttributeVisitor visitor)

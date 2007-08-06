@@ -126,13 +126,13 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 return new ConnectionStatusAttribute(status);
                 }
                 
-            case PRIORITY:
+            case ICE_PRIORITY:
                 {
                 final long priority = body.getUnsignedInt();
                 return new IcePriorityAttribute(priority);
                 }
                 
-            case USE_CANDIDATE:
+            case ICE_USE_CANDIDATE:
                 {
                 return new IceUseCandidateAttribute();
                 }
