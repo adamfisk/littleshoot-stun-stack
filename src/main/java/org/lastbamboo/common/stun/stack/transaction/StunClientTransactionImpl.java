@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
+import org.lastbamboo.common.stun.stack.message.CanceledStunMessage;
 import org.lastbamboo.common.stun.stack.message.NullStunMessage;
 import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
@@ -229,6 +230,11 @@ public class StunClientTransactionImpl
         }
 
     public StunMessage visitNullMessage(final NullStunMessage message)
+        {
+        return message;
+        }
+
+    public StunMessage visitCanceledMessage(final CanceledStunMessage message)
         {
         return message;
         }

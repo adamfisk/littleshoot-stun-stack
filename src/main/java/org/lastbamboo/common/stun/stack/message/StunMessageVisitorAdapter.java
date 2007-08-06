@@ -96,4 +96,9 @@ public abstract class StunMessageVisitorAdapter<T>
         return null;
         }
 
+    public T visitCanceledMessage(final CanceledStunMessage message)
+        {
+        LOG.error("Visiting unexpected message: {}", message);
+        return null;
+        }
     }

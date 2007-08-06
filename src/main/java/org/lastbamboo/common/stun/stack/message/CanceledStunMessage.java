@@ -8,10 +8,10 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 
 /**
- * Placeholder class that forces callers to handle cases such as when there
- * is no response to a request. 
+ * Placeholder class that forces callers to handle cases where the request
+ * transaction was cancelled.
  */
-public class NullStunMessage implements StunMessage
+public class CanceledStunMessage implements StunMessage
     {
 
     public Map<StunAttributeType, StunAttribute> getAttributes()
@@ -41,7 +41,7 @@ public class NullStunMessage implements StunMessage
 
     public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        return visitor.visitNullMessage(this);
+        return visitor.visitCanceledMessage(this);
         }
 
     }

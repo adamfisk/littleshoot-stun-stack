@@ -98,4 +98,14 @@ public interface StunMessageVisitor<T>
      */
     T visitNullMessage(NullStunMessage message);
 
+    /**
+     * Visits a STUN message indicating the STUN transaction was canceled.  
+     * This allows visitors to differentiate between canceled messages and 
+     * messages where the server never responded.
+     * 
+     * @param message The canceled message.
+     * @return The type the visitor returns.
+     */
+    T visitCanceledMessage(CanceledStunMessage message);
+
     }
