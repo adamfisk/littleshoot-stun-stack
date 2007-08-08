@@ -34,11 +34,7 @@ public final class IceControllingAttribute extends AbstractStunAttribute
      */
     public IceControllingAttribute(final byte[] tieBreaker)
         {
-        super(StunAttributeType.ICE_CONTROLLED, 8);
-        if (tieBreaker == null)
-            {
-            throw new NullPointerException("Null tie breaker???");
-            }
+        super(StunAttributeType.ICE_CONTROLLING, tieBreaker.length);
         m_tieBreaker = tieBreaker;
         }
 
