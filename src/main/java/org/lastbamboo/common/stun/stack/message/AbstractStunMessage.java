@@ -15,8 +15,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAtt
 /**
  * Abstracts out common methods and data of STUN messages.
  */
-public abstract class AbstractStunMessage implements StunMessage,
-    VisitableStunMessage
+public abstract class AbstractStunMessage implements StunMessage
     {
 
     private static final Map<StunAttributeType, StunAttribute> EMPTY_MAP =
@@ -83,7 +82,7 @@ public abstract class AbstractStunMessage implements StunMessage,
         return createAttributes(att);
         }
 
-    private int calculateBodyLength(
+    private static int calculateBodyLength(
         final Map<StunAttributeType, StunAttribute> attributesMap)
         {
         final Collection<StunAttribute> attributes = attributesMap.values();
@@ -122,6 +121,7 @@ public abstract class AbstractStunMessage implements StunMessage,
     
     public String toString()
         {
-        return ClassUtils.getShortClassName(getClass());
+        return ClassUtils.getShortClassName(getClass()) + " " + 
+            this.m_attributes + " body length: "+this.m_bodyLength;
         }
     }

@@ -14,7 +14,6 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
  * A STUN Binding message.
  */
 public class BindingRequest extends AbstractStunMessage 
-    implements VisitableStunMessage
     {
 
     private static final Log LOG = LogFactory.getLog(BindingRequest.class);
@@ -23,10 +22,13 @@ public class BindingRequest extends AbstractStunMessage
      * Creates a new STUN binding message.
      * 
      * @param id The message's transaction ID.
+     * @param attributes Additional Binding Request attributes, typically 
+     * attributes associated with a particular STUN usage.
      */
-    public BindingRequest(final UUID id)
+    public BindingRequest(final UUID id, 
+        final Map<StunAttributeType, StunAttribute> attributes)
         {
-        super(id, StunMessageType.BINDING_REQUEST);
+        super(id, StunMessageType.BINDING_REQUEST, attributes);
         if (LOG.isDebugEnabled())
             {
             LOG.debug("Building binding message");

@@ -18,11 +18,11 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactory
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributesFactoryImpl;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateErrorResponse;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
+import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
-import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
-import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
+import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
 import org.lastbamboo.common.util.mina.DecodingState;
 import org.lastbamboo.common.util.mina.DecodingStateMachine;
 import org.lastbamboo.common.util.mina.FixedLengthDecodingState;
@@ -30,7 +30,6 @@ import org.lastbamboo.common.util.mina.MinaUtils;
 import org.lastbamboo.common.util.mina.decode.binary.UnsignedShortDecodingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.BindingErrorProcessor;
 
 /**
  * State machine for decoding STUN messages.
@@ -189,7 +188,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
         switch (messageType)
             {
             case BINDING_REQUEST:
-                return new BindingRequest(id);
+                return new BindingRequest(id, attributes);
             case BINDING_SUCCESS_RESPONSE:
                 return new BindingSuccessResponse(id, attributes);
             case BINDING_ERROR_RESPONSE:
