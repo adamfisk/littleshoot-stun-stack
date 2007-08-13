@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
 import org.lastbamboo.common.stun.stack.message.CanceledStunMessage;
+import org.lastbamboo.common.stun.stack.message.IcmpErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.NullStunMessage;
 import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
@@ -133,17 +134,28 @@ public class StunClientTransactionImpl
     public StunMessage visitBindingErrorResponse(
         final BindingErrorResponse response)
         {
+        return notifyFailure(response);
+        }
+    
+    public StunMessage visitIcmpErrorMesssage(
+        final IcmpErrorStunMessage message)
+        {
+        return notifyFailure(message);
+        }
+    
+    private StunMessage notifyFailure(final StunMessage message)
+        {
         final Closure<StunTransactionListener> error =
             new Closure<StunTransactionListener>()
             {
             public void execute(final StunTransactionListener listener)
                 {
-                listener.onTransactionFailed(m_request, response);
+                listener.onTransactionFailed(m_request, message);
                 }
             };
-        return notifyListeners(response, error);
+        return notifyListeners(message, error);
         }
-    
+
     private StunMessage notifyListeners(final StunMessage response, 
         final Closure<StunTransactionListener> closure)
         {
@@ -162,7 +174,7 @@ public class StunClientTransactionImpl
             }
         }
 
-    private boolean isSameTransaction(StunMessage response)
+    private boolean isSameTransaction(final StunMessage response)
         {
         if (!this.m_request.getTransactionId().equals(
             response.getTransactionId()))

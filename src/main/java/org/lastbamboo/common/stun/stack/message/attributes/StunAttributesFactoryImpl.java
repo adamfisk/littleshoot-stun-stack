@@ -126,6 +126,14 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 return new ConnectionStatusAttribute(status);
                 }
                 
+            case ERROR_CODE:
+                {
+                body.skip(2);
+                final int code = body.getUnsignedShort();
+                final String reasonPhrase = MinaUtils.getString(body);
+                return new ErrorCodeAttribute(code, reasonPhrase);
+                }
+                
             case ICE_PRIORITY:
                 {
                 final long priority = body.getUnsignedInt();
@@ -150,7 +158,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 body.get(tieBreaker);
                 return new IceControllingAttribute(tieBreaker);
                 }
-                
+           
             default:
                 {
                 LOG.error("Unrecognized attribute: "+type);

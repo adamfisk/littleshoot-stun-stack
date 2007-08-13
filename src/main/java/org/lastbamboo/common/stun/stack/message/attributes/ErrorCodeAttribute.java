@@ -28,6 +28,7 @@ public class ErrorCodeAttribute extends AbstractStunAttribute
     public ErrorCodeAttribute(final int code, final String reasonPhrase)
         {
         super(StunAttributeType.ERROR_CODE, calculateBodyLength(reasonPhrase));
+        LOG.warn("Creating error code attribute");
         this.m_errorCode = code;
         this.m_reasonPhrase = reasonPhrase;
         this.m_errorClass = (int)Math.floor(code / 100);

@@ -1,5 +1,6 @@
 package org.lastbamboo.common.stun.stack.message.attributes.ice;
 
+import org.apache.commons.lang.ClassUtils;
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
@@ -38,5 +39,11 @@ public final class IcePriorityAttribute extends AbstractStunAttribute
     public void accept(final StunAttributeVisitor visitor)
         {
         visitor.visitIcePriority(this);
+        }
+    
+    public String toString()
+        {
+        return ClassUtils.getShortClassName(getClass()) + " priority: " + 
+            m_priority;
         }
     }

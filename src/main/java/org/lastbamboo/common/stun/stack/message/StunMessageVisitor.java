@@ -108,4 +108,12 @@ public interface StunMessageVisitor<T>
      */
     T visitCanceledMessage(CanceledStunMessage message);
 
+    /**
+     * Visits a STUN "message" indicating there was an ICMP error.
+     * 
+     * @param message The ICMP error message.
+     * @return The type the visitor returns.
+     */
+    T visitIcmpErrorMesssage(IcmpErrorStunMessage message);
+
     }

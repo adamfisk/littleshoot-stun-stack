@@ -1,12 +1,16 @@
 package org.lastbamboo.common.stun.stack;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.net.PortUnreachableException;
+
 import org.apache.mina.common.IoHandlerAdapter;
 import org.apache.mina.common.IoSession;
+import org.lastbamboo.common.stun.stack.message.IcmpErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
 import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Processes STUN messages.  This class can be subclassed to implement 
@@ -18,7 +22,7 @@ import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 public class StunIoHandler<T> extends IoHandlerAdapter
     {
     
-    private final Log LOG = LogFactory.getLog(StunIoHandler.class);
+    private final Logger LOG = LoggerFactory.getLogger(StunIoHandler.class);
     private final StunMessageVisitorFactory<T> m_visitorFactory;
     
     /**
@@ -31,6 +35,10 @@ public class StunIoHandler<T> extends IoHandlerAdapter
      */
     public StunIoHandler(final StunMessageVisitorFactory<T> visitorFactory)
         {
+        if (visitorFactory == null)
+            {
+            throw new NullPointerException("Null visitor!");
+            }
         m_visitorFactory = visitorFactory;
         }
 
@@ -46,13 +54,31 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         // The visitor will handle the particular message type, allowing for 
         // variation between, for example, client and server visitor 
         // implementations.
-        stunMessage.accept(this.m_visitorFactory.createVisitor(session));
+        final StunMessageVisitor<T> visitor = 
+            this.m_visitorFactory.createVisitor(session);
+        
+        LOG.debug("Sending message to visitor: {}", visitor);
+        stunMessage.accept(visitor);
         }
     
     public void exceptionCaught(final IoSession session, final Throwable cause)
         throws Exception
         {
-        LOG.warn("Exception on STUN IoHandler", cause);
-        session.close();
+        LOG.debug("Exception on STUN IoHandler", cause);
+        if (cause instanceof PortUnreachableException)
+            {
+            // We pretend it's like an ordinary STUN "message" and visit it.
+            // We allow the processing classes to close the session as they
+            // see fit.
+            //
+            // This will occur relatively frequently over the course of normal
+            // STUN checks.
+            final IcmpErrorStunMessage icmpError = new IcmpErrorStunMessage();
+            messageReceived(session, icmpError);
+            }
+        else
+            {
+            session.close();
+            }
         }
     }

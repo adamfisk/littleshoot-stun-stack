@@ -101,4 +101,10 @@ public abstract class StunMessageVisitorAdapter<T>
         LOG.error("Visiting unexpected message: {}", message);
         return null;
         }
+    
+    public T visitIcmpErrorMesssage(final IcmpErrorStunMessage message)
+        {
+        LOG.error("Visiting unexpected message: {}", message);
+        return null;
+        }
     }
