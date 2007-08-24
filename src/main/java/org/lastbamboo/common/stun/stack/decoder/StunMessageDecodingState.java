@@ -59,11 +59,11 @@ public class StunMessageDecodingState extends DecodingStateMachine
     protected DecodingState finishDecode(final List<Object> childProducts, 
         final ProtocolDecoderOutput out) throws Exception
         {
-        LOG.error("Got finish decode");
+        LOG.error("Got finish decode for full message");
         return null;
         }
     
-    private class ReadMessageType extends UnsignedShortDecodingState
+    private static class ReadMessageType extends UnsignedShortDecodingState
         {
     
         @Override
@@ -74,7 +74,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
             }
         }
     
-    private class ReadMessageLength extends UnsignedShortDecodingState
+    private static class ReadMessageLength extends UnsignedShortDecodingState
         {
 
         private final int m_messageType;
@@ -94,7 +94,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
     
         }
     
-    private class ReadTransactionId extends FixedLengthDecodingState
+    private static class ReadTransactionId extends FixedLengthDecodingState
         {
 
         private final int m_messageType;
@@ -128,12 +128,13 @@ public class StunMessageDecodingState extends DecodingStateMachine
                     createMessage(this.m_messageType, transactionId, 
                         EMPTY_ATTRIBUTES);
                 out.write(message);
-                return new ReadMessageType();
+                //return new ReadMessageType();
+                return null;
                 }
             }
         }
     
-    private class ReadBody extends FixedLengthDecodingState
+    private static class ReadBody extends FixedLengthDecodingState
         {
 
         private final int m_type;
@@ -168,11 +169,10 @@ public class StunMessageDecodingState extends DecodingStateMachine
                 createMessage(this.m_type, this.m_transactionId, attributes);
             
             out.write(message);
-            return new ReadMessageType();
+            return null;
+            //return new ReadMessageType();
             }
-    
         }
-    
     
     private static StunMessage createMessage(final int type,
         final byte[] transactionId, 
@@ -208,6 +208,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
             case CONNECTION_STATUS_INDICATION:
                 return new ConnectionStatusIndication(id, attributes);
             }
+        LOG.error("Could not understand message type: "+type);
         return null;
         }
 

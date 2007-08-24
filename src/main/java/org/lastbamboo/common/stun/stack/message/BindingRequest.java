@@ -39,7 +39,7 @@ public class BindingRequest extends AbstractStunMessage
      */
     public BindingRequest()
         {
-        super(UUID.randomUUID(), StunMessageType.BINDING_REQUEST);
+        super(StunMessageType.BINDING_REQUEST);
         }
 
     /**
@@ -50,8 +50,7 @@ public class BindingRequest extends AbstractStunMessage
      */
     public BindingRequest(final StunAttribute... attributes)
         {
-        super(UUID.randomUUID(), StunMessageType.BINDING_REQUEST, 
-            createAttributes(attributes));
+        super(StunMessageType.BINDING_REQUEST, createAttributes(attributes));
         if (LOG.isDebugEnabled())
             {
             LOG.debug("Created Binding Request from scratch: {}", this);

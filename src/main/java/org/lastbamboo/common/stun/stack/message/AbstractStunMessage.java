@@ -7,10 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ClassUtils;
+import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.lastbamboo.common.util.mina.MinaUtils;
 
 /**
  * Abstracts out common methods and data of STUN messages.
@@ -29,6 +32,43 @@ public abstract class AbstractStunMessage implements StunMessage
     private final int m_bodyLength;
 
     private final StunMessageType m_messageType;
+    
+    private static final int MAGIC_COOKIE = 0x2112A442;
+    
+    private static final int[] MAGIC_COOKIE_BYTES = 
+        {
+        0x21, 0x12, 0xA4, 0x42,   
+        };
+    
+    private static final ByteBuffer MAGIC_COOKIE_BUF = ByteBuffer.allocate(4);
+    
+    static
+        {
+        //MinaUtils.putUnsignedInt(MAGIC_COOKIE_BUF, 0x2112A442);
+        MAGIC_COOKIE_BUF.putInt(0x2112A442);
+        }
+    
+    /**
+     * Creates a new STUN message.
+     * 
+     * @param messageType The type of message.
+     */
+    public AbstractStunMessage(final StunMessageType messageType)
+        {
+        this(createTransactionId(), messageType, EMPTY_MAP);
+        }
+    
+    /**
+     * Creates a new STUN message.
+     * 
+     * @param attributes The message attributes.
+     * @param messageType The type of the message.
+     */
+    public AbstractStunMessage(final StunMessageType messageType,
+        final Map<StunAttributeType, StunAttribute> attributes)
+        {
+        this (createTransactionId(), messageType, attributes);
+        }
 
     /**
      * Creates a new STUN message.
@@ -39,7 +79,7 @@ public abstract class AbstractStunMessage implements StunMessage
     public AbstractStunMessage(final UUID transactionId,
         final StunMessageType messageType)
         {
-        this(transactionId, messageType, EMPTY_MAP);
+        this (transactionId, messageType, EMPTY_MAP);
         }
     
     /**
@@ -59,6 +99,26 @@ public abstract class AbstractStunMessage implements StunMessage
         m_totalLength = m_bodyLength + 20;
         m_messageType = messageType;
         }
+    
+    private static UUID createTransactionId()
+        {
+        final UUID id = UUID.randomUUID();
+        final byte[] idBytes = id.getRawBytes();
+        final ByteBuffer idBuf = ByteBuffer.wrap(idBytes);
+        
+        // Lower the limit to make room for the magic cookie.
+        idBuf.limit(idBytes.length - 4);
+        
+        final ByteBuffer newIdBuf = ByteBuffer.allocate(16);
+        MinaUtils.putUnsignedInt(newIdBuf, MAGIC_COOKIE);
+        //System.out.println("id buf remaining:     "+idBuf.remaining());
+        //System.out.println("new id buf remaining: "+newIdBuf.remaining());
+        newIdBuf.put(idBuf);
+        newIdBuf.flip();
+        
+        return new UUID(MinaUtils.toByteArray(newIdBuf));
+        }
+
 
     protected static Map<StunAttributeType, StunAttribute> createAttributes(
         final StunAttribute... attributes)

@@ -18,7 +18,7 @@ public final class AllocateRequest extends AbstractStunMessage
      */
     public AllocateRequest()
         {
-        super(UUID.randomUUID(), StunMessageType.ALLOCATE_REQUEST);
+        super(StunMessageType.ALLOCATE_REQUEST);
         }
 
     /**

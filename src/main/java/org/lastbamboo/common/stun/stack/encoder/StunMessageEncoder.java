@@ -39,7 +39,9 @@ public class StunMessageEncoder
         
         if (LOG.isDebugEnabled())
             {
-            LOG.debug("Total message length: "+length+" for STUN message: "+stunMessage);
+            LOG.debug("Total message length: "+length+" for STUN message: "+
+                stunMessage);
+            System.out.println(buf.capacity());
             }
         final StunMessageType type = stunMessage.getType();
         MinaUtils.putUnsignedShort(buf, type.toInt());

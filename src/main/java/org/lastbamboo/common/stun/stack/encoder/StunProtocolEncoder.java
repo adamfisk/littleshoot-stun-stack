@@ -2,16 +2,16 @@ package org.lastbamboo.common.stun.stack.encoder;
 
 import org.apache.mina.common.ByteBuffer;
 import org.apache.mina.common.IoSession;
-import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.lastbamboo.common.util.mina.DemuxableProtocolEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Encodes bytes into STUN messages.
  */
-public class StunProtocolEncoder implements ProtocolEncoder
+public class StunProtocolEncoder implements DemuxableProtocolEncoder
     {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -32,4 +32,11 @@ public class StunProtocolEncoder implements ProtocolEncoder
         final ByteBuffer buf = encoder.encode(stunMessage);
         out.write(buf);
         }
+    
+    @Override
+    public String toString()
+        {
+        return getClass().getSimpleName();
+        }
+    
     }

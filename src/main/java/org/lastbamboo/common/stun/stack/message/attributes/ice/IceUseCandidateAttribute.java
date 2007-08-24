@@ -25,4 +25,10 @@ public final class IceUseCandidateAttribute extends AbstractStunAttribute
         {
         visitor.visitIceUseCandidate(this);
         }
+    
+    @Override
+    public String toString()
+        {
+        return getClass().getSimpleName();
+        }
     }

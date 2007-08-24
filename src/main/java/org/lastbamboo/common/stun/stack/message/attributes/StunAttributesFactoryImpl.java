@@ -46,12 +46,6 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         {
         final int typeInt = buf.getUnsignedShort();
         final StunAttributeType type = StunAttributeType.toType(typeInt);
-        if (type == null)
-            {
-            // This could just be a weird attribute from a STUN server we 
-            // don't understand, for example.  Then again, it could be a bug!
-            LOG.debug("Could not get type for int: "+typeInt);
-            }
         final int length = buf.getUnsignedShort();
         
         if (buf.remaining() < length)
