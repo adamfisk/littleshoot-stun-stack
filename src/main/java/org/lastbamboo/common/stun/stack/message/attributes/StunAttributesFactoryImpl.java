@@ -50,7 +50,8 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
         
         if (buf.remaining() < length)
             {
-            LOG.error("Error reading attribute.\nExpected length:  "+length+
+            LOG.error("Error reading attribute of type: "+type+
+                "\nExpected length:  "+length+
                 "\nActual remaining: "+buf.remaining());
             }
         final byte[] body = new byte[length];

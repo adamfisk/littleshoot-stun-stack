@@ -60,4 +60,10 @@ public abstract class AbstractStunAddressAttribute extends AbstractStunAttribute
         {
         return this.m_addressFamily;
         }
+    
+    @Override
+    public String toString()
+        {
+        return getClass().getSimpleName() + " for: " + m_inetSocketAddress;
+        }
     }

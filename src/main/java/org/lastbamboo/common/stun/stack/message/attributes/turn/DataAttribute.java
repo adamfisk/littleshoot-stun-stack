@@ -39,4 +39,11 @@ public final class DataAttribute extends AbstractStunAttribute
         {
         visitor.visitData(this);
         }
+    
+    @Override
+    public String toString()
+        {
+        return getClass().getSimpleName() + " with "+ 
+            this.m_data.length +" bytes of data...";
+        }
     }

@@ -37,4 +37,9 @@ public abstract class AbstractStunAttribute implements StunAttribute
         return m_attributeType;
         }
 
+    @Override
+    public String toString()
+        {
+        return getClass().getSimpleName();
+        }
     }

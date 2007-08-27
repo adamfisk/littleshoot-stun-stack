@@ -1,8 +1,9 @@
-package org.lastbamboo.common.stun.stack.decoder;
+package org.lastbamboo.common.stun.stack;
 
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
+import org.lastbamboo.common.stun.stack.decoder.StunMessageDecodingState;
 import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
 import org.lastbamboo.common.util.mina.StateMachineProtocolDecoder;
 
