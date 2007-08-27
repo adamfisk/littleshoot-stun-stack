@@ -35,10 +35,6 @@ public class StunIoHandler<T> extends IoHandlerAdapter
      */
     public StunIoHandler(final StunMessageVisitorFactory<T> visitorFactory)
         {
-        if (visitorFactory == null)
-            {
-            throw new NullPointerException("Null visitor!");
-            }
         m_visitorFactory = visitorFactory;
         }
 
