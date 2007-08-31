@@ -47,8 +47,6 @@ public class StunClientTransactionImpl
 
     private final long m_transactionStartTime;
 
-    private final InetSocketAddress m_localAddress;
-
     private final InetSocketAddress m_remoteAddress;
 
     /**
@@ -57,17 +55,14 @@ public class StunClientTransactionImpl
      * @param request The request starting the transaction.
      * @param transactionListeners The listeners for transaction events.
      * @param remoteAddress The remote address for the transaction.
-     * @param localAddress The local address for the transation.
      */
     public StunClientTransactionImpl(final StunMessage request, 
         final List<StunTransactionListener> transactionListeners, 
-        final InetSocketAddress localAddress, 
         final InetSocketAddress remoteAddress)
         {
         this.m_request = request;
         this.m_transactionListeners = 
             Collections.synchronizedList(transactionListeners);
-        this.m_localAddress = localAddress;
         this.m_remoteAddress = remoteAddress;
         this.m_transactionStartTime = System.currentTimeMillis();
         }
@@ -78,11 +73,9 @@ public class StunClientTransactionImpl
      * @param request The request starting the transaction.
      * @param transactionListener The listener for transaction events.
      * @param remoteAddress The remote address for the transaction.
-     * @param localAddress The local address for the transation.
      */
     public StunClientTransactionImpl(final StunMessage request, 
-        StunTransactionListener transactionListener, 
-        final InetSocketAddress localAddress, 
+        final StunTransactionListener transactionListener, 
         final InetSocketAddress remoteAddress)
         {
         this.m_request = request;
@@ -91,7 +84,6 @@ public class StunClientTransactionImpl
         listeners.add(transactionListener);
         this.m_transactionListeners = 
             Collections.synchronizedList(listeners);
-        this.m_localAddress = localAddress;
         this.m_remoteAddress = remoteAddress;
         this.m_transactionStartTime = System.currentTimeMillis();
         }

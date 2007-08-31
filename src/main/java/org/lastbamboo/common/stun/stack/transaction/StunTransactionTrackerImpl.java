@@ -14,15 +14,15 @@ import org.lastbamboo.common.stun.stack.message.StunMessage;
 /**
  * Class for matching requests and responses to their associated transactions.
  */
-public class StunTransactionTrackerImpl implements StunTransactionTracker, 
-    StunTransactionListener
+public class StunTransactionTrackerImpl 
+    implements StunTransactionTracker<StunMessage>, StunTransactionListener
     {
     
     private static final Log LOG = 
         LogFactory.getLog(StunTransactionTrackerImpl.class);
     
-    private final Map<UUID, StunClientTransaction> m_transactions = 
-        new ConcurrentHashMap<UUID, StunClientTransaction>();
+    private final Map<UUID, StunClientTransaction<StunMessage>> m_transactions = 
+        new ConcurrentHashMap<UUID, StunClientTransaction<StunMessage>>();
     
     public void addTransaction(final StunMessage request, 
         final StunTransactionListener listener, 
@@ -33,13 +33,13 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
             new LinkedList<StunTransactionListener>();
         transactionListeners.add(listener);
         
-        final StunClientTransaction ct = 
+        final StunClientTransaction<StunMessage> ct = 
             new StunClientTransactionImpl(request, transactionListeners,
-                localAddress, remoteAddress);
+                remoteAddress);
         trackTransaction(ct);
         }
 
-    private void trackTransaction(final StunClientTransaction ct)
+    private void trackTransaction(final StunClientTransaction<StunMessage> ct)
         {
         LOG.debug("Tracking transaction...");
         final StunMessage message = ct.getRequest();
@@ -48,11 +48,13 @@ public class StunTransactionTrackerImpl implements StunTransactionTracker,
         ct.addListener(this);
         }
 
-    public StunClientTransaction getClientTransaction(final StunMessage message)
+    public StunClientTransaction<StunMessage> getClientTransaction(
+        final StunMessage message)
         {
         LOG.debug("Accessing client transaction...");
         final UUID key = getTransactionKey(message);
-        final StunClientTransaction ct = this.m_transactions.get(key);
+        final StunClientTransaction<StunMessage> ct = 
+            this.m_transactions.get(key);
         if (ct == null)
             {
             // This will happen fairly often with STUN using UDP because

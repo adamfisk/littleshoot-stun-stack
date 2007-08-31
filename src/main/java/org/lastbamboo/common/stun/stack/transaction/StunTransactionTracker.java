@@ -6,8 +6,10 @@ import org.lastbamboo.common.stun.stack.message.StunMessage;
 
 /**
  * Interface for classes responsible for keeping track of SIP transactions.
+ * 
+ * @param <T> The type visitors for transactions return. 
  */
-public interface StunTransactionTracker
+public interface StunTransactionTracker<T>
     {
 
     /**
@@ -37,6 +39,6 @@ public interface StunTransactionTracker
      * <code>null</code> if there is no associated transaction.  This can
      * happen if the transaction has timed out, for example.
      */
-    StunClientTransaction getClientTransaction(StunMessage message);
+    StunClientTransaction<T> getClientTransaction(StunMessage message);
 
     }
