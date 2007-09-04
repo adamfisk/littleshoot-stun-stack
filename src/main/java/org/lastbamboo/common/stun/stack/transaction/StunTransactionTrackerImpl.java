@@ -74,12 +74,14 @@ public class StunTransactionTrackerImpl
     public Object onTransactionFailed(final StunMessage request,
         final StunMessage response)
         {
+        LOG.debug("Transaction failed...");
         return removeTransaction(request);
         }
 
     public Object onTransactionSucceeded(final StunMessage request, 
         final StunMessage response)
         {
+        LOG.debug("Transaction succeeded...");
         return removeTransaction(request);
         }
 

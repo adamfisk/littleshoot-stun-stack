@@ -56,10 +56,6 @@ public class StunMessageEncoder
         putAttributes(attributes, buf);
         
         buf.flip();
-        if (LOG.isDebugEnabled())
-            {
-            LOG.debug("Successfully encoded message!!");
-            }
         return buf;
         }
 

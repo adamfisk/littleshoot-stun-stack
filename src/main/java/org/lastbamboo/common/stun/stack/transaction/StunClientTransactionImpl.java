@@ -155,7 +155,8 @@ public class StunClientTransactionImpl
             {
             final CollectionUtils utils = new CollectionUtilsImpl();
 
-            LOG.debug("About to notify listeners...");
+            LOG.debug("About to notify " + this.m_transactionListeners.size() + 
+                " listeners...");
             utils.forAllDoSynchronized(this.m_transactionListeners, closure);
             return response;
             }

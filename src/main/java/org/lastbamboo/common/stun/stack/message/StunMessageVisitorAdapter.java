@@ -27,84 +27,97 @@ public abstract class StunMessageVisitorAdapter<T>
     
     public T visitAllocateRequest(final AllocateRequest request)
         {
-        LOG.error("Visiting unexpected message: {}", request);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", request);
         return null;
         }
 
     public T visitBindingRequest(final BindingRequest request)
         {
-        LOG.error("Visiting unexpected message: {}", request);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", request);
         return null;
         }
 
     public T visitConnectRequest(final ConnectRequest request)
         {
-        LOG.error("Visiting unexpected message: {}", request);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", request);
         return null;
         }
 
     public T visitConnectionStatusIndication(
         final ConnectionStatusIndication indication)
         {
-        LOG.error("Visiting unexpected message: {}", indication);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", indication);
         return null;
         }
 
     public T visitDataIndication(final DataIndication data)
         {
-        LOG.error("Visiting unexpected message: {}", data);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", data);
         return null;
         }
 
     public T visitSendIndication(final SendIndication request)
         {
-        LOG.error("Visiting unexpected message: {}", request);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", request);
         return null;
         }
 
     public T visitAllocateSuccessResponse(
         final AllocateSuccessResponse response)
         {
-        LOG.error("Visiting unexpected message: {}", response);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", response);
         return null;
         }
 
     public T visitAllocateErrorResponse(
         final AllocateErrorResponse response)
         {
-        LOG.error("Visiting unexpected message: {}", response);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", response);
         return null;
         }
 
     public T visitBindingSuccessResponse(
         final BindingSuccessResponse response)
         {
-        LOG.error("Visiting unexpected message: {}", response);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", response);
         return null;
         }
     
     public T visitBindingErrorResponse(
         final BindingErrorResponse response)
         {
-        LOG.error("Visiting unexpected message: {}", response);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", response);
         return null;
         }
     
     public T visitNullMessage(final NullStunMessage message)
         {
-        LOG.error("Visiting unexpected message: {}", message);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", message);
         return null;
         }
 
     public T visitCanceledMessage(final CanceledStunMessage message)
         {
-        LOG.error("Visiting unexpected message: {}", message);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", message);
         return null;
         }
     
     public T visitIcmpErrorMesssage(final IcmpErrorStunMessage message)
         {
-        LOG.error("Visiting unexpected message: {}", message);
+        LOG.error(getClass().getSimpleName() + 
+            " visiting unexpected message: {}", message);
         return null;
         }
     }
