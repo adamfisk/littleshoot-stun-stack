@@ -8,7 +8,6 @@ import org.lastbamboo.common.stun.stack.message.IcmpErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
-import org.lastbamboo.common.stun.stack.message.VisitableStunMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +44,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             LOG.debug("Received message: "+message);
             }
         
-        final VisitableStunMessage stunMessage = (VisitableStunMessage) message;
+        final StunMessage stunMessage = (StunMessage) message;
         
         // The visitor will handle the particular message type, allowing for 
         // variation between, for example, client and server visitor 

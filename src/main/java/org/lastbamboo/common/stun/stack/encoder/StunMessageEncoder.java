@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class StunMessageEncoder
     {
 
-    private final Logger LOG = 
+    private final Logger m_log = 
         LoggerFactory.getLogger(StunMessageEncoder.class);
     
     /**
@@ -37,9 +37,9 @@ public class StunMessageEncoder
         final int length = stunMessage.getTotalLength();
         final ByteBuffer buf = ByteBuffer.allocate(length);
         
-        if (LOG.isDebugEnabled())
+        if (m_log.isDebugEnabled())
             {
-            LOG.debug("Total message length: "+length+" for STUN message: "+
+            m_log.debug("Total message length: "+length+" for STUN message: "+
                 stunMessage);
             }
         final StunMessageType type = stunMessage.getType();

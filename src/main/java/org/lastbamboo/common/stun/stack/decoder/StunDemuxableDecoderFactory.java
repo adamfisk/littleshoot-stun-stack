@@ -8,6 +8,10 @@ import org.lastbamboo.common.util.mina.DemuxingStateMachineProtocolDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * MINA decoder for demultiplexing between STUN messages and messages for 
+ * another protocol working in conjunction with STUN.
+ */
 public class StunDemuxableDecoderFactory implements DemuxableDecoderFactory
     {
 
