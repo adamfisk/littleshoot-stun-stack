@@ -30,6 +30,14 @@ public class StunDemuxingIoHandler implements IoHandler
     public StunDemuxingIoHandler(final Class clazz, final IoHandler handler,
         final IoHandler stunIoHandler)
         {
+        if (handler == null)
+            {
+            throw new NullPointerException("Null auxillary handler");
+            }
+        if (stunIoHandler == null)
+            {
+            throw new NullPointerException("Null STUN handler");
+            }
         m_clazz = clazz;
         m_ioHandler = handler;
         m_stunIoHandler = stunIoHandler;
