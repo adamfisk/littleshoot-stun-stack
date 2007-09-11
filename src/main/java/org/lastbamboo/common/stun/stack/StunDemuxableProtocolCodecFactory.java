@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * {@link DemuxableProtocolCodecFactory} for STUN.
  */
 public class StunDemuxableProtocolCodecFactory 
-    implements DemuxableProtocolCodecFactory
+    implements DemuxableProtocolCodecFactory<StunMessage>
     {
 
     private final Logger m_log = LoggerFactory.getLogger(getClass());
@@ -58,7 +58,7 @@ public class StunDemuxableProtocolCodecFactory
             }
         }
 
-    public Class getClassToEncode()
+    public Class<StunMessage> getClassToEncode()
         {
         return StunMessage.class;
         }
