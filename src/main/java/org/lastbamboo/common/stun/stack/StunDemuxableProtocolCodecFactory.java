@@ -21,7 +21,7 @@ public class StunDemuxableProtocolCodecFactory
 
     private final Logger m_log = LoggerFactory.getLogger(getClass());
     
-    public boolean canDecode(ByteBuffer in)
+    public boolean canDecode(final ByteBuffer in)
         {
         final int pos = in.position();
         final int limit = in.limit();

@@ -44,7 +44,6 @@ public abstract class AbstractStunMessage implements StunMessage
     
     static
         {
-        //MinaUtils.putUnsignedInt(MAGIC_COOKIE_BUF, 0x2112A442);
         MAGIC_COOKIE_BUF.putInt(0x2112A442);
         }
     
@@ -111,8 +110,6 @@ public abstract class AbstractStunMessage implements StunMessage
         
         final ByteBuffer newIdBuf = ByteBuffer.allocate(16);
         MinaUtils.putUnsignedInt(newIdBuf, MAGIC_COOKIE);
-        //System.out.println("id buf remaining:     "+idBuf.remaining());
-        //System.out.println("new id buf remaining: "+newIdBuf.remaining());
         newIdBuf.put(idBuf);
         newIdBuf.flip();
         

@@ -44,17 +44,21 @@ public abstract class AbstractStunDataMessage extends AbstractStunMessage
     /**
      * Creates a new abstract STUN data message.
      * 
-     * @param transactionId The transaction ID>
      * @param messageType The type of message.
      * @param data The data.
      * @param remoteAddress The address the data came from or should be sent to.
      */
-    public AbstractStunDataMessage(final UUID transactionId, 
+    public AbstractStunDataMessage(
         final StunMessageType messageType, final byte[] data, 
         final InetSocketAddress remoteAddress)
         {
-        super(transactionId, messageType, 
-            createDataAttributes(data, remoteAddress));
+        super(messageType, createDataAttributes(data, remoteAddress));
+        if (data.length > 0xffff)
+            {
+            throw new IllegalArgumentException(
+                "Data length must be smaller than: "+0xffff+" but is:"+
+                data.length);
+            }
         m_remoteAddress = remoteAddress;
         m_data = data;
         }

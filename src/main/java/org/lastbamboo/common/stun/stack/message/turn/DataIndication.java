@@ -37,8 +37,7 @@ public final class DataIndication extends AbstractStunDataMessage
     public DataIndication(final InetSocketAddress remoteAddress, 
         final byte[] data)
         {
-        super(UUID.randomUUID(), StunMessageType.DATA_INDICATION, 
-            data, remoteAddress);
+        super(StunMessageType.DATA_INDICATION, data, remoteAddress);
         }
 
     public <T> T accept(final StunMessageVisitor<T> visitor)

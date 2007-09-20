@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class StunIoHandler<T> extends IoHandlerAdapter
     {
     
-    private final Logger LOG = LoggerFactory.getLogger(StunIoHandler.class);
+    private final Logger m_log = LoggerFactory.getLogger(StunIoHandler.class);
     private final StunMessageVisitorFactory<T> m_visitorFactory;
     
     /**
@@ -37,11 +37,12 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         m_visitorFactory = visitorFactory;
         }
 
+    @Override
     public void messageReceived(final IoSession session, final Object message)
         {
-        if (LOG.isDebugEnabled())
+        if (m_log.isDebugEnabled())
             {
-            LOG.debug("Received message: "+message);
+            m_log.debug("Received message: {}", message);
             }
         
         final StunMessage stunMessage = (StunMessage) message;
@@ -52,14 +53,14 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         final StunMessageVisitor<T> visitor = 
             this.m_visitorFactory.createVisitor(session);
         
-        LOG.debug("Sending message to visitor: {}", visitor);
+        m_log.debug("Sending message to visitor: {}", visitor);
         stunMessage.accept(visitor);
         }
     
+    @Override
     public void exceptionCaught(final IoSession session, final Throwable cause)
-        throws Exception
         {
-        LOG.debug("Exception on STUN IoHandler", cause);
+        m_log.debug("Exception on STUN IoHandler", cause);
         if (cause instanceof PortUnreachableException)
             {
             // We pretend it's like an ordinary STUN "message" and visit it.
@@ -67,7 +68,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             // see fit.
             //
             // This will occur relatively frequently over the course of normal
-            // STUN checks.
+            // STUN checks for UDP.
             final IcmpErrorStunMessage icmpError = new IcmpErrorStunMessage();
             messageReceived(session, icmpError);
             }

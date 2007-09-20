@@ -18,7 +18,6 @@ public class StunProtocolEncoder implements DemuxableProtocolEncoder
 
     public void dispose(final IoSession session) throws Exception
         {
-        // TODO Auto-generated method stub
 
         }
 

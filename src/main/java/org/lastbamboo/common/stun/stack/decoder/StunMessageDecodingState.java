@@ -128,7 +128,6 @@ public class StunMessageDecodingState extends DecodingStateMachine
                     createMessage(this.m_messageType, transactionId, 
                         EMPTY_ATTRIBUTES);
                 out.write(message);
-                //return new ReadMessageType();
                 return null;
                 }
             }
@@ -170,7 +169,6 @@ public class StunMessageDecodingState extends DecodingStateMachine
             
             out.write(message);
             return null;
-            //return new ReadMessageType();
             }
         }
     

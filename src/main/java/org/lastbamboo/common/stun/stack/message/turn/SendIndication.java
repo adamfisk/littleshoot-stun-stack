@@ -16,7 +16,7 @@ public final class SendIndication extends AbstractStunDataMessage
 	{
 
     /**
-     * Creates a new Send Indication message.
+     * Creates a new Send Indication message with data from the network.
      * 
      * @param transactionId The ID of the transaction.
      * @param attributes The message attributes.
@@ -28,7 +28,7 @@ public final class SendIndication extends AbstractStunDataMessage
         }
     
     /**
-     * Creates a new send indication message.
+     * Creates a new Send Indication message.
      * 
      * @param remoteAddress The address to send the data to.
      * @param data The data.
@@ -36,8 +36,7 @@ public final class SendIndication extends AbstractStunDataMessage
     public SendIndication(final InetSocketAddress remoteAddress, 
         final byte[] data)
         {
-        super(UUID.randomUUID(), StunMessageType.SEND_INDICATION, 
-            data, remoteAddress);
+        super(StunMessageType.SEND_INDICATION, data, remoteAddress);
         }
     
     public <T> T accept(final StunMessageVisitor<T> visitor)
