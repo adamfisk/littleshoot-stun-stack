@@ -104,7 +104,7 @@ public class ErrorCodeAttribute extends AbstractStunAttribute
     
     public String toString()
         {
-        return ClassUtils.getShortClassName(getClass()) + 
+        return getClass().getSimpleName() + 
             ": " + this.m_errorClass + this.m_errorNumber + 
             " " + this.m_reasonPhrase;
         }

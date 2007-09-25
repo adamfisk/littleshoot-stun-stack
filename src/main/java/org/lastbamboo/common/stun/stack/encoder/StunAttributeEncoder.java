@@ -98,7 +98,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         // The first 21 bits are zero-filled for 32 bit alignment.  We skip
         // the first 16 here so we can just write a full byte for the class
         // on the next call.
-        m_buf.skip(16);
+        m_buf.skip(2);
         MinaUtils.putUnsignedByte(this.m_buf, attribute.getErrorClass());
         MinaUtils.putUnsignedByte(this.m_buf, attribute.getErrorNumber());
         try
