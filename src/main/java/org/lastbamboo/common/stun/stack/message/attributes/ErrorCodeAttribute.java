@@ -32,7 +32,18 @@ public class ErrorCodeAttribute extends AbstractStunAttribute
         this.m_errorCode = code;
         this.m_reasonPhrase = reasonPhrase;
         this.m_errorClass = (int)Math.floor(code / 100);
+        if (this.m_errorClass < 3 ||
+            this.m_errorClass > 6)
+            {
+            throw new IllegalArgumentException(
+                "Bad class of "+this.m_errorClass+" from code: "+code);
+            }
         this.m_errorNumber = code % 100;
+        if (this.m_errorNumber < 0 || this.m_errorNumber > 99)
+            {
+            throw new IllegalArgumentException(
+                "Bad error # of "+this.m_errorNumber+" from code: "+code);
+            }
         }
 
     private static int calculateBodyLength(final String reasonPhrase)
