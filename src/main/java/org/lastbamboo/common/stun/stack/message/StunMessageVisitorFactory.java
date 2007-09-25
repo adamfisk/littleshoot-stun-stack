@@ -1,6 +1,7 @@
 package org.lastbamboo.common.stun.stack.message;
 
 import org.apache.mina.common.IoSession;
+import org.apache.mina.handler.StreamIoHandler;
 
 /**
  * Factory for creating STUN message visitors.  Implementing classes might
@@ -16,9 +17,8 @@ public interface StunMessageVisitorFactory<T>
      * 
      * @param session The {@link IoSession} for reading or writing any necessary
      * data.
-     * 
      * @return The new visitor.
      */
-    StunMessageVisitor<T> createVisitor(final IoSession session);
+    StunMessageVisitor<T> createVisitor(IoSession session);
 
     }
