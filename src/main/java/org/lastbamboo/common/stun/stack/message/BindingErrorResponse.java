@@ -24,19 +24,10 @@ public class BindingErrorResponse extends AbstractStunMessage
     public BindingErrorResponse(final UUID transactionId, 
         final int errorCode, final String reasonPhrase)
         {
-        super(transactionId, 
-            StunMessageType.BINDING_ERROR_RESPONSE, 
+        super(transactionId, StunMessageType.BINDING_ERROR_RESPONSE, 
             createAttributes(errorCode, reasonPhrase));
         }
-
-    private static Map<StunAttributeType, StunAttribute> createAttributes(
-        final int errorCode, final String reasonPhrase)
-        {
-        final StunAttribute error = 
-            new ErrorCodeAttribute(errorCode, reasonPhrase);
-        return createAttributes(error);
-        }
-
+    
     /**
      * Creates a new binding response message.
      * 
@@ -49,6 +40,15 @@ public class BindingErrorResponse extends AbstractStunMessage
         super(transactionId, StunMessageType.BINDING_ERROR_RESPONSE, 
             attributes);
         }
+
+    private static Map<StunAttributeType, StunAttribute> createAttributes(
+        final int errorCode, final String reasonPhrase)
+        {
+        final StunAttribute error = 
+            new ErrorCodeAttribute(errorCode, reasonPhrase);
+        return createAttributes(error);
+        }
+
     
     /**
      * Returns the full error code.
@@ -70,7 +70,6 @@ public class BindingErrorResponse extends AbstractStunMessage
     
     public String toString()
         {
-        return ClassUtils.getShortClassName(getClass()) + 
-            " with attributes: "+getAttributes();
+        return getClass().getSimpleName()+" with attributes: "+getAttributes();
         }
     }

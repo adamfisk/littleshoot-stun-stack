@@ -2,7 +2,6 @@ package org.lastbamboo.common.stun.stack.message.attributes;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.lang.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -62,7 +62,6 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         final ConnectionStatus status = attribute.getConnectionStatus();
         MinaUtils.putUnsignedInt(m_buf, status.toLong());
         }
-    
 
     public void visitIceControlled(final IceControlledAttribute attribute)
         {
