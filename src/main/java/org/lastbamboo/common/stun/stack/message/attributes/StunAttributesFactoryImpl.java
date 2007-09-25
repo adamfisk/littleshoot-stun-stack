@@ -124,9 +124,10 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
             case ERROR_CODE:
                 {
                 body.skip(2);
-                final int code = body.getUnsignedShort();
+                final short errorClass = body.getUnsigned();
+                final short errorNumber = body.getUnsigned();
                 final String reasonPhrase = MinaUtils.getString(body);
-                return new ErrorCodeAttribute(code, reasonPhrase);
+                return new ErrorCodeAttribute(errorClass, errorNumber, reasonPhrase);
                 }
                 
             case ICE_PRIORITY:

@@ -19,30 +19,38 @@ public class ErrorCodeAttribute extends AbstractStunAttribute
     private int m_errorCode;
 
     /**
-     * Creates a new STUN server attribute.
+     * Creates a new STUN error code attribute.
      * 
      * @param code The error code.
      * @param reasonPhrase The reason for the error.
      */
     public ErrorCodeAttribute(final int code, final String reasonPhrase)
         {
+        this((int)Math.floor(code / 100), code % 100, reasonPhrase);
+        }
+
+    /**
+     * Creates a new STUN error code attribute.
+     * 
+     * @param errorClass The error class from 3 to 6.
+     * @param errorNumber The error number from 0 to 99.
+     * @param reasonPhrase The reason for the error.
+     */
+    public ErrorCodeAttribute(final int errorClass, final int errorNumber, 
+        final String reasonPhrase)
+        {
         super(StunAttributeType.ERROR_CODE, calculateBodyLength(reasonPhrase));
-        LOG.warn("Creating error code attribute");
-        this.m_errorCode = code;
+        if (errorClass < 3 ||  errorClass > 6)
+            {
+            throw new IllegalArgumentException("Bad class of "+errorClass);
+            }
+        if (errorNumber < 0 || errorNumber > 99)
+            {
+            throw new IllegalArgumentException("Bad error # of "+errorNumber);
+            }
+        this.m_errorClass = errorClass;
+        this.m_errorNumber = errorNumber;
         this.m_reasonPhrase = reasonPhrase;
-        this.m_errorClass = (int)Math.floor(code / 100);
-        if (this.m_errorClass < 3 ||
-            this.m_errorClass > 6)
-            {
-            throw new IllegalArgumentException(
-                "Bad class of "+this.m_errorClass+" from code: "+code);
-            }
-        this.m_errorNumber = code % 100;
-        if (this.m_errorNumber < 0 || this.m_errorNumber > 99)
-            {
-            throw new IllegalArgumentException(
-                "Bad error # of "+this.m_errorNumber+" from code: "+code);
-            }
         }
 
     private static int calculateBodyLength(final String reasonPhrase)
