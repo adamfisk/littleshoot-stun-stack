@@ -23,7 +23,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
     
     private final Logger m_log = LoggerFactory.getLogger(StunIoHandler.class);
     private final StunMessageVisitorFactory m_visitorFactory;
-    private final String m_attributeKey;
+    private final String m_attributeKey = "STUN_HELPER";
     
     /**
      * Creates a new STUN IO handler class.
@@ -36,7 +36,6 @@ public class StunIoHandler<T> extends IoHandlerAdapter
     public StunIoHandler(final StunMessageVisitorFactory visitorFactory)
         {
         m_visitorFactory = visitorFactory;
-        m_attributeKey = "ICE_STREAM";
         }
 
     @Override
@@ -46,20 +45,22 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         
         final StunMessage stunMessage = (StunMessage) message;
 
+        // There may or may not be an attached class to pass to the visitor.
         final Object attribute = session.getAttribute(this.m_attributeKey);
-        if (attribute == null)
-            {
-            m_log.error("No attribute for session: {}", session);
-            throw new NullPointerException(
-                "Should be an attribute for session: " + session);
-            }
         
-        m_log.debug("Found session attribute: {}", attribute);
         // The visitor will handle the particular message type, allowing for 
         // variation between, for example, client and server visitor 
         // implementations.
-        final StunMessageVisitor visitor = 
-            this.m_visitorFactory.createVisitor(session, attribute);
+        final StunMessageVisitor visitor;
+        if (attribute == null)
+            {
+            visitor = this.m_visitorFactory.createVisitor(session);
+            }
+        else
+            {
+            m_log.debug("Found session attribute: {}", attribute);
+            visitor = this.m_visitorFactory.createVisitor(session, attribute);
+            }
         
         m_log.debug("Sending message to visitor: {}", visitor);
         stunMessage.accept(visitor);
