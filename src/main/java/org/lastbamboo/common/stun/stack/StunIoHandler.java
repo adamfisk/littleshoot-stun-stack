@@ -22,7 +22,8 @@ public class StunIoHandler<T> extends IoHandlerAdapter
     {
     
     private final Logger m_log = LoggerFactory.getLogger(StunIoHandler.class);
-    private final StunMessageVisitorFactory<T> m_visitorFactory;
+    private final StunMessageVisitorFactory m_visitorFactory;
+    private final String m_attributeKey;
     
     /**
      * Creates a new STUN IO handler class.
@@ -32,26 +33,33 @@ public class StunIoHandler<T> extends IoHandlerAdapter
      * client side while others create visitors for the server side, 
      * for example.
      */
-    public StunIoHandler(final StunMessageVisitorFactory<T> visitorFactory)
+    public StunIoHandler(final StunMessageVisitorFactory visitorFactory)
         {
         m_visitorFactory = visitorFactory;
+        m_attributeKey = "ICE_STREAM";
         }
 
     @Override
     public void messageReceived(final IoSession session, final Object message)
         {
-        if (m_log.isDebugEnabled())
-            {
-            m_log.debug("Received message: {}", message);
-            }
+        m_log.debug("Received message: {}", message);
         
         final StunMessage stunMessage = (StunMessage) message;
+
+        final Object attribute = session.getAttribute(this.m_attributeKey);
+        if (attribute == null)
+            {
+            m_log.error("No attribute for session: {}", session);
+            throw new NullPointerException(
+                "Should be an attribute for session: " + session);
+            }
         
+        m_log.debug("Found session attribute: {}", attribute);
         // The visitor will handle the particular message type, allowing for 
         // variation between, for example, client and server visitor 
         // implementations.
-        final StunMessageVisitor<T> visitor = 
-            this.m_visitorFactory.createVisitor(session);
+        final StunMessageVisitor visitor = 
+            this.m_visitorFactory.createVisitor(session, attribute);
         
         m_log.debug("Sending message to visitor: {}", visitor);
         stunMessage.accept(visitor);

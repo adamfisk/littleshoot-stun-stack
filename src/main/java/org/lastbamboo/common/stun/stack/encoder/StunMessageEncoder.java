@@ -56,6 +56,7 @@ public class StunMessageEncoder
         putAttributes(attributes, buf);
         
         buf.flip();
+        m_log.debug("Encoded STUN message as buf: {}", buf);
         return buf;
         }
 

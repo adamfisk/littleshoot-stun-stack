@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class StunMessageDecodingState extends DecodingStateMachine 
     {
 
-    private final static Logger LOG = 
+    private final static Logger m_log = 
         LoggerFactory.getLogger(StunMessageDecodingState.class);
     
     private static final Map<StunAttributeType, StunAttribute> 
@@ -46,7 +46,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
     @Override
     protected DecodingState init() throws Exception
         {
-        LOG.debug("Initing...");
+        m_log.debug("Initing...");
         return new ReadMessageType();
         }
 
@@ -59,7 +59,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
     protected DecodingState finishDecode(final List<Object> childProducts, 
         final ProtocolDecoderOutput out) throws Exception
         {
-        LOG.error("Got finish decode for full message");
+        m_log.error("Got finish decode for full message");
         return null;
         }
     
@@ -88,7 +88,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
         protected DecodingState finishDecode(final int decoded, 
             final ProtocolDecoderOutput out) throws Exception
             {
-            LOG.debug("Read message length: "+decoded);
+            m_log.debug("Read message length: "+decoded);
             return new ReadTransactionId(this.m_messageType, decoded);
             }
     
@@ -115,7 +115,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
             // This copy is not ideal, but passing around ByteBuffers was 
             // causing issues.
             final byte[] transactionId = MinaUtils.toByteArray(readData);
-            LOG.debug("Read transaction id...");
+            m_log.debug("Read transaction id...");
             if (this.m_messageLength > 0)
                 {
                 return new ReadBody(this.m_messageType, this.m_messageLength, 
@@ -123,7 +123,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
                 }
             else
                 {
-                LOG.debug("Handling empty body");
+                m_log.debug("Handling empty body");
                 final StunMessage message = 
                     createMessage(this.m_messageType, transactionId, 
                         EMPTY_ATTRIBUTES);
@@ -153,7 +153,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
             {
             if (readData.remaining() != m_length)
                 {
-                LOG.error("Read body of unexpected length." +
+                m_log.error("Read body of unexpected length." +
                     "\nExpected length:  "+m_length+
                     "\nRemaining length: "+readData.remaining());
                 }
@@ -180,9 +180,10 @@ public class StunMessageDecodingState extends DecodingStateMachine
         final StunMessageType messageType = StunMessageType.toType(type);
         if (messageType == null)
             {
-            LOG.warn("Unrecognized type: "+type);
+            m_log.warn("Unrecognized type: "+type);
             throw new IllegalArgumentException("Unrecognized type: "+type);
             }
+        m_log.debug("Decoded STUN message type: {}", messageType);
         switch (messageType)
             {
             case BINDING_REQUEST:
@@ -206,7 +207,7 @@ public class StunMessageDecodingState extends DecodingStateMachine
             case CONNECTION_STATUS_INDICATION:
                 return new ConnectionStatusIndication(id, attributes);
             }
-        LOG.error("Could not understand message type: "+type);
+        m_log.error("Could not understand message type: "+type);
         return null;
         }
 
