@@ -1,6 +1,5 @@
 package org.lastbamboo.common.stun.stack.message.turn;
 
-import java.net.InetSocketAddress;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
@@ -8,10 +7,8 @@ import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageType;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public final class AllocateErrorResponse extends AbstractStunMessage
     {
     
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger m_log = LoggerFactory.getLogger(getClass());
     
     /**
      * Creates a new successful response to an allocate request.

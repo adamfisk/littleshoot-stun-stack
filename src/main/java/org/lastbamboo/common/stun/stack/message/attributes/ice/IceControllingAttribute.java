@@ -1,9 +1,6 @@
 package org.lastbamboo.common.stun.stack.message.attributes.ice;
 
-import java.math.BigInteger;
-
 import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;

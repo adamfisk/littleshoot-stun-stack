@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public final class AllocateSuccessResponse extends AbstractStunMessage
     {
     
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger m_log = LoggerFactory.getLogger(getClass());
     
     private final InetSocketAddress m_mappedAddress;
 

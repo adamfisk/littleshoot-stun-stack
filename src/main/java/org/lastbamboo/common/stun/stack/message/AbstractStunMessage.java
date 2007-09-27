@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
@@ -34,11 +33,6 @@ public abstract class AbstractStunMessage implements StunMessage
     private final StunMessageType m_messageType;
     
     private static final int MAGIC_COOKIE = 0x2112A442;
-    
-    private static final int[] MAGIC_COOKIE_BYTES = 
-        {
-        0x21, 0x12, 0xA4, 0x42,   
-        };
     
     private static final ByteBuffer MAGIC_COOKIE_BUF = ByteBuffer.allocate(4);
     
