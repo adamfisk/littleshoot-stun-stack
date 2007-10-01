@@ -123,6 +123,7 @@ public class StunAttributesFactoryImpl implements StunAttributesFactory
                 
             case ERROR_CODE:
                 {
+                LOG.warn("Reading error code attribute.");
                 body.skip(2);
                 final short errorClass = body.getUnsigned();
                 final short errorNumber = body.getUnsigned();
