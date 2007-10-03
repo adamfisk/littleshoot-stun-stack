@@ -1,5 +1,6 @@
 package org.lastbamboo.common.stun.stack.encoder;
 
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.CharacterCodingException;
@@ -67,6 +68,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         {
         writeHeader(attribute);
         final byte[] tieBreaker = attribute.getTieBreaker();
+        LOG.debug("Encoding controlled: {}", tieBreaker);
         m_buf.put(tieBreaker);
         }
 
@@ -74,6 +76,7 @@ public class StunAttributeEncoder implements StunAttributeVisitor
         {
         writeHeader(attribute);
         final byte[] tieBreaker = attribute.getTieBreaker();
+        LOG.debug("Encoding controlling: {}", tieBreaker);
         m_buf.put(tieBreaker);
         }
 

@@ -1,12 +1,12 @@
 package org.lastbamboo.common.stun.stack.message.attributes.ice;
 
-import java.math.BigInteger;
-
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.mina.common.ByteBuffer;
+import org.apache.mina.common.support.ByteBufferHexDumper;
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The ICE-CONTROLLED attribute is present in a Binding Request, and
@@ -18,15 +18,8 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
 public final class IceControlledAttribute extends AbstractStunAttribute 
     {
 
+    private final Logger m_log = LoggerFactory.getLogger(getClass());
     private final byte[] m_tieBreaker;
-
-    /**
-     * Creates a new ICE-CONTROLLED attribute.
-     */
-    public IceControlledAttribute()
-        {
-        this(new BigInteger(64, RandomUtils.JVM_RANDOM).toByteArray());
-        }
 
     /**
      * Creates a new ICE-CONTROLLED attribute.
@@ -35,7 +28,7 @@ public final class IceControlledAttribute extends AbstractStunAttribute
      */
     public IceControlledAttribute(final byte[] tieBreaker)
         {
-        super(StunAttributeType.ICE_CONTROLLED, tieBreaker.length);
+        super(StunAttributeType.ICE_CONTROLLED,  tieBreaker.length);
         m_tieBreaker = tieBreaker;
         }
 
@@ -57,7 +50,14 @@ public final class IceControlledAttribute extends AbstractStunAttribute
 
     public String toString()
         {
-        return ClassUtils.getShortClassName(getClass());
+        final StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" with tie breaker: ");
+        final ByteBuffer buf = ByteBuffer.wrap(this.m_tieBreaker);
+        sb.append(ByteBufferHexDumper.getHexdump(buf));
+        //return getClass().getSimpleName() + " with tie breaker: " +
+          //  this.m_tieBreaker;
+        return sb.toString();
         }
     
     }

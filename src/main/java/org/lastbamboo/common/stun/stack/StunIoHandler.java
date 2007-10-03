@@ -24,6 +24,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
     private final Logger m_log = LoggerFactory.getLogger(StunIoHandler.class);
     private final StunMessageVisitorFactory m_visitorFactory;
     private final String m_attributeKey = "STUN_HELPER";
+    private final Object m_attachment;
     
     /**
      * Creates a new STUN IO handler class.
@@ -35,7 +36,14 @@ public class StunIoHandler<T> extends IoHandlerAdapter
      */
     public StunIoHandler(final StunMessageVisitorFactory visitorFactory)
         {
-        m_visitorFactory = visitorFactory;
+        this(visitorFactory, null);
+        }
+
+    public StunIoHandler(final StunMessageVisitorFactory visitorFactory, 
+        final Object attachment)
+        {
+        this.m_visitorFactory = visitorFactory;
+        this.m_attachment = attachment;
         }
 
     @Override
@@ -46,7 +54,11 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         final StunMessage stunMessage = (StunMessage) message;
 
         // There may or may not be an attached class to pass to the visitor.
-        final Object attribute = session.getAttribute(this.m_attributeKey);
+        Object attribute = session.getAttribute(this.m_attributeKey);
+        if (attribute == null)
+            {
+            attribute = this.m_attachment;
+            }
         
         // The visitor will handle the particular message type, allowing for 
         // variation between, for example, client and server visitor 
@@ -56,8 +68,9 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             {
             visitor = this.m_visitorFactory.createVisitor(session);
             }
-        else
+        else 
             {
+            
             m_log.debug("Found session attribute: {}", attribute);
             visitor = this.m_visitorFactory.createVisitor(session, attribute);
             }
@@ -83,6 +96,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             }
         else
             {
+            m_log.warn("Exception on STUN IoHandler", cause);
             session.close();
             }
         }

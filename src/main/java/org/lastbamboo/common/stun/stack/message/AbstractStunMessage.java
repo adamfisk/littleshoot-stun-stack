@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.commons.lang.ClassUtils;
 import org.apache.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
@@ -172,7 +171,7 @@ public abstract class AbstractStunMessage implements StunMessage
     
     public String toString()
         {
-        return ClassUtils.getShortClassName(getClass()) + " " + 
+        return getClass().getSimpleName() + " " + 
             this.m_attributes + " body length: "+this.m_bodyLength;
         }
     }

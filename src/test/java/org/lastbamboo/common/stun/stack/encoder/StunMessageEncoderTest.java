@@ -1,6 +1,5 @@
 package org.lastbamboo.common.stun.stack.encoder;
 
-import java.math.BigInteger;
 import java.util.Random;
 
 import junit.framework.TestCase;
@@ -25,8 +24,9 @@ public class StunMessageEncoderTest extends TestCase
                 priority);
 
         // The agent uses the same tie-breaker throughout the session.
-        final byte[] tieBreaker = 
-            new BigInteger(64, new Random()).toByteArray();
+        final Random rand = new Random();
+        final byte[] tieBreaker = new byte[16];
+        rand.nextBytes(tieBreaker);
         
         final StunAttribute controlling =
             new IceControlledAttribute(tieBreaker);

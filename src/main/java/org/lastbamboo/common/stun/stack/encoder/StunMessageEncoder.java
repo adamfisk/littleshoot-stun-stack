@@ -33,7 +33,6 @@ public class StunMessageEncoder
      */
     public ByteBuffer encode(final StunMessage stunMessage) 
         {
-        
         final int length = stunMessage.getTotalLength();
         final ByteBuffer buf = ByteBuffer.allocate(length);
         
