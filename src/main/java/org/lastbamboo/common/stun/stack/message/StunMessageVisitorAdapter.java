@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @param <T> The class the visitor methods return.
  */
-public abstract class StunMessageVisitorAdapter<T>
+public class StunMessageVisitorAdapter<T>
     implements StunMessageVisitor<T>
     {
 
