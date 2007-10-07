@@ -4,7 +4,7 @@ import java.net.PortUnreachableException;
 
 import org.apache.mina.common.IoHandlerAdapter;
 import org.apache.mina.common.IoSession;
-import org.lastbamboo.common.stun.stack.message.IcmpErrorStunMessage;
+import org.lastbamboo.common.stun.stack.message.ConnectErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
@@ -66,7 +66,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             //
             // This will occur relatively frequently over the course of normal
             // STUN checks for UDP.
-            final IcmpErrorStunMessage icmpError = new IcmpErrorStunMessage();
+            final ConnectErrorStunMessage icmpError = new ConnectErrorStunMessage();
             messageReceived(session, icmpError);
             }
         else

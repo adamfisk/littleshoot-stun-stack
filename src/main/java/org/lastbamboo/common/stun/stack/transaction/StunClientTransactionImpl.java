@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
 import org.lastbamboo.common.stun.stack.message.CanceledStunMessage;
-import org.lastbamboo.common.stun.stack.message.IcmpErrorStunMessage;
+import org.lastbamboo.common.stun.stack.message.ConnectErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.NullStunMessage;
 import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
@@ -129,8 +129,8 @@ public class StunClientTransactionImpl
         return notifyFailure(response);
         }
     
-    public StunMessage visitIcmpErrorMesssage(
-        final IcmpErrorStunMessage message)
+    public StunMessage visitConnectErrorMesssage(
+        final ConnectErrorStunMessage message)
         {
         return notifyFailure(message);
         }

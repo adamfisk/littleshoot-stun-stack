@@ -114,7 +114,7 @@ public class StunMessageVisitorAdapter<T>
         return null;
         }
     
-    public T visitIcmpErrorMesssage(final IcmpErrorStunMessage message)
+    public T visitConnectErrorMesssage(final ConnectErrorStunMessage message)
         {
         LOG.error(getClass().getSimpleName() + 
             " visiting unexpected message: {}", message);

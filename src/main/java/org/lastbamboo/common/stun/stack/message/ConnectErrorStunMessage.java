@@ -10,7 +10,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 /**
  * STUN "message" indicating there was an ICMP error.
  */
-public class IcmpErrorStunMessage implements StunMessage
+public class ConnectErrorStunMessage implements StunMessage
     {
 
     public Map<StunAttributeType, StunAttribute> getAttributes()
@@ -40,7 +40,7 @@ public class IcmpErrorStunMessage implements StunMessage
 
     public <T> T accept(final StunMessageVisitor<T> visitor)
         {
-        return visitor.visitIcmpErrorMesssage(this);
+        return visitor.visitConnectErrorMesssage(this);
         }
 
     }
