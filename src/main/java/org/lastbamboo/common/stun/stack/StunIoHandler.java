@@ -66,7 +66,8 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             //
             // This will occur relatively frequently over the course of normal
             // STUN checks for UDP.
-            final ConnectErrorStunMessage icmpError = new ConnectErrorStunMessage();
+            final ConnectErrorStunMessage icmpError =
+                new ConnectErrorStunMessage();
             messageReceived(session, icmpError);
             }
         else
