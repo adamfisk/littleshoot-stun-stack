@@ -23,6 +23,11 @@ public class StunDemuxableProtocolCodecFactory
     
     public boolean canDecode(final ByteBuffer in)
         {
+        if (!enoughData(in))
+            {
+            throw new IllegalArgumentException(
+                "Not enough data to determine if we can decode it or not!!");
+            }
         final int pos = in.position();
         final int limit = in.limit();
         try
@@ -35,7 +40,7 @@ public class StunDemuxableProtocolCodecFactory
                 {
                 return false;
                 }
-            else
+            else 
                 {
                 // OK, it could be a STUN message.  Let's check the 
                 // STUN magic cookie field to make sure.
@@ -73,6 +78,26 @@ public class StunDemuxableProtocolCodecFactory
     public ProtocolEncoder newEncoder()
         {
         return new StunProtocolEncoder();
+        }
+
+    public boolean enoughData(final ByteBuffer in)
+        {
+        //0                   1                   2                   3
+        //0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+        //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        //|0 0|     STUN Message Type     |         Message Length        |
+        //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        //|                         Magic Cookie                          |
+        //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        //|                                                               |
+        //|                     Transaction ID (96 bits)                  |
+        //|                                                               |
+        //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        
+        // As you can see from the above diagram, we need 8 bytes total to
+        // read the magic cookie.  Anything less than this, and we can't 
+        // reliably determine whether or not it's a STUN message.
+        return in.remaining() >= 8;
         }
 
     }
