@@ -2,8 +2,10 @@ package org.lastbamboo.common.stun.stack;
 
 import java.net.PortUnreachableException;
 
+import org.apache.mina.common.IdleStatus;
 import org.apache.mina.common.IoHandlerAdapter;
 import org.apache.mina.common.IoSession;
+import org.apache.mina.util.SessionUtil;
 import org.lastbamboo.common.stun.stack.message.ConnectErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
@@ -75,5 +77,24 @@ public class StunIoHandler<T> extends IoHandlerAdapter
             m_log.warn("Exception on STUN IoHandler", cause);
             session.close();
             }
+        }
+    
+    @Override
+    public void sessionCreated(final IoSession session) throws Exception
+        {
+        SessionUtil.initialize(session);
+        
+        // The idle time is in seconds.  If there's been no traffic in either
+        // direction for awhile, we free the connection to limit load on the
+        // server.
+        session.setIdleTime(IdleStatus.BOTH_IDLE, 300);
+        }
+
+    @Override
+    public void sessionIdle(final IoSession session, final IdleStatus status)
+        {
+        m_log.warn("Killing idle session");
+        // Kill idle sessions.
+        session.close();
         }
     }
