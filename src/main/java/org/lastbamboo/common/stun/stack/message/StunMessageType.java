@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * STUN attribute types.  These are converted to the full values including
- * the class bits for ease of use.  This is just a litle easier that forcing
+ * the class bits for ease of use.  This is just a little easier that forcing
  * implementors to deal with the STUN encoding structure specified in 
  * draft-ietf-behave-rfc3489bis-08.txt section 6.
  */
