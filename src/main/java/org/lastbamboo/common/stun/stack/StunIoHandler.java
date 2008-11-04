@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Processes STUN messages.  This class can be subclassed to implement 
+ * Processes STUN messages.  This class can be sub-classed to implement 
  * specialized policies, for example for specialized policies for idle sessions
  * for specific STUN usages.
  * 
@@ -86,7 +86,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         
         // The idle time is in seconds.  If there's been no traffic in either
         // direction for awhile, we free the connection.  
-        session.setIdleTime(IdleStatus.BOTH_IDLE, 300);
+        session.setIdleTime(IdleStatus.BOTH_IDLE, 100);
         }
 
     @Override
