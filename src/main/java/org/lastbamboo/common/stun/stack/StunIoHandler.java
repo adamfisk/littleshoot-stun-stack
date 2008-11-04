@@ -85,8 +85,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
         SessionUtil.initialize(session);
         
         // The idle time is in seconds.  If there's been no traffic in either
-        // direction for awhile, we free the connection to limit load on the
-        // server.
+        // direction for awhile, we free the connection.  
         session.setIdleTime(IdleStatus.BOTH_IDLE, 300);
         }
 
