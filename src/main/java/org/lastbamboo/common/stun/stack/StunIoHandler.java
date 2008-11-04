@@ -92,7 +92,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter
     @Override
     public void sessionIdle(final IoSession session, final IdleStatus status)
         {
-        m_log.warn("Killing idle session");
+        m_log.debug("Killing idle session");
         // Kill idle sessions.
         session.close();
         }
