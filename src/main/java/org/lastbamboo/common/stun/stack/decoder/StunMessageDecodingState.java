@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.mina.common.ByteBuffer;
-import org.apache.mina.filter.codec.ProtocolDecoderOutput;
+import org.littleshoot.mina.common.ByteBuffer;
+import org.littleshoot.mina.filter.codec.ProtocolDecoderOutput;
 import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
 import org.lastbamboo.common.stun.stack.message.BindingSuccessResponse;

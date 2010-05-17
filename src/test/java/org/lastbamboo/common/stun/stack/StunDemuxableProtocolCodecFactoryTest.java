@@ -2,7 +2,7 @@ package org.lastbamboo.common.stun.stack;
 
 import static org.junit.Assert.*;
 
-import org.apache.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.ByteBuffer;
 import org.junit.Test;
 
 public class StunDemuxableProtocolCodecFactoryTest

@@ -7,7 +7,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
-import org.apache.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAddressAttribute;

@@ -2,7 +2,7 @@ package org.lastbamboo.common.stun.stack.message.attributes;
 
 import java.util.Map;
 
-import org.apache.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.ByteBuffer;
 
 /**
  * Factory for creating STUN attributes.

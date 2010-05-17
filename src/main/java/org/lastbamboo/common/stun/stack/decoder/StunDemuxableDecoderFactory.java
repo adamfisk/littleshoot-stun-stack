@@ -1,6 +1,6 @@
 package org.lastbamboo.common.stun.stack.decoder;
 
-import org.apache.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.ByteBuffer;
 import org.lastbamboo.common.util.mina.DecodingStateMachine;
 import org.lastbamboo.common.util.mina.DemuxableDecoderFactory;
 import org.lastbamboo.common.util.mina.DemuxableProtocolDecoder;

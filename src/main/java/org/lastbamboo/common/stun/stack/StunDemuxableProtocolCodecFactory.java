@@ -1,7 +1,7 @@
 package org.lastbamboo.common.stun.stack;
 
-import org.apache.mina.common.ByteBuffer;
-import org.apache.mina.filter.codec.ProtocolEncoder;
+import org.littleshoot.mina.common.ByteBuffer;
+import org.littleshoot.mina.filter.codec.ProtocolEncoder;
 import org.lastbamboo.common.stun.stack.decoder.StunMessageDecodingState;
 import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
 import org.lastbamboo.common.stun.stack.message.StunMessage;

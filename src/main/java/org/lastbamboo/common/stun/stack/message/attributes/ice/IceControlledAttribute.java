@@ -1,7 +1,7 @@
 package org.lastbamboo.common.stun.stack.message.attributes.ice;
 
-import org.apache.mina.common.ByteBuffer;
-import org.apache.mina.common.support.ByteBufferHexDumper;
+import org.littleshoot.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.support.ByteBufferHexDumper;
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;

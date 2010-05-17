@@ -2,10 +2,10 @@ package org.lastbamboo.common.stun.stack;
 
 import java.net.PortUnreachableException;
 
-import org.apache.mina.common.IdleStatus;
-import org.apache.mina.common.IoHandlerAdapter;
-import org.apache.mina.common.IoSession;
-import org.apache.mina.util.SessionUtil;
+import org.littleshoot.mina.common.IdleStatus;
+import org.littleshoot.mina.common.IoHandlerAdapter;
+import org.littleshoot.mina.common.IoSession;
+import org.littleshoot.mina.util.SessionUtil;
 import org.lastbamboo.common.stun.stack.message.ConnectErrorStunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;

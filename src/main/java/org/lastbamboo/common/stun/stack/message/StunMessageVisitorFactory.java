@@ -1,6 +1,6 @@
 package org.lastbamboo.common.stun.stack.message;
 
-import org.apache.mina.common.IoSession;
+import org.littleshoot.mina.common.IoSession;
 
 /**
  * Factory for creating STUN message visitors.  Implementing classes might

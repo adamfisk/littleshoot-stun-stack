@@ -1,8 +1,8 @@
 package org.lastbamboo.common.stun.stack.encoder;
 
-import org.apache.mina.common.ByteBuffer;
-import org.apache.mina.common.IoSession;
-import org.apache.mina.filter.codec.ProtocolEncoderOutput;
+import org.littleshoot.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.IoSession;
+import org.littleshoot.mina.filter.codec.ProtocolEncoderOutput;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 import org.lastbamboo.common.util.mina.DemuxableProtocolEncoder;
 import org.slf4j.Logger;

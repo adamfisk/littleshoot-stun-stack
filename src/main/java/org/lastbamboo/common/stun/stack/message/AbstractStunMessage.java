@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.mina.common.ByteBuffer;
+import org.littleshoot.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
