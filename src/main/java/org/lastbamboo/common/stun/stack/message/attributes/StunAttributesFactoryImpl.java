@@ -5,8 +5,8 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.littleshoot.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControllingAttribute;
@@ -25,8 +25,7 @@ import org.lastbamboo.common.util.mina.MinaUtils;
 public class StunAttributesFactoryImpl implements StunAttributesFactory
     {
 
-    private static final Log LOG = 
-        LogFactory.getLog(StunAttributesFactoryImpl.class);
+    private final Logger LOG = LoggerFactory.getLogger(StunAttributesFactoryImpl.class);
     
     public Map<StunAttributeType, StunAttribute> createAttributes(
         final ByteBuffer body)

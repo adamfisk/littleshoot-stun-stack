@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.id.uuid.UUID;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 
 /**
@@ -18,8 +18,7 @@ public class StunTransactionTrackerImpl
     implements StunTransactionTracker<StunMessage>, StunTransactionListener
     {
     
-    private static final Log LOG = 
-        LogFactory.getLog(StunTransactionTrackerImpl.class);
+    private final Logger LOG = LoggerFactory.getLogger(StunTransactionTrackerImpl.class);
     
     private final Map<UUID, StunClientTransaction<StunMessage>> m_transactions = 
         new ConcurrentHashMap<UUID, StunClientTransaction<StunMessage>>();

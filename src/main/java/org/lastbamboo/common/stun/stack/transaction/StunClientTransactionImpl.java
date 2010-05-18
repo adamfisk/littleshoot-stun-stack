@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.lastbamboo.common.stun.stack.message.BindingErrorResponse;
 import org.lastbamboo.common.stun.stack.message.BindingRequest;
 import org.lastbamboo.common.stun.stack.message.CanceledStunMessage;
@@ -32,8 +32,7 @@ public class StunClientTransactionImpl
     implements StunClientTransaction<StunMessage>
     {
     
-    private static final Log LOG = 
-        LogFactory.getLog(StunClientTransactionImpl.class);
+    private final Logger LOG = LoggerFactory.getLogger(StunClientTransactionImpl.class);
     
     private final StunMessage m_request;
 

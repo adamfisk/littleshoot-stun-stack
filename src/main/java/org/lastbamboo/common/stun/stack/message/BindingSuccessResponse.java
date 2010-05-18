@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.lastbamboo.common.stun.stack.message.attributes.MappedAddressAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
@@ -18,8 +18,7 @@ import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 public class BindingSuccessResponse extends AbstractStunMessage
     {
 
-    private static final Log LOG = 
-        LogFactory.getLog(BindingSuccessResponse.class);
+    private final Logger LOG = LoggerFactory.getLogger(BindingSuccessResponse.class);
     private final InetSocketAddress m_mappedAddress;
 
     /**
