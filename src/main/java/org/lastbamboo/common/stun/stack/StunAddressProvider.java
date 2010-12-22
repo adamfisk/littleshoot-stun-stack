@@ -7,8 +7,7 @@ import java.net.InetSocketAddress;
 /**
  * Provider of STUN addresses.
  */
-public interface StunAddressProvider
-    {
+public interface StunAddressProvider {
     /**
      * Gets the host address for this client, or the local address on a local
      * network interface.
@@ -45,19 +44,5 @@ public interface StunAddressProvider
      */
     InetSocketAddress getRelayAddress();
     
-
-    /**
-     * Returns whether or not the host port was successfully mapped to a public
-     * address using a port mapping protocol such as UPnP or PMP.  Note this is
-     * only relevant if the client has a private address.  If this client has
-     * a public address, this will return <code>false</code> to indicate no
-     * mapping has taken place.
-     * 
-     * @return <code>true</code> if the private host address port was 
-     * successfully mapped to a public address and port, otherwise 
-     * <code>false</code>.
-     */
-    boolean hostPortMapped();
-    
     void close();
-    }
+}
