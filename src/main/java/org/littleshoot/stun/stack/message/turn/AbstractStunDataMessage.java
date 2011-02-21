@@ -4,12 +4,12 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessageType;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.littleshoot.stun.stack.message.AbstractStunMessage;
+import org.littleshoot.stun.stack.message.StunMessageType;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.turn.DataAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 
 /**
  * Abstract class for TURN messages containing data, particularly the 

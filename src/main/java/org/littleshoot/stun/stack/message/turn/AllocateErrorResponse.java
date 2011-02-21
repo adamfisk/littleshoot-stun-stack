@@ -3,12 +3,12 @@ package org.littleshoot.stun.stack.message.turn;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessageType;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
-import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.AbstractStunMessage;
+import org.littleshoot.stun.stack.message.StunMessageType;
+import org.littleshoot.stun.stack.message.StunMessageVisitor;
+import org.littleshoot.stun.stack.message.attributes.ErrorCodeAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

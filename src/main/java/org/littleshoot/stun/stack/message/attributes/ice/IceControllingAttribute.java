@@ -4,9 +4,9 @@ import java.math.BigInteger;
 
 import org.littleshoot.mina.common.ByteBuffer;
 import org.littleshoot.mina.common.support.ByteBufferHexDumper;
-import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.littleshoot.stun.stack.message.attributes.AbstractStunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

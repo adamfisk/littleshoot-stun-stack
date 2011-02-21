@@ -6,10 +6,10 @@ import org.littleshoot.mina.common.IdleStatus;
 import org.littleshoot.mina.common.IoHandlerAdapter;
 import org.littleshoot.mina.common.IoSession;
 import org.littleshoot.mina.util.SessionUtil;
-import org.lastbamboo.common.stun.stack.message.ConnectErrorStunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitorFactory;
+import org.littleshoot.stun.stack.message.ConnectErrorStunMessage;
+import org.littleshoot.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.message.StunMessageVisitor;
+import org.littleshoot.stun.stack.message.StunMessageVisitorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

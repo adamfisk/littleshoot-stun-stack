@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessageType;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatus;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.littleshoot.stun.stack.message.AbstractStunMessage;
+import org.littleshoot.stun.stack.message.StunMessageType;
+import org.littleshoot.stun.stack.message.StunMessageVisitor;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.turn.ConnectionStatus;
+import org.littleshoot.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 
 /**
  * Message indicating the connection status of a specific remote host.

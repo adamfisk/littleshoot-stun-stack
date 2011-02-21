@@ -1,9 +1,9 @@
 package org.littleshoot.stun.stack.message.turn;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;
-import org.lastbamboo.common.stun.stack.message.StunMessageType;
-import org.lastbamboo.common.stun.stack.message.StunMessageVisitor;
+import org.littleshoot.stun.stack.message.AbstractStunMessage;
+import org.littleshoot.stun.stack.message.StunMessageType;
+import org.littleshoot.stun.stack.message.StunMessageVisitor;
 
 /**
  * Allocate request message.  This can create an allocate request from scratch

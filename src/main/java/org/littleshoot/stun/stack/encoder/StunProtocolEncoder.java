@@ -3,7 +3,7 @@ package org.littleshoot.stun.stack.encoder;
 import org.littleshoot.mina.common.ByteBuffer;
 import org.littleshoot.mina.common.IoSession;
 import org.littleshoot.mina.filter.codec.ProtocolEncoderOutput;
-import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.message.StunMessage;
 import org.littleshoot.util.mina.DemuxableProtocolEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

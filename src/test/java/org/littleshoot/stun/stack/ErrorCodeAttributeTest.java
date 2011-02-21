@@ -1,6 +1,6 @@
 package org.littleshoot.stun.stack;
 
-import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
+import org.littleshoot.stun.stack.message.attributes.ErrorCodeAttribute;
 
 import junit.framework.TestCase;
 

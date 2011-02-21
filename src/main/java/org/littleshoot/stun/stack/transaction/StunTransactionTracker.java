@@ -2,7 +2,7 @@ package org.littleshoot.stun.stack.transaction;
 
 import java.net.InetSocketAddress;
 
-import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.message.StunMessage;
 
 /**
  * Interface for classes responsible for keeping track of SIP transactions.

@@ -1,8 +1,8 @@
 package org.littleshoot.stun.stack.message.attributes.turn;
 
-import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.littleshoot.stun.stack.message.attributes.AbstractStunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeVisitor;
 
 /**
  * Class that wraps incoming data from a remote host.  It adds the address of 

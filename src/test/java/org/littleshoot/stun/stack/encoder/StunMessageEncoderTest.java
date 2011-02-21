@@ -5,10 +5,10 @@ import java.util.Random;
 import junit.framework.TestCase;
 
 import org.littleshoot.mina.common.ByteBuffer;
-import org.lastbamboo.common.stun.stack.message.BindingRequest;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IcePriorityAttribute;
+import org.littleshoot.stun.stack.message.BindingRequest;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IceControlledAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IcePriorityAttribute;
 
 public class StunMessageEncoderTest extends TestCase
     {

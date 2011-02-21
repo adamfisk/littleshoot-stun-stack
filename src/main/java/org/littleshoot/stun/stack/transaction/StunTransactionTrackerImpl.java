@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.id.uuid.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.message.StunMessage;
 
 /**
  * Class for matching requests and responses to their associated transactions.

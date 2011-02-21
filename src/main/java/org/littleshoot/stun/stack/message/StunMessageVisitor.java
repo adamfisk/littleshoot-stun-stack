@@ -1,12 +1,12 @@
 package org.littleshoot.stun.stack.message;
 
-import org.lastbamboo.common.stun.stack.message.turn.AllocateErrorResponse;
-import org.lastbamboo.common.stun.stack.message.turn.AllocateRequest;
-import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
-import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
-import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
-import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
-import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
+import org.littleshoot.stun.stack.message.turn.AllocateErrorResponse;
+import org.littleshoot.stun.stack.message.turn.AllocateRequest;
+import org.littleshoot.stun.stack.message.turn.ConnectRequest;
+import org.littleshoot.stun.stack.message.turn.ConnectionStatusIndication;
+import org.littleshoot.stun.stack.message.turn.AllocateSuccessResponse;
+import org.littleshoot.stun.stack.message.turn.DataIndication;
+import org.littleshoot.stun.stack.message.turn.SendIndication;
 
 /**
  * Visitor for various STUN messages.

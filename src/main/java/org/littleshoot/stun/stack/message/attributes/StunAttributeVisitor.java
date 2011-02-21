@@ -1,13 +1,13 @@
 package org.littleshoot.stun.stack.message.attributes;
 
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControlledAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IceControllingAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IcePriorityAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.ice.IceUseCandidateAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.DataAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RelayAddressAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IceControlledAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IceControllingAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IcePriorityAttribute;
+import org.littleshoot.stun.stack.message.attributes.ice.IceUseCandidateAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.ConnectionStatusAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.DataAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.RelayAddressAttribute;
+import org.littleshoot.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 
 
 /**

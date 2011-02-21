@@ -1,6 +1,6 @@
 package org.littleshoot.stun.stack.transaction;
 
-import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.message.StunMessage;
 
 /**
  * Interface for classes wishing to listen for STUN transtaction events.

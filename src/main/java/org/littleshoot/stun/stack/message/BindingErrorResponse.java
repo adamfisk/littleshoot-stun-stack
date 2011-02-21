@@ -3,9 +3,9 @@ package org.littleshoot.stun.stack.message;
 import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
-import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.ErrorCodeAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
 
 /**
  * Binding error response message.

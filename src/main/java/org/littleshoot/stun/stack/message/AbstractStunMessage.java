@@ -8,9 +8,9 @@ import java.util.Map;
 
 import org.apache.commons.id.uuid.UUID;
 import org.littleshoot.mina.common.ByteBuffer;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.turn.RemoteAddressAttribute;
 import org.littleshoot.util.mina.MinaUtils;
 
 /**

@@ -3,7 +3,7 @@ package org.littleshoot.stun.stack;
 import org.littleshoot.mina.filter.codec.ProtocolCodecFactory;
 import org.littleshoot.mina.filter.codec.ProtocolDecoder;
 import org.littleshoot.mina.filter.codec.ProtocolEncoder;
-import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
+import org.littleshoot.stun.stack.encoder.StunProtocolEncoder;
 
 /**
  * Codec factory for creating STUN encoders and decoders.  Note this creates

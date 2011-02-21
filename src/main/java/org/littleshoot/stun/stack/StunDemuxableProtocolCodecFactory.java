@@ -2,9 +2,9 @@ package org.littleshoot.stun.stack;
 
 import org.littleshoot.mina.common.ByteBuffer;
 import org.littleshoot.mina.filter.codec.ProtocolEncoder;
-import org.lastbamboo.common.stun.stack.decoder.StunMessageDecodingState;
-import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
-import org.lastbamboo.common.stun.stack.message.StunMessage;
+import org.littleshoot.stun.stack.decoder.StunMessageDecodingState;
+import org.littleshoot.stun.stack.encoder.StunProtocolEncoder;
+import org.littleshoot.stun.stack.message.StunMessage;
 import org.littleshoot.util.mina.DecodingStateMachine;
 import org.littleshoot.util.mina.DemuxableProtocolCodecFactory;
 import org.littleshoot.util.mina.DemuxableProtocolDecoder;

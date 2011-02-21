@@ -2,9 +2,9 @@ package org.littleshoot.stun.stack.message.attributes.turn;
 
 import java.net.InetSocketAddress;
 
-import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAddressAttribute;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
-import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeVisitor;
+import org.littleshoot.stun.stack.message.attributes.AbstractStunAddressAttribute;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeType;
+import org.littleshoot.stun.stack.message.attributes.StunAttributeVisitor;
 
 /**
  * Relay address attribute.
