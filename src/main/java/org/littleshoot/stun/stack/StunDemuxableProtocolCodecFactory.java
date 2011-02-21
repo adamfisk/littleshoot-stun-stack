@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack;
+package org.littleshoot.stun.stack;
 
 import org.littleshoot.mina.common.ByteBuffer;
 import org.littleshoot.mina.filter.codec.ProtocolEncoder;

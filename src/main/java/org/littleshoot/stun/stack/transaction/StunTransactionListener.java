@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.transaction;
+package org.littleshoot.stun.stack.transaction;
 
 import org.lastbamboo.common.stun.stack.message.StunMessage;
 

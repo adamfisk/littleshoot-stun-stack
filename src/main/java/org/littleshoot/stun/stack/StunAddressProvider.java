@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack;
+package org.littleshoot.stun.stack;
 
 import java.io.IOException;
 import java.net.InetAddress;

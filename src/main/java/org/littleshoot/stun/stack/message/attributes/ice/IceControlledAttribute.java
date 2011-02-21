@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message.attributes.ice;
+package org.littleshoot.stun.stack.message.attributes.ice;
 
 import org.littleshoot.mina.common.ByteBuffer;
 import org.littleshoot.mina.common.support.ByteBufferHexDumper;

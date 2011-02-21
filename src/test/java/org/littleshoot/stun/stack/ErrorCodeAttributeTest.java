@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack;
+package org.littleshoot.stun.stack;
 
 import org.lastbamboo.common.stun.stack.message.attributes.ErrorCodeAttribute;
 

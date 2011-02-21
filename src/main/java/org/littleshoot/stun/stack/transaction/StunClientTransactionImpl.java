@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.transaction;
+package org.littleshoot.stun.stack.transaction;
 
 import java.net.InetSocketAddress;
 import java.util.Collections;

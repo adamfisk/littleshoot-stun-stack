@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.decoder;
+package org.littleshoot.stun.stack.decoder;
 
 import org.littleshoot.util.mina.DemuxingStateMachineProtocolDecoder;
 

@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message.turn;
+package org.littleshoot.stun.stack.message.turn;
 
 import java.net.InetSocketAddress;
 import java.util.Map;

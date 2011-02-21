@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.encoder;
+package org.littleshoot.stun.stack.encoder;
 
 import java.util.Collection;
 import java.util.Map;

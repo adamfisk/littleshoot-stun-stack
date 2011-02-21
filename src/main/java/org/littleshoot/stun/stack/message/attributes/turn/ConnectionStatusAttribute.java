@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message.attributes.turn;
+package org.littleshoot.stun.stack.message.attributes.turn;
 
 import org.lastbamboo.common.stun.stack.message.attributes.AbstractStunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;

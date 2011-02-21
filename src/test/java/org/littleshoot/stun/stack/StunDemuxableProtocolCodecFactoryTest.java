@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack;
+package org.littleshoot.stun.stack;
 
 import static org.junit.Assert.*;
 

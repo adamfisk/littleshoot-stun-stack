@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message;
+package org.littleshoot.stun.stack.message;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message.turn;
+package org.littleshoot.stun.stack.message.turn;
 
 import org.apache.commons.id.uuid.UUID;
 import org.lastbamboo.common.stun.stack.message.AbstractStunMessage;

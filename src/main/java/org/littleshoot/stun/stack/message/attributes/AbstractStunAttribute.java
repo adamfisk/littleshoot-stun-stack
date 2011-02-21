@@ -1,4 +1,4 @@
-package org.lastbamboo.common.stun.stack.message.attributes;
+package org.littleshoot.stun.stack.message.attributes;
 
 /**
  * Abstracts out common STUN attribute functionality.
