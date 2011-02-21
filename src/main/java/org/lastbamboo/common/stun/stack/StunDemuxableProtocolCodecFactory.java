@@ -5,10 +5,10 @@ import org.littleshoot.mina.filter.codec.ProtocolEncoder;
 import org.lastbamboo.common.stun.stack.decoder.StunMessageDecodingState;
 import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
 import org.lastbamboo.common.stun.stack.message.StunMessage;
-import org.lastbamboo.common.util.mina.DecodingStateMachine;
-import org.lastbamboo.common.util.mina.DemuxableProtocolCodecFactory;
-import org.lastbamboo.common.util.mina.DemuxableProtocolDecoder;
-import org.lastbamboo.common.util.mina.DemuxingStateMachineProtocolDecoder;
+import org.littleshoot.util.mina.DecodingStateMachine;
+import org.littleshoot.util.mina.DemuxableProtocolCodecFactory;
+import org.littleshoot.util.mina.DemuxableProtocolDecoder;
+import org.littleshoot.util.mina.DemuxingStateMachineProtocolDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

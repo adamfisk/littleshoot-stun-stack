@@ -11,17 +11,14 @@ import org.lastbamboo.common.stun.stack.encoder.StunProtocolEncoder;
  * encoder and decoder instances.  This ultimately results in each session
  * having its own encoder and decoder.
  */
-public class StunProtocolCodecFactory implements ProtocolCodecFactory
-    {
+public class StunProtocolCodecFactory implements ProtocolCodecFactory {
 
-    public ProtocolDecoder getDecoder() throws Exception
-        {
+    public ProtocolDecoder getDecoder() throws Exception {
         return new StunMessageDecoder();
-        }
-
-    public ProtocolEncoder getEncoder() throws Exception
-        {
-        return new StunProtocolEncoder();
-        }
-
     }
+
+    public ProtocolEncoder getEncoder() throws Exception {
+        return new StunProtocolEncoder();
+    }
+
+}

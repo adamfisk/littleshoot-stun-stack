@@ -11,7 +11,7 @@ import org.littleshoot.mina.common.ByteBuffer;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttribute;
 import org.lastbamboo.common.stun.stack.message.attributes.StunAttributeType;
 import org.lastbamboo.common.stun.stack.message.attributes.turn.RemoteAddressAttribute;
-import org.lastbamboo.common.util.mina.MinaUtils;
+import org.littleshoot.util.mina.MinaUtils;
 
 /**
  * Abstracts out common methods and data of STUN messages.

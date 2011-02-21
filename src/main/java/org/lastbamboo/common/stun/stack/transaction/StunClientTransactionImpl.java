@@ -21,9 +21,9 @@ import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
 import org.lastbamboo.common.stun.stack.message.turn.AllocateSuccessResponse;
-import org.lastbamboo.common.util.Closure;
-import org.lastbamboo.common.util.CollectionUtils;
-import org.lastbamboo.common.util.CollectionUtilsImpl;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 
 /**
  * Implementation of a STUN client transaction.
@@ -111,6 +111,16 @@ public class StunClientTransactionImpl
         final BindingSuccessResponse response)
         {
         LOG.debug("Received success response");
+        final Function<StunTransactionListener, Boolean> success = 
+            new Function<StunTransactionListener, Boolean>() {
+
+            public Boolean apply(final StunTransactionListener listener) {
+                listener.onTransactionSucceeded(m_request, response);
+                return true;
+            }
+        };
+        return notifyListeners(response, success);
+        /*
         final Closure<StunTransactionListener> success =
             new Closure<StunTransactionListener>()
             {
@@ -119,7 +129,8 @@ public class StunClientTransactionImpl
                 listener.onTransactionSucceeded(m_request, response);
                 }
             };
-        return notifyListeners(response, success);
+        
+        */
         }
     
     public StunMessage visitBindingErrorResponse(
@@ -136,27 +147,30 @@ public class StunClientTransactionImpl
     
     private StunMessage notifyFailure(final StunMessage message)
         {
-        final Closure<StunTransactionListener> error =
-            new Closure<StunTransactionListener>()
-            {
-            public void execute(final StunTransactionListener listener)
-                {
+        final Function<StunTransactionListener, Boolean> error = 
+            new Function<StunTransactionListener, Boolean>() {
+
+            public Boolean apply(final StunTransactionListener listener) {
                 listener.onTransactionFailed(m_request, message);
-                }
-            };
+                return true;
+            }
+        };
         return notifyListeners(message, error);
         }
 
     private StunMessage notifyListeners(final StunMessage response, 
-        final Closure<StunTransactionListener> closure)
+        final Function<StunTransactionListener, Boolean> closure)
         {
         if (isSameTransaction(response))
             {
-            final CollectionUtils utils = new CollectionUtilsImpl();
+            //final CollectionUtils utils = new CollectionUtilsImpl();
 
             LOG.debug("About to notify " + this.m_transactionListeners.size() + 
                 " listeners...");
-            utils.forAllDoSynchronized(this.m_transactionListeners, closure);
+            synchronized (this.m_transactionListeners) {
+                Collections2.transform(this.m_transactionListeners, closure);
+            }
+            //utils.forAllDoSynchronized(this.m_transactionListeners, closure);
             return response;
             }
         else

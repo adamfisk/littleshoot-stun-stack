@@ -23,11 +23,11 @@ import org.lastbamboo.common.stun.stack.message.turn.ConnectRequest;
 import org.lastbamboo.common.stun.stack.message.turn.ConnectionStatusIndication;
 import org.lastbamboo.common.stun.stack.message.turn.DataIndication;
 import org.lastbamboo.common.stun.stack.message.turn.SendIndication;
-import org.lastbamboo.common.util.mina.DecodingState;
-import org.lastbamboo.common.util.mina.DecodingStateMachine;
-import org.lastbamboo.common.util.mina.FixedLengthDecodingState;
-import org.lastbamboo.common.util.mina.MinaUtils;
-import org.lastbamboo.common.util.mina.decode.binary.UnsignedShortDecodingState;
+import org.littleshoot.util.mina.DecodingState;
+import org.littleshoot.util.mina.DecodingStateMachine;
+import org.littleshoot.util.mina.FixedLengthDecodingState;
+import org.littleshoot.util.mina.MinaUtils;
+import org.littleshoot.util.mina.decode.binary.UnsignedShortDecodingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

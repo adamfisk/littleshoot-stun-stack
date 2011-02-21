@@ -1,10 +1,10 @@
 package org.lastbamboo.common.stun.stack.decoder;
 
 import org.littleshoot.mina.common.ByteBuffer;
-import org.lastbamboo.common.util.mina.DecodingStateMachine;
-import org.lastbamboo.common.util.mina.DemuxableDecoderFactory;
-import org.lastbamboo.common.util.mina.DemuxableProtocolDecoder;
-import org.lastbamboo.common.util.mina.DemuxingStateMachineProtocolDecoder;
+import org.littleshoot.util.mina.DecodingStateMachine;
+import org.littleshoot.util.mina.DemuxableDecoderFactory;
+import org.littleshoot.util.mina.DemuxableProtocolDecoder;
+import org.littleshoot.util.mina.DemuxingStateMachineProtocolDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

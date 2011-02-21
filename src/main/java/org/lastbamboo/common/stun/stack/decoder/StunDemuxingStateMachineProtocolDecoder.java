@@ -1,6 +1,6 @@
 package org.lastbamboo.common.stun.stack.decoder;
 
-import org.lastbamboo.common.util.mina.DemuxingStateMachineProtocolDecoder;
+import org.littleshoot.util.mina.DemuxingStateMachineProtocolDecoder;
 
 /**
  * Decoder for STUN messages that uses a state machine and is capable of being
