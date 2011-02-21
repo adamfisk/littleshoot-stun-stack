@@ -67,10 +67,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.littleshoot.mina</groupId>
-            <artifactId>mina-core</artifactId>
-            <version>1.1.7</version>
-        </dependency>
+            <groupId>org.littleshoot</groupId>
+            <artifactId>mina-port</artifactId>
+            <version>1.0</version>
+        </dependency> 
 
         <dependency>
             <groupId>org.littleshoot</groupId>
