@@ -53,8 +53,8 @@ public class BindingSuccessResponse extends AbstractStunMessage {
 
     private InetSocketAddress getAddress(
             final Map<StunAttributeType, StunAttribute> attributes) {
-        final MappedAddressAttribute mappedAddress = (MappedAddressAttribute) attributes
-                .get(StunAttributeType.MAPPED_ADDRESS);
+        final MappedAddressAttribute mappedAddress = 
+            (MappedAddressAttribute) attributes.get(StunAttributeType.MAPPED_ADDRESS);
         if (mappedAddress == null) {
             LOG.error("No mapped address in: " + attributes.values());
             return null;
@@ -64,7 +64,8 @@ public class BindingSuccessResponse extends AbstractStunMessage {
 
     private static Map<StunAttributeType, StunAttribute> createAttributes(
             final InetSocketAddress address) {
-        final Map<StunAttributeType, StunAttribute> attributes = new HashMap<StunAttributeType, StunAttribute>();
+        final Map<StunAttributeType, StunAttribute> attributes = 
+            new HashMap<StunAttributeType, StunAttribute>();
 
         final StunAttribute attribute = new MappedAddressAttribute(address);
         attributes.put(StunAttributeType.MAPPED_ADDRESS, attribute);
