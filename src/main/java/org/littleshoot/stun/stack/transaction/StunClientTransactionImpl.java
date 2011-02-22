@@ -109,9 +109,7 @@ public class StunClientTransactionImpl implements
         m_log.debug("Received success response");
         final Function<StunTransactionListener, Boolean> success = 
             new Function<StunTransactionListener, Boolean>() {
-
             public Boolean apply(final StunTransactionListener listener) {
-                m_log.warn("Notifying transaction succeeded");
                 listener.onTransactionSucceeded(m_request, response);
                 return true;
             }
@@ -132,9 +130,7 @@ public class StunClientTransactionImpl implements
     private StunMessage notifyFailure(final StunMessage message) {
         final Function<StunTransactionListener, Boolean> error = 
             new Function<StunTransactionListener, Boolean>() {
-
             public Boolean apply(final StunTransactionListener listener) {
-                m_log.warn("Notifying transaction failed");
                 listener.onTransactionFailed(m_request, message);
                 return true;
             }
