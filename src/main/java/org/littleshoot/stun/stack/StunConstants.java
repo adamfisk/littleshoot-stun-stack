@@ -14,7 +14,7 @@ public class StunConstants {
     
     public static InetSocketAddress[] SERVERS = {
         new InetSocketAddress("stun.ideasip.com", StunConstants.STUN_PORT),
-        new InetSocketAddress("stun01.sipphone.com", StunConstants.STUN_PORT),
+        //new InetSocketAddress("stun01.sipphone.com", StunConstants.STUN_PORT),
         new InetSocketAddress("stun.softjoys.com", StunConstants.STUN_PORT),
         new InetSocketAddress("stun.voipbuster.com", StunConstants.STUN_PORT),
         new InetSocketAddress("stun.voxgratia.org", StunConstants.STUN_PORT),
