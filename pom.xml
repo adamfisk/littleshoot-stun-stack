@@ -47,7 +47,6 @@
     <inceptionYear>2011</inceptionYear>
 
     <dependencies>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -55,21 +54,15 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-discovery</groupId>
-            <artifactId>commons-discovery</artifactId>
-            <version>0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-id</groupId>
-            <artifactId>commons-id</artifactId>
-            <version>0.1</version>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+            <version>3.1.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>mina-port</artifactId>
-            <version>1.0</version>
+            <version>${mina.port.version}</version>
         </dependency> 
 
         <dependency>
@@ -83,31 +76,6 @@
             <artifactId>util</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency> 
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
-        </dependency>
 
     </dependencies>
 
