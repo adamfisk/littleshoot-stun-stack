@@ -28,25 +28,21 @@
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>mina-port</artifactId>
-            <version>${mina.port.version}</version>
         </dependency> 
 
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>mina-util</artifactId>
-            <version>${project.version}</version>
         </dependency> 
 
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>util</artifactId>
-            <version>${project.version}</version>
         </dependency> 
 
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>littleshoot-commons-id</artifactId>
-            <version>${project.version}</version>
         </dependency> 
 
     </dependencies>
