@@ -66,7 +66,7 @@ public class StunIoHandler<T> extends IoHandlerAdapter {
             final ConnectErrorStunMessage icmpError = new ConnectErrorStunMessage();
             messageReceived(session, icmpError);
         } else {
-            m_log.warn("Exception on STUN IoHandler", cause);
+            m_log.warn("Exception on STUN IoHandler for session: "+session, cause);
             session.close();
         }
     }
