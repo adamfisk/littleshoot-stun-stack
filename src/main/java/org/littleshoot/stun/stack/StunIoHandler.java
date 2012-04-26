@@ -20,9 +20,8 @@ import org.slf4j.LoggerFactory;
  * 
  * @param <T> The type returned when visitors visit {@link StunMessage}s. 
  */
-public class StunIoHandler<T> extends IoHandlerAdapter
-    {
-    
+public class StunIoHandler<T> extends IoHandlerAdapter {
+
     private final Logger m_log = LoggerFactory.getLogger(StunIoHandler.class);
     private final StunMessageVisitorFactory m_visitorFactory;
     
@@ -34,66 +33,57 @@ public class StunIoHandler<T> extends IoHandlerAdapter
      * client side while others create visitors for the server side, 
      * for example.
      */
-    public StunIoHandler(final StunMessageVisitorFactory visitorFactory)
-        {
+    public StunIoHandler(final StunMessageVisitorFactory visitorFactory) {
         this.m_visitorFactory = visitorFactory;
-        }
+    }
 
     @Override
-    public void messageReceived(final IoSession session, final Object message)
-        {
+    public void messageReceived(final IoSession session, final Object message) {
         m_log.debug("Received message: {}", message);
-        
+
         final StunMessage stunMessage = (StunMessage) message;
-        
-        // The visitor will handle the particular message type, allowing for 
-        // variation between, for example, client and server visitor 
+
+        // The visitor will handle the particular message type, allowing for
+        // variation between, for example, client and server visitor
         // implementations.
-        final StunMessageVisitor visitor = 
-            this.m_visitorFactory.createVisitor(session);
-        
+        final StunMessageVisitor visitor = this.m_visitorFactory
+                .createVisitor(session);
+
         m_log.debug("Sending message to visitor: {}", visitor);
         stunMessage.accept(visitor);
-        }
-    
+    }
+
     @Override
-    public void exceptionCaught(final IoSession session, final Throwable cause)
-        {
+    public void exceptionCaught(final IoSession session, final Throwable cause) {
         m_log.debug("Exception on STUN IoHandler", cause);
-        if (cause instanceof PortUnreachableException)
-            {
+        if (cause instanceof PortUnreachableException) {
             // We pretend it's like an ordinary STUN "message" and visit it.
             // We allow the processing classes to close the session as they
             // see fit.
             //
             // This will occur relatively frequently over the course of normal
             // STUN checks for UDP.
-            final ConnectErrorStunMessage icmpError =
-                new ConnectErrorStunMessage();
+            final ConnectErrorStunMessage icmpError = new ConnectErrorStunMessage();
             messageReceived(session, icmpError);
-            }
-        else
-            {
+        } else {
             m_log.warn("Exception on STUN IoHandler", cause);
             session.close();
-            }
         }
-    
-    @Override
-    public void sessionCreated(final IoSession session) throws Exception
-        {
-        SessionUtil.initialize(session);
-        
-        // The idle time is in seconds.  If there's been no traffic in either
-        // direction for awhile, we free the connection.  
-        session.setIdleTime(IdleStatus.BOTH_IDLE, 100);
-        }
+    }
 
     @Override
-    public void sessionIdle(final IoSession session, final IdleStatus status)
-        {
+    public void sessionCreated(final IoSession session) throws Exception {
+        SessionUtil.initialize(session);
+
+        // The idle time is in seconds. If there's been no traffic in either
+        // direction for awhile, we free the connection.
+        session.setIdleTime(IdleStatus.BOTH_IDLE, 100);
+    }
+
+    @Override
+    public void sessionIdle(final IoSession session, final IdleStatus status) {
         m_log.debug("Killing idle session");
         // Kill idle sessions.
         session.close();
-        }
     }
+}
