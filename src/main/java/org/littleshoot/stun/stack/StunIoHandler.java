@@ -41,6 +41,10 @@ public class StunIoHandler<T> extends IoHandlerAdapter {
     public void messageReceived(final IoSession session, final Object message) {
         m_log.debug("Received message: {}", message);
 
+        if (session.isClosing() || !session.isConnected()) {
+            m_log.debug("Ignoring message on closing session...");
+            return;
+        }
         final StunMessage stunMessage = (StunMessage) message;
 
         // The visitor will handle the particular message type, allowing for
