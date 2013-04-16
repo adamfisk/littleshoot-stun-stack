@@ -22,101 +22,114 @@ public class StunMessageVisitorAdapter<T>
     implements StunMessageVisitor<T>
     {
 
-    private Logger LOG = LoggerFactory.getLogger(
+    private final Logger LOG = LoggerFactory.getLogger(
         StunMessageVisitorAdapter.class);
-    
+
+    @Override
     public T visitAllocateRequest(final AllocateRequest request)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", request);
         return null;
         }
 
+    @Override
     public T visitBindingRequest(final BindingRequest request)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", request);
         return null;
         }
 
+    @Override
     public T visitConnectRequest(final ConnectRequest request)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", request);
         return null;
         }
 
+    @Override
     public T visitConnectionStatusIndication(
         final ConnectionStatusIndication indication)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", indication);
         return null;
         }
 
+    @Override
     public T visitDataIndication(final DataIndication data)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", data);
         return null;
         }
 
+    @Override
     public T visitSendIndication(final SendIndication request)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", request);
         return null;
         }
 
+    @Override
     public T visitAllocateSuccessResponse(
         final AllocateSuccessResponse response)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", response);
         return null;
         }
 
+    @Override
     public T visitAllocateErrorResponse(
         final AllocateErrorResponse response)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", response);
         return null;
         }
 
+    @Override
     public T visitBindingSuccessResponse(
         final BindingSuccessResponse response)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", response);
         return null;
         }
-    
+
+    @Override
     public T visitBindingErrorResponse(
         final BindingErrorResponse response)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", response);
         return null;
         }
-    
+
+    @Override
     public T visitNullMessage(final NullStunMessage message)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", message);
         return null;
         }
 
+    @Override
     public T visitCanceledMessage(final CanceledStunMessage message)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", message);
         return null;
         }
-    
+
+    @Override
     public T visitConnectErrorMesssage(final ConnectErrorStunMessage message)
         {
-        LOG.error(getClass().getSimpleName() + 
+        LOG.info(getClass().getSimpleName() +
             " visiting unexpected message: {}", message);
         return null;
         }
